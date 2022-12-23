@@ -17,6 +17,7 @@ char Sector_planetStrings[PLANET_ALL][10] = {
 
 Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
     Sector_Planet p;
+    p.unitnum = 0;
     p.temperature = distFromStar <= TEMP_X_COLD ? distFromStar : TEMP_X_COLD;
     // Generate appropriate type, some types don't work with particular temperatures
     int typeOk = 0;
@@ -111,7 +112,7 @@ Sector_Entity Sector_create(Sector_Template st) {
     s.pop = 0;
     s.popMax = 0;
     for (int i = 0; i < PLANET_MAX; i++) {
-        Sector_Planet p = {PLANET_NONE, 0, TEMP_X_COLD, 0, 0, 0, 0, {}, 0};
+        Sector_Planet p = {PLANET_NONE, 0, TEMP_X_COLD, 0, 0, 0, 0, {}, 0, {}, 0};
         s.planets[i] = p;
     }
     if (st.startingLocation) {
@@ -157,6 +158,11 @@ void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abund
 
 Sector_Planet Sector_getPlanet(Sector_Entity* s, int index) {
     return s->planets[index];
+}
+
+void Sector_deployUnitToPlanet(Sector_Planet* p, int uid) {
+    p->units[p->unitnum] = uid;
+    p->unitnum++;
 }
 
 /**

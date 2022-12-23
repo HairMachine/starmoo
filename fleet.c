@@ -30,6 +30,13 @@ void Fleet_addUnit(Fleet_Entity* f, int uid) {
     }
 }
 
+void Fleet_removeUnit(Fleet_Entity* f, int uid) {
+    for (int i = uid; i < f->unitmax; i++) {
+        f->units[i] = f->units[i + 1];
+    }
+    f->unitmax--;
+}
+
 Fleet_Entity* Fleet_getPointer(int index) {
     return &fleets[index];
 }
@@ -168,7 +175,7 @@ void Fleet_changePop(Fleet_Entity* f, int excessDeaths) {
     Unit_Entity u;
     for (int i = 0; i < f->unitmax; i++) {
         u = Unit_getCopy(f->units[i]);
-        popMax += u.passengerMax;
+        popMax += u.popMax;
     }
     int popCurrent = FLEET_BASIC_NEEDS;
     int births = 0;
@@ -231,4 +238,14 @@ void Fleet_simulate(Fleet_Entity* f) {
     Fleet_changePop(f, excessDeaths);
     Fleet_generateResources(f);
     // TODO: scientists perform research
+}
+
+int Fleet_canMine(Fleet_Entity* f) {
+    for (int i = 0; i < f->unitmax; i++) {
+        Unit_Entity u = Unit_getCopy(f->units[i]);
+        if (u.mining > 0) {
+            return 1;
+        }
+    }
+    return 0;
 }

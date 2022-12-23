@@ -41,6 +41,8 @@ typedef struct {
     int popMax;
     Sector_Resource resources[RESOURCE_MAX];
     int resourcenum;
+    int units[8]; // Units deployed at this planet for mining, research etc.
+    int unitnum;
 } Sector_Planet;
 
 typedef enum {
@@ -73,5 +75,6 @@ Sector_Entity Sector_create(Sector_Template st);
 void Sector_simulate(Sector_Entity* s);
 void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abundance);
 Sector_Planet Sector_getPlanet(Sector_Entity* s, int index);
+void Sector_deployUnitToPlanet(Sector_Planet* p, int uid);
 
 #endif

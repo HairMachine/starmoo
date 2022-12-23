@@ -89,6 +89,7 @@ Sector_Entity* currentSectorInfo = 0;
 int lastFleet = 0;
 int showEventPanel = 0;
 Sector_Planet* currentPlanetInfo = 0;
+int chooseResourcesForMining = 0;
 
 // Click and draw handler functions
 
@@ -99,7 +100,7 @@ void UI_drawButton(UI_Element* el) {
 }
 
 void UI_fleetSelectedEnable(UI_Element* el) {
-    if (currentScreen == SCREEN_MAP && currentSectorInfo && currentSectorInfo->fleet > -1) {
+    if (currentSectorInfo && currentSectorInfo->fleet > -1) {
         el->enabled = 1;
     } else {
         el->enabled = 0;
@@ -169,6 +170,23 @@ void UI_endTurnEnable(UI_Element *el, Vector2 mpos) {
 
 void UI_clickEndTurn(UI_Element *el, Vector2 mpos) {
     World_update();
+}
+
+void UI_deployMineEnable(UI_Element *el, Vector2 mpos) {
+    if (currentScreen != SCREEN_SYSTEM || !currentPlanetInfo) {
+        el->enabled = 0;
+        return;
+    }
+    if (currentPlanetInfo->resourcenum > 0 && Fleet_canMine(Fleet_getPointer(currentSectorInfo->fleet))) {
+        el->enabled = 1;
+    } else {
+        el->enabled = 0;
+    }
+}
+
+void UI_clickMineEnable(UI_Element *el, Vector2 mpos) {
+    // TODO: Be able to choose a mining ship.
+    chooseResourcesForMining = 1;
 }
 
 void UI_drawMap(UI_Element* el) {
@@ -308,13 +326,10 @@ void UI_drawBuildShipMenu(UI_Element* el) {
     for (int i = 0; i < Unit_designCount(); i++) {
         Unit_Design d = Unit_getDesignCopy(i);
         int num = Fleet_getUnitCountByDesign(Fleet_getPointer(currentSectorInfo->fleet), i);
+        int cost = Unit_designProductionCost(&d);
         DrawRectangleLines(el->x, el->y + i * 32, el->width, 32, RAYWHITE);
         if (strcmp(d.name, "")) {
-            if (d.warpDriveLevel > 0 && num > 0) {
-                DrawText(TextFormat("Cannot build %s (%d already in fleet)", d.name, num), el->x, el->y + i * 32, 16, RED);
-            } else {
-                DrawText(TextFormat("Build %s (%d owned)", d.name, num), el->x, el->y + i * 32, 16, RAYWHITE);
-            }
+            DrawText(TextFormat("Build %s (%d owned) - %d production", d.name, num, cost), el->x, el->y + i * 32, 16, RAYWHITE);
         } else {
             DrawText("+ New design", el->x, el->y + i *32, 16, RAYWHITE);
         }
@@ -385,6 +400,11 @@ void UI_drawSystem(UI_Element* el) {
             default:
                 break;
         }
+        // Show units deployed here
+        for (int i = 0; i < p->unitnum; i++) {
+            DrawText("X", starPosX + ring + i*8, starPosY, 8, BLACK);
+        }
+        // Highlight selected planet
         if (currentPlanetInfo && currentPlanetInfo == p) {
             DrawRectangleLines(starPosX + ring - psize, starPosY - psize, hpsize, hpsize, RAYWHITE);
             // Draw a panel of info
@@ -419,25 +439,68 @@ void UI_clickSystem(UI_Element* el, Vector2 mpos) {
     }
 }
 
+void UI_resourceSelectEnable(UI_Element* el) {
+    el->enabled = chooseResourcesForMining;
+}
+
+void UI_drawResourceSelect(UI_Element* el) {
+    DrawRectangle(el->x, el->y, el->width, el->height, BLACK);
+    DrawRectangleLines(el->x, el->y, el->width, el->height, RAYWHITE);
+    for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
+        DrawText(Sector_resourceStrings[currentPlanetInfo->resources[i].type], el->x, el->y + i*16, 16, RAYWHITE);
+        if (chooseResourcesForMining >= 2 && chooseResourcesForMining - 2 == i) {
+            DrawRectangleLines(el->x, el->y + i*16, el->width, 16, GREEN);
+        }
+    }
+}
+
+void UI_clickResourceSelect(UI_Element* el, Vector2 mpos) {
+    int rely = mpos.y - el->y;
+    for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
+        if (rely > i*16 && rely < (i+1) * 16) {
+            chooseResourcesForMining = i+2;
+        }
+    }
+}
+
+void UI_clickConfirmResourceSelection(UI_Element* el, Vector2 mpos) {
+    if (chooseResourcesForMining < 2) {
+        chooseResourcesForMining = 0;
+        return;
+    }
+    Fleet_Entity* f = Fleet_getPointer(currentSectorInfo->fleet);
+    Unit_Entity* u = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        u = Unit_getPointer(f->units[i]);
+        if (u->mining > 0) {
+            Sector_deployUnitToPlanet(currentPlanetInfo, f->units[i]);
+            u->resourceMining = currentPlanetInfo->resources[chooseResourcesForMining - 2].type;
+            Fleet_removeUnit(f, i);
+        }
+    }
+    chooseResourcesForMining = 0;
+}
+
 void UI_initialise() {
     UI_createElement(0, 0, 100, 32, "Galaxy", SCREEN_ALL, NOFUNC, UI_drawButton, UI_clickGalaxyTab, NOFUNC);
-    UI_createElement(100, 0, 100, 32, "System", SCREEN_ALL, NOFUNC, UI_drawButton, UI_clickSystemTab, NOFUNC);
-    UI_createElement(200, 0, 100, 32, "Fleet", SCREEN_ALL, NOFUNC, UI_drawButton, UI_clickFleetTab, NOFUNC);
+    UI_createElement(100, 0, 100, 32, "System", SCREEN_ALL, UI_fleetSelectedEnable, UI_drawButton, UI_clickSystemTab, NOFUNC);
+    UI_createElement(200, 0, 100, 32, "Fleet", SCREEN_ALL, UI_fleetSelectedEnable, UI_drawButton, UI_clickBuildShips, NOFUNC);
     UI_createElement(350, 350, 100, 32, "Next", SCREEN_ALL, UI_eventEnable, UI_drawButton, UI_clickNextEvent, NOFUNC);
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, UI_eventEnable, UI_drawButton, UI_clickNextEvent, NOFUNC);
-    UI_createElement(100, 200, 400, 200, "", SCREEN_ALL, UI_eventEnable, UI_drawEventPanel, NOFUNC, NOFUNC);
+    UI_createElement(100, 200, 400, 200, "Event Panel", SCREEN_ALL, UI_eventEnable, UI_drawEventPanel, NOFUNC, NOFUNC);
         
     UI_createElement(0, 40, World_sizeX*UI_tileSize, World_sizeY*UI_tileSize, "", SCREEN_MAP, NOFUNC, UI_drawMap, UI_clickMap, NOFUNC);
-    UI_createElement(600, 40, 300, World_sizeY, "", SCREEN_MAP, NOFUNC, UI_drawSectorInfo, NOFUNC, NOFUNC);
+    UI_createElement(600, 40, 300, World_sizeY, "Map display", SCREEN_MAP, NOFUNC, UI_drawSectorInfo, NOFUNC, NOFUNC);
     UI_createElement(600, 300, 132, 32, "Set Destination", SCREEN_MAP, UI_fleetSelectedEnable, UI_drawButton, UI_clickSetDestination, UI_targeterSetDestination);
-    UI_createElement(600, 364, 132, 32, "Build Ships", SCREEN_MAP, UI_fleetSelectedEnable, UI_drawButton, UI_clickBuildShips, NOFUNC);
     UI_createElement(600, 500, 100, 32, "End Turn", SCREEN_MAP, UI_endTurnEnable, UI_drawButton, UI_clickEndTurn, NOFUNC);
 
-    UI_createElement(0, 40, SCREENX, SCREENY, "", SCREEN_SYSTEM, NOFUNC, UI_drawSystem, UI_clickSystem, NOFUNC);
+    UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, UI_resourceSelectEnable, UI_drawButton, UI_clickConfirmResourceSelection, NOFUNC);
+    UI_createElement(100, 200, 400, 200, "Resource select", SCREEN_SYSTEM, UI_resourceSelectEnable, UI_drawResourceSelect, UI_clickResourceSelect, NOFUNC);
+    UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, UI_deployMineEnable, UI_drawButton, UI_clickMineEnable, NOFUNC);
+    UI_createElement(0, 40, SCREENX, SCREENY, "System display", SCREEN_SYSTEM, NOFUNC, UI_drawSystem, UI_clickSystem, NOFUNC);
 
-    UI_createElement(0, 64, 400, SCREENY, "", SCREEN_BUILD_MILITARY, NOFUNC, UI_drawBuildShipMenu, UI_clickBuildShipMenu, NOFUNC);
-    UI_createElement(600, 0, 132, 32, "Done", SCREEN_BUILD_MILITARY, NOFUNC, UI_drawButton, UI_clickGalaxyTab, NOFUNC);
-
+    UI_createElement(0, 64, 400, SCREENY, "Build ship display", SCREEN_BUILD_MILITARY, NOFUNC, UI_drawBuildShipMenu, UI_clickBuildShipMenu, NOFUNC);
+    
     UI_enableScreen(SCREEN_MAP);
     UI_updateEnabled();
 }

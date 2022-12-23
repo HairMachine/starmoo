@@ -13,6 +13,7 @@ int main()
     InitWindow(SCREENX, SCREENY, "4x COOL");
     SetTargetFPS(60);
     World_create();
+    Unit_initComponents();
     UI_initialise();
 
     // Create initial warp ship design available to player
@@ -20,15 +21,11 @@ int main()
 
     Unit_Design* ud = Unit_createDesign();
     strcpy(ud->name, "Mothership");
-    ud->passengerBays = 5;
-    ud->shipSize = 4;
-    ud->fuelTanks = 5;
-    ud->warpDriveLevel = 1;
-    ud->researchLabs = 5;
-    ud->constructionBays = 1;
-    ud->storageBays = 5;
-    ud->farmingBays = 2;
-    ud->miningRigs = 1;
+    ud->componentnum = 3;
+    ud->components[0] = Unit_getComponent(0);
+    ud->components[1] = Unit_getComponent(1);
+    ud->components[2] = Unit_getComponent(3);
+
     // Build one to start them off with
     Unit_create(ud);
     
@@ -37,27 +34,13 @@ int main()
     Fleet_getPointer(0)->food = 250;
     Fleet_getPointer(0)->drink = 250;
     Fleet_getPointer(0)->oxygen = 750;
-    Fleet_getPointer(0)->fuel = 5;
+    Fleet_getPointer(0)->fuel = 100;
 
-    // Some other basic designs for transport and supply ships
-    
+    // Some crappy base designs for testing
     ud = Unit_createDesign();
-    strcpy(ud->name, "Habitat Pod");
-    ud->passengerBays = 1;
-    ud->farmingBays = 1;
-
-    ud = Unit_createDesign();
-    strcpy(ud->name, "Research Vessel");
-    ud->researchLabs = 1;
-
-    ud = Unit_createDesign();
-    strcpy(ud->name, "Hauler");
-    ud->storageBays = 1;
-    ud->fuelTanks = 1;
-
-    ud = Unit_createDesign();
-    strcpy(ud->name, "Constructor");
-    ud->constructionBays = 1;
+    strcpy(ud->name, "Mining Vessel");
+    ud->componentnum = 1;
+    ud->components[0] = Unit_getComponent(4);
 
     // Main game loop
     while (!WindowShouldClose()) {

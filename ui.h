@@ -18,7 +18,7 @@ struct UI_Element {
     int y;
     int width;
     int height;
-    char btnText[16];
+    char btnText[32];
     UI_Screen screen;
     int enabled;
     void (*enableFunc)(UI_Element* el);

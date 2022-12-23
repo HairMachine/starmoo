@@ -29,6 +29,7 @@ typedef struct {
 
 Fleet_Entity* Fleet_create();
 void Fleet_addUnit(Fleet_Entity* f, int uid);
+void Fleet_removeUnit(Fleet_Entity* f, int uid);
 Fleet_Entity* Fleet_getPointer(int index);
 void Fleet_destroy(int index);
 int Fleet_count();
@@ -41,4 +42,5 @@ void Fleet_consumeResources(Fleet_Entity* f);
 int Fleet_newPop(Fleet_Entity* f, float birthChance);
 void Fleet_changePop(Fleet_Entity* f, int excessDeaths);
 void Fleet_simulate(Fleet_Entity* f);
+int Fleet_canMine(Fleet_Entity *f);
 

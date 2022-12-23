@@ -1,49 +1,63 @@
+#include "sector.h"
+
+#define UNIT_COMPONENT_MAX 32
+
 typedef struct {
-    int power; // Raw damage output
-    int penetration; // How much it can bypass energy shields
-    int projectileSpeed; // How quickly the projectile moves; 0 is a direct damage weapon
-    int cooldown; // Cooldown between each shot
-} Unit_Weapon;
+    char name[32];
+    int shotPower; // Raw damage output
+    int shotPenetration; // How much it can bypass energy shields
+    int shotProjectileSpeed; // How quickly the projectile moves; 0 is a direct damage weapon
+    int shotCooldown; // Cooldown between each shot
+    int armourStrength;
+    int shieldStrength;
+    int sheildRechargeRate;
+    int warpDriveLevel;
+    int thrusterSpeed;
+    int storageCapacity;
+    int habitationSpace;
+    int goodProductionVolume;
+    int goodProduced;
+    int miningVolume;
+    int unitProductionVolume;
+    int size;
+    int productionCost;
+} Unit_Component;
 
 typedef struct {
     int id;
     char name[32];
-    Unit_Weapon weapons[8];
     int shipSize;
-    int warpDriveLevel;
-    int armourLevel;
-    int shieldLevel;
-    int passengerBays;
-    int fuelTanks;
-    int researchLabs;
-    int constructionBays;
-    int storageBays;
-    int miningRigs;
-    int farmingBays;
+    Unit_Component components[UNIT_COMPONENT_MAX];
+    int componentnum;
 } Unit_Design;
 
+void Unit_initComponents();
+Unit_Component Unit_getComponent(int index);
 Unit_Design* Unit_createDesign();
 int Unit_designCount();
 Unit_Design Unit_getDesignCopy(int id);
 Unit_Design* Unit_getDesignPointer(int id);
+int Unit_designProductionCost(Unit_Design* d);
 
 typedef struct {
     int hp;
     int hpMax;
-    Unit_Weapon weapons[8];
+    Unit_Component components[8];
     int shields;
     int shieldMax;
     int fuelMax;
-    int passengerMax;
+    int popMax;
     int warpDriveLevel; // Able to carry other ships in the fleet through a space warp if > 0
     int design;
     int research;
     int production;
     int storage;
     int mining;
+    Sector_ResourceType resourceMining;
     int farming;
 } Unit_Entity;
 
 Unit_Entity* Unit_create(Unit_Design* design);
 Unit_Entity Unit_getCopy(int uid);
+Unit_Entity* Unit_getPointer(int uid);
 int Unit_count();
