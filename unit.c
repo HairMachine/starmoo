@@ -19,10 +19,10 @@ void Unit_initComponents() {
     strcpy(Unit_allComponents[2].name, "Basic Storage");
     Unit_allComponents[2].storageCapacity = 250;
     // Basic construction
-    strcpy(Unit_allComponents[3].name, "Basic Construction");
+    strcpy(Unit_allComponents[3].name, "Basic Fabricator");
     Unit_allComponents[3].unitProductionVolume = 50;
     // Basic mining
-    strcpy(Unit_allComponents[4].name, "Basic Mining");
+    strcpy(Unit_allComponents[4].name, "Basic Miner");
     Unit_allComponents[4].miningVolume = 25;
     // Basic farm
     strcpy(Unit_allComponents[5].name, "Basic Farm");

@@ -111,6 +111,14 @@ void UI_clickNextEvent(UI_Element* el, Vector2 mpos) {
     Event_remove(0);
 }
 
+void UI_setDestinationAvailable(UI_Element *el) {
+    if (currentScreen == SCREEN_MAP && currentSectorInfo && currentSectorInfo->fleet > -1) {
+        el->enabled = 1;
+    } else {
+        el->enabled = 0;
+    }
+}
+
 void UI_clickSetDestination(UI_Element *el, Vector2 mpos) {
     // Get the max range from the fleet's supply
     int range = Fleet_getPointer(currentSectorInfo->fleet)->fuel;
@@ -491,7 +499,7 @@ void UI_initialise() {
         
     UI_createElement(0, 40, World_sizeX*UI_tileSize, World_sizeY*UI_tileSize, "", SCREEN_MAP, NOFUNC, UI_drawMap, UI_clickMap, NOFUNC);
     UI_createElement(600, 40, 300, World_sizeY, "Map display", SCREEN_MAP, NOFUNC, UI_drawSectorInfo, NOFUNC, NOFUNC);
-    UI_createElement(600, 300, 132, 32, "Set Destination", SCREEN_MAP, UI_fleetSelectedEnable, UI_drawButton, UI_clickSetDestination, UI_targeterSetDestination);
+    UI_createElement(600, 300, 132, 32, "Set Destination", SCREEN_MAP, UI_setDestinationAvailable, UI_drawButton, UI_clickSetDestination, UI_targeterSetDestination);
     UI_createElement(600, 500, 100, 32, "End Turn", SCREEN_MAP, UI_endTurnEnable, UI_drawButton, UI_clickEndTurn, NOFUNC);
 
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, UI_resourceSelectEnable, UI_drawButton, UI_clickConfirmResourceSelection, NOFUNC);
