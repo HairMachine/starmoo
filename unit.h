@@ -19,6 +19,7 @@ typedef struct {
     int goodProduced;
     int miningVolume;
     int unitProductionVolume;
+    int foodProduction;
     int size;
     int productionCost;
 } Unit_Component;

@@ -6,7 +6,7 @@
 Unit_Design designs[8];
 int designnum = 0;
 
-Unit_Component Unit_allComponents[5] = {};
+Unit_Component Unit_allComponents[6] = {};
 
 void Unit_initComponents() {
     // Warp Device I
@@ -24,15 +24,13 @@ void Unit_initComponents() {
     // Basic mining
     strcpy(Unit_allComponents[4].name, "Basic Mining");
     Unit_allComponents[4].miningVolume = 25;
+    // Basic farm
+    strcpy(Unit_allComponents[5].name, "Basic Farm");
+    Unit_allComponents[5].foodProduction = 25;
 }
 
 Unit_Component Unit_getComponent(int index) {
     return Unit_allComponents[index];
-}
-
-Unit_Component _blankComponent() {
-    Unit_Component c = {"", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    return c;
 }
 
 Unit_Design* Unit_createDesign() {
@@ -40,7 +38,7 @@ Unit_Design* Unit_createDesign() {
     d->id = designnum;
     d->shipSize = 1;
     for (int i = 0; i < UNIT_COMPONENT_MAX; i++) {
-        d->components[i] = _blankComponent();
+        d->components[i] = (Unit_Component) {};
     }
     d->componentnum = 0;
     designnum++;
@@ -90,6 +88,7 @@ Unit_Entity* Unit_create(Unit_Design* design) {
         u->storage += c->storageCapacity;
         u->popMax += c->habitationSpace;
         u->mining += c->miningVolume;
+        u->farming += c->foodProduction;
     }
     u->hp = u->hpMax;
     u->shields = u->shieldMax;

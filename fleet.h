@@ -12,9 +12,7 @@ typedef struct {
     int unitmax;
     int warpFactor;
     int storageMax;
-    int oxygen;
     int food;
-    int drink;
     int recreation;
     int luxury;
     int education;

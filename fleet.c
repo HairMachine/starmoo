@@ -28,6 +28,7 @@ void Fleet_addUnit(Fleet_Entity* f, int uid) {
     if (newUnit.warpDriveLevel > 0 && newUnit.warpDriveLevel > f->warpFactor) {
         f->warpFactor = newUnit.warpDriveLevel;
     }
+    f->food += newUnit.farming;
 }
 
 void Fleet_removeUnit(Fleet_Entity* f, int uid) {
@@ -66,33 +67,6 @@ int Fleet_getUnitCountByDesign(Fleet_Entity* f, int designId) {
 
 void Fleet_generateResources(Fleet_Entity* f) {
     // TODO: Full product / resource system as described in design doc
-    Unit_Entity u;
-    // Assign population to jobs and stuff
-    // TODO: more than just farmers, duh
-    int farmers = 0;
-    for (int i = 0; i < FLEET_BASIC_NEEDS; i++) {
-        farmers++;
-    }
-    int plots = 0;
-    for (int i = 0; i < f->unitmax; i++) {
-        u = Unit_getCopy(f->units[i]);
-        plots += u.farming;
-    }
-    farmers = plots > farmers ? farmers : plots;
-    f->food += round(farmers / 2);
-    f->drink += round(farmers / 2);
-    // Plants generate a little oxygen
-    f->oxygen += floor(farmers * 0.10);
-    // Fill storage containers with goods, discarding excess equally
-    // TODO: Discard excess according to storage policies or some other thing
-    // TODO: Different things take up different amounts of storage? Or perhaps each unit larger / smaller effects?
-    int spaceRequired = f->food + f->drink + f->oxygen - f->storageMax;
-    while (spaceRequired > 0) {
-        if (f->food > 0) f->food -= 1;
-        if (f->drink > 0) f->drink -= 1;
-        if (f->oxygen > 0) f->oxygen -= 1;
-        spaceRequired -= 3;
-    }
 }
 
 int Fleet_createUnrest(Fleet_Entity* f, int need, int notBasic) {
@@ -112,8 +86,6 @@ int Fleet_createUnrest(Fleet_Entity* f, int need, int notBasic) {
 
 void Fleet_unrestChange(Fleet_Entity* f) {
     int unrestChange = 
-        Fleet_createUnrest(f, f->food, 0) +
-        Fleet_createUnrest(f, f->drink, 0) +
         Fleet_createUnrest(f, f->recreation, 0) +
         Fleet_createUnrest(f, floor(f->luxury / 2), 1) +
         Fleet_createUnrest(f, floor(f->education / 2), 1);
@@ -125,38 +97,10 @@ void Fleet_unrestChange(Fleet_Entity* f) {
 
 int Fleet_excessDeaths(Fleet_Entity* f) {
     int excessDeaths = 0;
-    if (f->food < FLEET_BASIC_NEEDS) {
-        Event_create(
-            "Famine!",
-            TextFormat("Captain, our people are starving!\nWe lacked %d food last month.\n", FLEET_BASIC_NEEDS - f->food)
-        );
-        excessDeaths += floor((FLEET_BASIC_NEEDS - f->food) * 0.1);
-    }
-    if (f->drink < FLEET_BASIC_NEEDS) {
-        Event_create(
-            "Drought!",
-            TextFormat("Captain, our people are dying of thirst!\nWe lacked %d drink last month.\n", FLEET_BASIC_NEEDS - f->drink)
-        );
-        excessDeaths += floor((FLEET_BASIC_NEEDS - f->drink) * 0.25);
-    }
-    if (f->oxygen < FLEET_BASIC_NEEDS) {
-        Event_create(
-            "Asphyxiation!",
-            TextFormat("Captain, our people are suffocating!\nWe lacked %d oxygen last month.\n", FLEET_BASIC_NEEDS - f->oxygen)
-        );
-        excessDeaths += FLEET_BASIC_NEEDS - f->oxygen;
-    }
     return excessDeaths;
 }
 
 void Fleet_consumeResources(Fleet_Entity* f) {
-    // Consume resources
-    f->food -= f->lowpop + (f->medpop * 2) + (f->highpop * 4) + (f->ultrapop * 8);
-    if (f->food < 0) f->food = 0;
-    f->oxygen -= FLEET_BASIC_NEEDS;
-    if (f->oxygen < 0) f->oxygen = 0;
-    f->drink -= f->lowpop + (f->medpop * 2) + (f->highpop * 4) + (f->ultrapop * 8);
-    if (f->drink < 0) f->drink = 0;
     f->recreation -= f->lowpop + (f->medpop * 2) + (f->highpop * 4) + (f->ultrapop * 8);
     if (f->recreation < 0) f->recreation = 0;
     f->education = f->medpop + (f->highpop * 2) + (f->ultrapop * 8);
@@ -176,6 +120,10 @@ void Fleet_changePop(Fleet_Entity* f, int excessDeaths) {
     for (int i = 0; i < f->unitmax; i++) {
         u = Unit_getCopy(f->units[i]);
         popMax += u.popMax;
+    }
+    // Your population is limited by the amount of food resource available to you
+    if (popMax > f->food) {
+        popMax = f->food;
     }
     int popCurrent = FLEET_BASIC_NEEDS;
     int births = 0;
