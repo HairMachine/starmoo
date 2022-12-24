@@ -10,19 +10,19 @@ typedef enum {
     PLANET_TUNDRA, PLANET_BARREN, PLANET_VOLCANIC, PLANET_GAS_GIANT, PLANET_ALL
 } Sector_PlanetType;
 
-extern char Sector_planetStrings[PLANET_ALL][10];
+extern char Sector_planetStrings[PLANET_ALL][16];
 
 typedef enum {
     TEMP_X_HOT, TEMP_HOT, TEMP_Q_HOT, TEMP_GOLDILOCKS, TEMP_Q_COLD, TEMP_COLD, TEMP_X_COLD
 } Sector_PlanetTemperature;
 
-extern char Sector_tempStrings[TEMP_X_COLD+1][14];
+extern char Sector_tempStrings[TEMP_X_COLD+1][16];
 
 typedef enum {
-    RES_NONE, RES_OXYGEN, RES_FOOD, RES_WATER, RES_FUEL, RES_ALL
+    RES_NONE, RES_BASE_METALS, RES_FERTILE_SOIL, RES_FABRICS, RES_ANTIMATTER, RES_WARP_SEED, RES_ALL
 } Sector_ResourceType;
 
-extern char Sector_resourceStrings[RES_ALL][8];
+extern char Sector_resourceStrings[RES_ALL][16];
 
 typedef struct {
     Sector_ResourceType type;

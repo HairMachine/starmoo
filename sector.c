@@ -3,17 +3,71 @@
 
 #include "sector.h"
 
-char Sector_resourceStrings[RES_ALL][8] = {
-    "None", "Oxygen", "Food", "Water", "Fuel"
+char Sector_resourceStrings[RES_ALL][16] = {
+    "None", "Base Metals", "Fertile Soil", "Fabrics", "Antimatter", "Warp Seed"
 };
 
-char Sector_tempStrings[TEMP_X_COLD+1][14] = {
+char Sector_tempStrings[TEMP_X_COLD+1][16] = {
     "Extremely Hot", "Very Hot", "Hot", "Temperate", "Cold", "Very Cold", "Extremely Cold" 
 };
 
-char Sector_planetStrings[PLANET_ALL][10] = {
+char Sector_planetStrings[PLANET_ALL][16] = {
     "None", "Gaia", "Terran", "Ocean", "Desert", "Tundra", "Barren", "Volcanic", "Gas Giant"
 };
+
+void _getPossibleResourcesByPlanet(Sector_Planet p, Sector_Resource rt[]) {
+    // Reset the template
+    for (int i = 0; i < RESOURCE_MAX; i++) {
+        rt[i] = (Sector_Resource) {RES_NONE, 0};
+    }
+    switch (p.type) {
+        case PLANET_GAIA:
+            rt[0] = (Sector_Resource) {RES_FERTILE_SOIL, 100};
+            rt[1] = (Sector_Resource) {RES_BASE_METALS, 15};
+            rt[2] = (Sector_Resource) {RES_FABRICS, 50};
+            if (rand() % 100 <= 5) {
+                rt[3] = (Sector_Resource) {RES_ANTIMATTER, 5};
+            } 
+            break;
+        case PLANET_TERRAN:
+            rt[0] = (Sector_Resource) {RES_FERTILE_SOIL, 80};
+            rt[1] = (Sector_Resource) {RES_BASE_METALS, 15};
+            rt[2] = (Sector_Resource) {RES_FABRICS, 40};
+            if (rand() % 100 <= 5) {
+                rt[3] = (Sector_Resource) {RES_ANTIMATTER, 5};
+            } 
+            break;
+        case PLANET_DESERT:
+        case PLANET_OCEAN:
+            rt[0] = (Sector_Resource) {RES_FERTILE_SOIL, 15};
+            rt[1] = (Sector_Resource) {RES_BASE_METALS, 30};
+            rt[2] = (Sector_Resource) {RES_FABRICS, 20};
+            if (rand() % 100 <= 5) {
+                rt[3] = (Sector_Resource) {RES_ANTIMATTER, 5};
+            } 
+            break;
+        case PLANET_TUNDRA:
+        case PLANET_VOLCANIC:
+            rt[0] = (Sector_Resource) {RES_BASE_METALS, 30};
+            if (rand() % 100 <= 15) {
+                rt[1] = (Sector_Resource) {RES_ANTIMATTER, 10};
+            } 
+            break;
+        case PLANET_BARREN:
+            rt[0] = (Sector_Resource) {RES_BASE_METALS, 80};
+            if (rand() % 100 <= 25) {
+                rt[1] = (Sector_Resource) {RES_ANTIMATTER, 25};
+            }
+            break;
+        case PLANET_GAS_GIANT:
+            if (rand() % 100 <= 50) {
+                rt[0] = (Sector_Resource) {RES_ANTIMATTER, 45};
+            }
+            break;
+        default:
+            break;
+    }
+}
 
 Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
     Sector_Planet p;
@@ -59,11 +113,13 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
     }
     // Create some resources
     p.resourcenum = 0;
-    int rnum = rand() % RESOURCE_MAX;
-    for (int i = 0; i < rnum; i++) {
-        int rtype = (rand() % RES_ALL - 1) + 1;
-        int rq = rand() % 100 + 1;
-        Sector_planetAddResource(&p, rtype, rq);
+    Sector_Resource resourceTemplate[RESOURCE_MAX] = {};
+    _getPossibleResourcesByPlanet(p, resourceTemplate);
+    for (int i = 0; i < RESOURCE_MAX; i++) {
+        if (resourceTemplate[i].type != RES_NONE) {
+            int rq = resourceTemplate[i].abundance + (rand() % 50 + 1) - (rand() % 50 + 1);
+            Sector_planetAddResource(&p, resourceTemplate[i].type, rq);
+        }
     }
     // Population based on size and other factors
     if (p.type == PLANET_GAS_GIANT) {
@@ -119,10 +175,10 @@ Sector_Entity Sector_create(Sector_Template st) {
         s.explored = 1;
         s.fleet = 0;
         Sector_Planet homeworld = {PLANET_TERRAN, 300, TEMP_GOLDILOCKS, 0, 0, 1000, 2000, {} ,0};
-        Sector_planetAddResource(&homeworld, RES_OXYGEN, 100);
-        Sector_planetAddResource(&homeworld, RES_FOOD, 80);
-        Sector_planetAddResource(&homeworld, RES_WATER, 75);
-        Sector_planetAddResource(&homeworld, RES_FUEL, 50);
+        Sector_planetAddResource(&homeworld, RES_BASE_METALS, 50);
+        Sector_planetAddResource(&homeworld, RES_ANTIMATTER, 25);
+        Sector_planetAddResource(&homeworld, RES_FABRICS, 75);
+        Sector_planetAddResource(&homeworld, RES_FERTILE_SOIL, 80);
         s.planets[3] = homeworld;
         s.planetnum = 6;
     } else {
@@ -151,6 +207,9 @@ Sector_Entity Sector_create(Sector_Template st) {
 }
 
 void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abundance) {
+    if (abundance <= 0) {
+        return;
+    }
     Sector_Resource newResource = {t, abundance};
     p->resources[p->resourcenum] = newResource;
     p->resourcenum++;

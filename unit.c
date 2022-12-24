@@ -15,18 +15,25 @@ void Unit_initComponents() {
     // Basic Habitation
     strcpy(Unit_allComponents[1].name, "Basic Habitation");
     Unit_allComponents[1].habitationSpace = 50;
+    Unit_allComponents[1].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 25};
+    Unit_allComponents[1].buildCosts[1] = (Sector_Resource) {RES_FABRICS, 10};
     // Basic storage
     strcpy(Unit_allComponents[2].name, "Basic Storage");
     Unit_allComponents[2].storageCapacity = 250;
+    Unit_allComponents[2].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 50};
     // Basic construction
     strcpy(Unit_allComponents[3].name, "Basic Fabricator");
     Unit_allComponents[3].unitProductionVolume = 50;
+    Unit_allComponents[3].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 50};
     // Basic mining
     strcpy(Unit_allComponents[4].name, "Basic Miner");
     Unit_allComponents[4].miningVolume = 25;
+    Unit_allComponents[4].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 50};
     // Basic farm
     strcpy(Unit_allComponents[5].name, "Basic Farm");
     Unit_allComponents[5].foodProduction = 25;
+    Unit_allComponents[5].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 10};
+    Unit_allComponents[5].buildCosts[1] = (Sector_Resource) {RES_FERTILE_SOIL, 100};
 }
 
 Unit_Component Unit_getComponent(int index) {

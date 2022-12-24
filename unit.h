@@ -22,6 +22,7 @@ typedef struct {
     int foodProduction;
     int size;
     int productionCost;
+    Sector_Resource buildCosts[4];
 } Unit_Component;
 
 typedef struct {
