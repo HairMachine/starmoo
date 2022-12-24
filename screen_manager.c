@@ -46,10 +46,9 @@ void _drawEventPanel(UI_Element* el) {
     if (Event_count() == 0) {
         return;
     }
+    UI_drawPanel(el);
     Event_Entity* e = 0;
     e = Event_getPointer(0);
-    DrawRectangle(el->x, el->y, el->width, el->height, BLACK);
-    DrawRectangleLines(el->x, el->y, el->width, el->height, RAYWHITE);
     DrawText(e->title, el->x + 32, el->y + 16, 32, RAYWHITE);
     DrawText(e->body, el->x + 32, el->y + 64, 16, RAYWHITE);
 }

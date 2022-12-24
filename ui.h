@@ -41,3 +41,4 @@ void UI_drawButton(UI_Element* el);
 UI_Screen UI_getScreen();
 void UI_enableScreen(UI_Screen s);
 void UI_updateEnabled();
+void UI_drawPanel(UI_Element* el);

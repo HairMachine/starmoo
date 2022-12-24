@@ -31,8 +31,7 @@ void _clickConfirmResourceSelection(UI_Element* el, Vector2 mpos) {
 }
 
 void _drawResourceSelect(UI_Element* el) {
-    DrawRectangle(el->x, el->y, el->width, el->height, BLACK);
-    DrawRectangleLines(el->x, el->y, el->width, el->height, RAYWHITE);
+    UI_drawPanel(el);
     for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
         DrawText(Sector_resourceStrings[currentPlanetInfo->resources[i].type], el->x, el->y + i*16, 16, RAYWHITE);
         if (chooseResourcesForMining >= 2 && chooseResourcesForMining - 2 == i) {

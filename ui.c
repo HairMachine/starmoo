@@ -77,8 +77,9 @@ void UI_drawButton(UI_Element* el) {
     DrawText(el->btnText, el->x + 5, el->y + 5, 16, RAYWHITE);
 }
 
-void UI_clickFleetTab(UI_Element *el, Vector2 mpos) {
-    UI_enableScreen(SCREEN_FLEET);
+void UI_drawPanel(UI_Element* el) {
+    DrawRectangle(el->x, el->y, el->width, el->height, BLACK);
+    DrawRectangleLines(el->x, el->y, el->width, el->height, RAYWHITE);
 }
 
 void UI_drawElements() {
