@@ -7,6 +7,7 @@
 #include "fleet.h"
 #include "world.h"
 #include "ui.h"
+#include "screen_manager.h"
 
 int main() 
 {
@@ -14,7 +15,7 @@ int main()
     SetTargetFPS(60);
     World_create();
     Unit_initComponents();
-    UI_initialise();
+    ScreenManager_init();
 
     // Create initial warp ship design available to player
     Fleet_create();

@@ -34,6 +34,10 @@ typedef struct {
     UI_Element triggeredBy;
 } UI_Targeter;
 
-void UI_initialise();
+void UI_createElement(int x, int y, int width, int height, char* btnText, UI_Screen screen, void (*enableFunc), void (*drawFunc), void (*clickFunc), void (*targeterFunc));
 void UI_drawElements();
 void UI_handleMouse();
+void UI_drawButton(UI_Element* el);
+UI_Screen UI_getScreen();
+void UI_enableScreen(UI_Screen s);
+void UI_updateEnabled();

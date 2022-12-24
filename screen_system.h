@@ -1,0 +1,1 @@
+void ScreenSystem_init();
