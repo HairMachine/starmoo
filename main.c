@@ -12,7 +12,7 @@
 int main() 
 {
     InitWindow(SCREENX, SCREENY, "4x COOL");
-    SetTargetFPS(60);
+    SetTargetFPS(120);
     World_create();
     Unit_initComponents();
     ScreenManager_init();
