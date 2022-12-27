@@ -103,7 +103,7 @@ void World_update() {
     for (int i = Order_count() - 1; i >= 0; i--) {
         Order_Entity* o = Order_getPointer(i);
         switch (o->type) {
-            case ORDER_MOVE_FLEET:
+            case ORDER_MOVE_FLEET: {
                 int dirx, diry;
                 Sector_Entity* se = &World_sectors[o->originY * World_sizeX + o->originX];
                 Fleet_Entity* f = Fleet_getPointer(se->fleet);
@@ -133,7 +133,7 @@ void World_update() {
                         break;
                     }
                 }
-                break;
+            } break;
             default:
                 break;
         }
