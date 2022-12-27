@@ -33,21 +33,17 @@ void _clickConfirmResourceSelection(UI_Element* el, Vector2 mpos) {
 void _drawResourceSelect(UI_Element* el) {
     UI_drawPanel(el);
     for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
-        DrawText(Sector_resourceStrings[currentPlanetInfo->resources[i].type], el->x, el->y + i*16, 16, RAYWHITE);
-        if (chooseResourcesForMining >= 2 && chooseResourcesForMining - 2 == i) {
-            DrawRectangleLines(el->x, el->y + i*16, el->width, 16, GREEN);
-        }
+        UI_drawSelectListItem(
+            el, i, 16, 
+            Sector_resourceStrings[currentPlanetInfo->resources[i].type], 
+            chooseResourcesForMining >= 2 && chooseResourcesForMining - 2 == i
+        );
     }
 }
 
 
 void _clickResourceSelect(UI_Element* el, Vector2 mpos) {
-    int rely = mpos.y - el->y;
-    for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
-        if (rely > i*16 && rely < (i+1) * 16) {
-            chooseResourcesForMining = i+2;
-        }
-    }
+    chooseResourcesForMining = UI_handleSelectList(el, mpos, currentPlanetInfo->resourcenum, 16) + 2;
 }
 
 void _deployMineEnable(UI_Element *el, Vector2 mpos) {

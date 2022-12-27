@@ -82,6 +82,25 @@ void UI_drawPanel(UI_Element* el) {
     DrawRectangleLines(el->x, el->y, el->width, el->height, RAYWHITE);
 }
 
+void UI_drawSelectListItem(UI_Element* el, int offset, int listsize, char text[32], int isSelected) {
+    DrawText(text, el->x, el->y + offset*listsize, listsize, RAYWHITE);
+    if (isSelected) {
+        DrawRectangleLines(el->x, el->y + offset*16, el->width, 16, GREEN);
+    }
+}
+
+int UI_handleSelectList(UI_Element* el, Vector2 mpos, int numelements, int listsize) {
+    int rely = mpos.y - el->y;
+    int chosen = -1;
+    for (int i = 0; i < numelements; i++) {
+        if (rely > i*listsize && rely < (i+1) * listsize) {
+            chosen = i;
+            return chosen;
+        }
+    }
+    return chosen;
+}
+
 void UI_drawElements() {
     // Draw in reverse priority order
     for (int e = elementEnd - 1; e >= 0; e--) {
