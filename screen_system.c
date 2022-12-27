@@ -6,28 +6,54 @@
 #include "screen_manager.h"
 
 int chooseResourcesForMining = 0;
+int chooseShipForMining = 0;
 Sector_Planet* currentPlanetInfo = 0;
 
 void _resourceSelectEnable(UI_Element* el) {
-    el->visible = chooseResourcesForMining;
+    el->visible = chooseResourcesForMining && chooseShipForMining;
+}
+
+void _miningShipSelectEnable(UI_Element *el) {
+    el->visible = chooseShipForMining && !chooseResourcesForMining;
+}
+
+void _drawMiningShipSelect(UI_Element *el) {
+    UI_drawPanel(el);
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    Unit_Entity* u = 0;
+    Unit_Design* d = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        
+        u = Unit_getPointer(f->units[i]);
+        if (u->mining > 0) {
+            d = Unit_getDesignPointer(u->design);
+            UI_drawSelectListItem(el, i, 16, d->name, chooseShipForMining - 2 >= 0 && chooseShipForMining - 2 == i);    
+        }
+    }
+}
+
+void _clickMiningShipSelection(UI_Element *el, Vector2 mpos) {
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    chooseShipForMining = UI_handleSelectList(el, mpos, f->unitmax, 16) + 2;
+}
+
+void _clickConfirmMiningShipSelect(UI_Element *el, Vector2 mpos) {
+    chooseResourcesForMining = 1;
 }
 
 void _clickConfirmResourceSelection(UI_Element* el, Vector2 mpos) {
     if (chooseResourcesForMining < 2) {
         chooseResourcesForMining = 0;
+        chooseShipForMining = 0;
         return;
     }
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
-    Unit_Entity* u = 0;
-    for (int i = 0; i < f->unitmax; i++) {
-        u = Unit_getPointer(f->units[i]);
-        if (u->mining > 0) {
-            Sector_deployUnitToPlanet(currentPlanetInfo, f->units[i]);
-            u->resourceMining = currentPlanetInfo->resources[chooseResourcesForMining - 2].type;
-            Fleet_removeUnit(f, i);
-        }
-    }
+    Unit_Entity* u = Unit_getPointer(chooseShipForMining - 2);
+    Sector_deployUnitToPlanet(currentPlanetInfo, chooseShipForMining - 2);
+    u->resourceMining = currentPlanetInfo->resources[chooseResourcesForMining - 2].type;
+    Fleet_removeUnit(f, chooseShipForMining - 2);
     chooseResourcesForMining = 0;
+    chooseShipForMining = 0;
 }
 
 void _drawResourceSelect(UI_Element* el) {
@@ -64,8 +90,7 @@ void _deployMineEnable(UI_Element *el, Vector2 mpos) {
 }
 
 void _clickMineEnable(UI_Element *el, Vector2 mpos) {
-    // TODO: Be able to choose a mining ship.
-    chooseResourcesForMining = 1;
+    chooseShipForMining = 1;
 }
 
 int _calcRingChange(Sector_Planet* p) {
@@ -166,7 +191,9 @@ void _clickSystem(UI_Element* el, Vector2 mpos) {
 
 
 void ScreenSystem_init() {
-    UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, _resourceSelectEnable, UI_drawButton, _clickConfirmResourceSelection, NOFUNC);
+    UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _miningShipSelectEnable, UI_drawButton, _clickConfirmMiningShipSelect, NOFUNC);
+    UI_createElement(100, 200, 400, 200, "Mining ship select", SCREEN_SYSTEM, _miningShipSelectEnable, _drawMiningShipSelect, _clickMiningShipSelection, NOFUNC);
+    UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _resourceSelectEnable, UI_drawButton, _clickConfirmResourceSelection, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Resource select", SCREEN_SYSTEM, _resourceSelectEnable, _drawResourceSelect, _clickResourceSelect, NOFUNC);
     UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
     UI_createElement(0, 40, SCREENX, SCREENY, "System display", SCREEN_SYSTEM, NOFUNC, _drawSystem, _clickSystem, NOFUNC);
