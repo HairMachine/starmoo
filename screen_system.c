@@ -162,9 +162,22 @@ void _drawSystem(UI_Element* el) {
                 "%s World\nPopulation: %dM\nTemperature: %s",
                 Sector_planetStrings[p->type], p->pop, Sector_tempStrings[p->temperature], p->temperature
             ), 500, 0, 16, RAYWHITE);
+            Unit_Entity* u = 0;
             for (int i = 0; i < p->resourcenum; i++) {
+                int isBeingMined = 0;
                 if (p->resources[i].type != RES_NONE) {
-                    DrawText(TextFormat("%s: %d%%", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 100 + i * 24, 16, RAYWHITE);
+                    for (int j = 0; j < p->unitnum; j++) {
+                        u = Unit_getPointer(p->units[j]);
+                        if (u->resourceMining == p->resources[i].type) {
+                            isBeingMined = 1;
+                            break;
+                        }
+                    }
+                    if (isBeingMined) {
+                        DrawText(TextFormat("%s: %d%% (being mined)", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 100 + i * 24, 16, RAYWHITE);
+                    } else {
+                        DrawText(TextFormat("%s: %d%%", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 100 + i * 24, 16, RAYWHITE);
+                    }
                 }
             }
         }
