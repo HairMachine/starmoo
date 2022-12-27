@@ -4,6 +4,7 @@ Inventory_Entity inventory[512] = {};
 int inventorynum = 0;
 
 Inventory_Entity* Inventory_create() {
+    inventory[inventorynum] = (Inventory_Entity) {};
     Inventory_Entity* inv = &inventory[inventorynum];
     inventorynum++;
     return inv;
@@ -26,4 +27,8 @@ int Inventory_volume() {
         total += inventory[i].quantity;
     }
     return total;
+}
+
+int Inventory_count() {
+    return inventorynum;
 }

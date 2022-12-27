@@ -1,10 +1,12 @@
 #include <stdlib.h>
+#include "raylib.h"
 
 #include "sector.h"
 #include "event.h"
 #include "order.h"
 #include "unit.h"
 #include "fleet.h"
+#include "inventory.h"
 #include "world.h"
 
 Sector_Entity World_sectors[World_sizeY * World_sizeX];
@@ -143,6 +145,45 @@ void World_update() {
         for (int y = 0; y < World_sizeY; y++) {
             Sector_Entity* s = &World_sectors[y * World_sizeX + x];
             Sector_simulate(s);
+            // Perform any mining and research tasks
+            Sector_Planet* p = 0;
+            Unit_Entity* u = 0;
+            int amount = 0;
+            for (int pi = 0; pi < s->planetnum; pi++) {
+                p = &s->planets[pi];
+                for (int ui = 0; ui < p->unitnum; ui++) {
+                    u = Unit_getPointer(p->units[ui]);
+                    if (u->storage - u->totalStored <= 0) {
+                        continue;
+                    }
+                    if (u->resourceMining.type != RES_NONE) {
+                        Inventory_Entity* inv = 0;
+                        amount = (u->mining * u->resourceMining.abundance) / 100;
+                        amount = u->totalStored + amount <= u->storage ? amount : u->storage - u->totalStored;
+                        if (amount <= 0) {
+                            Event_create("Could not mine", TextFormat("Mining ship at %d, %d could not mine", x, y));
+                            continue;
+                        }
+                        u->totalStored += amount;
+                        if (u->storage - u->totalStored <= 0) {
+                            Event_create("Out of space", TextFormat("Mining ship at %d, %d has run out of storage space.", x, y));
+                        }
+                        for (int si = 0; si < u->storednum; si++) {
+                            inv = Inventory_getPointer(u->stored[si]);
+                            if (inv->storedResourceId == u->resourceMining.type) {
+                                inv->quantity += amount;
+                                break;
+                            }
+                        }
+                        if (!inv) {
+                            inv = Inventory_create();
+                            inv->quantity = amount;
+                            inv->storedResourceId = u->resourceMining.type;
+                            Unit_storeItem(u, Inventory_count() - 1);
+                        }
+                    }
+                }
+            }
             World_resupplyFleet(s);
             if (s->fleet > -1) {
                 Fleet_simulate(Fleet_getPointer(s->fleet));

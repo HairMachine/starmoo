@@ -50,7 +50,7 @@ void _clickConfirmResourceSelection(UI_Element* el, Vector2 mpos) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     Unit_Entity* u = Unit_getPointer(chooseShipForMining - 2);
     Sector_deployUnitToPlanet(currentPlanetInfo, chooseShipForMining - 2);
-    u->resourceMining = currentPlanetInfo->resources[chooseResourcesForMining - 2].type;
+    u->resourceMining = currentPlanetInfo->resources[chooseResourcesForMining - 2];
     Fleet_removeUnit(f, chooseShipForMining - 2);
     chooseResourcesForMining = 0;
     chooseShipForMining = 0;
@@ -168,7 +168,7 @@ void _drawSystem(UI_Element* el) {
                 if (p->resources[i].type != RES_NONE) {
                     for (int j = 0; j < p->unitnum; j++) {
                         u = Unit_getPointer(p->units[j]);
-                        if (u->resourceMining == p->resources[i].type) {
+                        if (u->resourceMining.type == p->resources[i].type) {
                             isBeingMined = 1;
                             break;
                         }

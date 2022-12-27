@@ -83,7 +83,7 @@ Unit_Entity* Unit_create(Unit_Design* design) {
     u->storage = 0;
     u->popMax = 0;
     u->mining = 0;
-    u->resourceMining = RES_NONE;
+    u->resourceMining = (Sector_Resource) {RES_NONE, 0};
     Unit_Component* c = 0;
     for (int i = 0; i < design->componentnum; i++) {
         c = &design->components[i];
@@ -116,4 +116,9 @@ Unit_Entity* Unit_getPointer(int uid) {
 
 int Unit_count() {
     return unitnum;
+}
+
+void Unit_storeItem(Unit_Entity* u, int invId) {
+    u->stored[u->storednum] = invId;
+    u->storednum++;
 }

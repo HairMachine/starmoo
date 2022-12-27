@@ -55,11 +55,15 @@ typedef struct {
     int production;
     int storage;
     int mining;
-    Sector_ResourceType resourceMining;
+    Sector_Resource resourceMining;
     int farming;
+    int stored[32];
+    int storednum;
+    int totalStored;
 } Unit_Entity;
 
 Unit_Entity* Unit_create(Unit_Design* design);
 Unit_Entity Unit_getCopy(int uid);
 Unit_Entity* Unit_getPointer(int uid);
 int Unit_count();
+void Unit_storeItem(Unit_Entity*, int invId);

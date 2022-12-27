@@ -11,7 +11,6 @@ typedef struct {
     int units[64];
     int unitmax;
     int warpFactor;
-    int storageMax;
     int food;
     int recreation;
     int luxury;
@@ -41,4 +40,6 @@ int Fleet_newPop(Fleet_Entity* f, float birthChance);
 void Fleet_changePop(Fleet_Entity* f, int excessDeaths);
 void Fleet_simulate(Fleet_Entity* f);
 int Fleet_canMine(Fleet_Entity *f);
+int Fleet_getUsedStorage(Fleet_Entity *f);
+int Fleet_getMaxStorage(Fleet_Entity *f);
 

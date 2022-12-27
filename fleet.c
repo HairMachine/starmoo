@@ -12,7 +12,6 @@ Fleet_Entity* Fleet_create() {
     Fleet_Entity* f = &fleets[fleetnum];
     f->orders = -1;
     f->fuel = 0;
-    f->storageMax = 0;
     fleetnum++;
     return f;
 }
@@ -23,7 +22,6 @@ void Fleet_addUnit(Fleet_Entity* f, int uid) {
     // Recalculate supplies
     Unit_Entity newUnit = Unit_getCopy(uid);
     f->fuelMax += newUnit.fuelMax;
-    f->storageMax += newUnit.storage;
     // Set warp factor
     if (newUnit.warpDriveLevel > 0 && newUnit.warpDriveLevel > f->warpFactor) {
         f->warpFactor = newUnit.warpDriveLevel;
@@ -196,4 +194,22 @@ int Fleet_canMine(Fleet_Entity* f) {
         }
     }
     return 0;
+}
+
+int Fleet_getUsedStorage(Fleet_Entity* f) {
+    int total = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        Unit_Entity* u = Unit_getPointer(f->units[i]);
+        total += u->totalStored;
+    }
+    return total;
+}
+
+int Fleet_getMaxStorage(Fleet_Entity* f) {
+    int total = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        Unit_Entity* u = Unit_getPointer(f->units[i]);
+        total += u->storage;
+    }
+    return total;
 }

@@ -37,8 +37,9 @@ int main()
     // Some crappy base designs for testing
     ud = Unit_createDesign();
     strcpy(ud->name, "Mining Vessel");
-    ud->componentnum = 1;
+    ud->componentnum = 2;
     ud->components[0] = Unit_getComponent(4);
+    ud->components[1] = Unit_getComponent(2);
 
     // Main game loop
     while (!WindowShouldClose()) {

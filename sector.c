@@ -229,6 +229,6 @@ void Sector_deployUnitToPlanet(Sector_Planet* p, int uid) {
  * Less detail than fleet simulation; random events, create resources and goods, etc.
  */
 void Sector_simulate(Sector_Entity* s) {
-
+    
 }
 

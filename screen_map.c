@@ -91,7 +91,18 @@ void _drawMap(UI_Element* el) {
             if (s->fleet > -1) {
                 DrawText("F", el->x + x * UI_tileSize + UI_tileSize - 4, el->y + y * UI_tileSize + 1, 4, BLACK);
                 DrawText("F", el->x + x * UI_tileSize + UI_tileSize - 5, el->y + y * UI_tileSize, 4, WHITE);
+            } else {
+                Sector_Planet* p = 0;
+                for (int i = 0; i < s->planetnum; i++) {
+                    p = &s->planets[i];
+                    if (p->unitnum > 0) {
+                        DrawText("X", el->x + x * UI_tileSize + UI_tileSize - 4, el->y + y * UI_tileSize + 1, 4, BLACK);
+                        DrawText("X", el->x + x * UI_tileSize + UI_tileSize - 5, el->y + y * UI_tileSize, 4, WHITE);
+                        break;
+                    }
+                }
             }
+            
         }
     }
     // Show targeter
@@ -175,7 +186,8 @@ void _drawSectorInfo(UI_Element* el) {
         DrawText(
             TextFormat(
                 "Total ships: %d\nPopulation: %d\nFuel: %d/%d\nFood: %d\nStorage: %d/%d",
-                f->unitmax, FLEET_BASIC_NEEDS, f->fuel, f->fuelMax, f->food, f->food, f->storageMax),
+                f->unitmax, FLEET_BASIC_NEEDS, f->fuel, f->fuelMax, f->food,
+                Fleet_getUsedStorage(f), Fleet_getMaxStorage(f)),
             el->x, el->y + 128, 8, RAYWHITE
         );
     }
