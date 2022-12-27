@@ -21,6 +21,7 @@ struct UI_Element {
     char btnText[32];
     UI_Screen screen;
     int enabled;
+    int visible;
     void (*enableFunc)(UI_Element* el);
     void (*drawFunc)(UI_Element* el);
     void (*clickFunc)(UI_Element* el, Vector2 mpos);

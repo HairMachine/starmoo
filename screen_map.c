@@ -143,9 +143,9 @@ void _clickMap(UI_Element* el, Vector2 mpos) {
 
 void _setDestinationAvailable(UI_Element *el) {
     if (UI_getScreen() == SCREEN_MAP && ScreenManager_currentSector() && ScreenManager_currentSector()->fleet > -1) {
-        el->enabled = 1;
+        el->visible = 1;
     } else {
-        el->enabled = 0;
+        el->visible = 0;
     }
 }
 

@@ -32,9 +32,9 @@ void _clickBuildShips(UI_Element *el, Vector2 mpos) {
 
 void _eventEnable(UI_Element* el) {
     if (Event_count() == 0) {
-        el->enabled = 0;
+        el->visible = 0;
     } else {
-        el->enabled = 1;
+        el->visible = 1;
     }
 }
 

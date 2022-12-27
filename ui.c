@@ -26,13 +26,14 @@ void UI_createElement(int x, int y, int width, int height, char* btnText, UI_Scr
     el->clickFunc = clickFunc;
     el->targeterFunc = targeterFunc;
     el->enabled = 1;
+    el->visible = 1;
     elementEnd++;
 }
 
 UI_Element UI_getElementByPosition(int x, int y) {
     for (int e = 0; e < elementEnd; e++) {
         UI_Element* el = &elements[e];
-        if (!el->enabled) {
+        if (!el->enabled || !el->visible) {
             continue;
         }
         if (x >= el->x && y >= el->y && x <= el->x + el->width && y <= el->y + el->height) {
@@ -46,9 +47,9 @@ UI_Screen currentScreen;
 
 void UI_isCurrentScreenEnable(UI_Element* el) {
     if (currentScreen == el->screen || el->screen == SCREEN_ALL) {
-        el->enabled = 1;
+        el->visible = 1;
     } else {
-        el->enabled = 0;
+        el->visible = 0;
     }
 }
 
@@ -72,7 +73,12 @@ int showEventPanel = 0;
 // Click and draw handler functions
 
 void UI_drawButton(UI_Element* el) {
-    DrawRectangle(el->x, el->y, el->width, el->height, DARKBLUE);
+    if (el->enabled) {
+        DrawRectangle(el->x, el->y, el->width, el->height, DARKBLUE);
+    } else {
+        DrawRectangle(el->x, el->y, el->width, el->height, DARKGRAY);
+    }
+
     DrawRectangleLines(el->x, el->y, el->width, el->height, RAYWHITE);
     DrawText(el->btnText, el->x + 5, el->y + 5, 16, RAYWHITE);
 }
@@ -104,7 +110,7 @@ int UI_handleSelectList(UI_Element* el, Vector2 mpos, int numelements, int lists
 void UI_drawElements() {
     // Draw in reverse priority order
     for (int e = elementEnd - 1; e >= 0; e--) {
-        if (elements[e].enabled) {
+        if (elements[e].visible) {
             elements[e].drawFunc(&elements[e]);
         }
     }

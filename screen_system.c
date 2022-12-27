@@ -9,7 +9,7 @@ int chooseResourcesForMining = 0;
 Sector_Planet* currentPlanetInfo = 0;
 
 void _resourceSelectEnable(UI_Element* el) {
-    el->enabled = chooseResourcesForMining;
+    el->visible = chooseResourcesForMining;
 }
 
 void _clickConfirmResourceSelection(UI_Element* el, Vector2 mpos) {
@@ -48,13 +48,18 @@ void _clickResourceSelect(UI_Element* el, Vector2 mpos) {
 
 void _deployMineEnable(UI_Element *el, Vector2 mpos) {
     if (UI_getScreen() != SCREEN_SYSTEM || !currentPlanetInfo) {
-        el->enabled = 0;
+        el->visible = 0;
         return;
     }
-    if (currentPlanetInfo->resourcenum > 0 && Fleet_canMine(Fleet_getPointer(ScreenManager_currentSector()->fleet))) {
-        el->enabled = 1;
+    if (currentPlanetInfo->resourcenum <= 0) {
+        el->visible = 0;
     } else {
-        el->enabled = 0;
+        el->visible = 1;
+        if (Fleet_canMine(Fleet_getPointer(ScreenManager_currentSector()->fleet))) {
+            el->enabled = 1;
+        } else {
+            el->enabled = 0;
+        }
     }
 }
 
