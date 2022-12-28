@@ -26,8 +26,8 @@ void _clickSystemTab(UI_Element *el, Vector2 mpos) {
     }
 }
 
-void _clickBuildShips(UI_Element *el, Vector2 mpos) {
-    UI_enableScreen(SCREEN_BUILD_MILITARY);
+void _clickFleetTab(UI_Element *el, Vector2 mpos) {
+    UI_enableScreen(SCREEN_FLEET);
 }
 
 void _eventEnable(UI_Element* el) {
@@ -76,7 +76,7 @@ void _clickEndTurn(UI_Element *el, Vector2 mpos) {
 void ScreenManager_init() {
     UI_createElement(0, 0, 100, 32, "Galaxy", SCREEN_ALL, NOFUNC, UI_drawButton, _clickGalaxyTab, NOFUNC);
     UI_createElement(100, 0, 100, 32, "System", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickSystemTab, NOFUNC);
-    UI_createElement(200, 0, 100, 32, "Fleet", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickBuildShips, NOFUNC);
+    UI_createElement(200, 0, 100, 32, "Fleet", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickFleetTab, NOFUNC);
     
     UI_createElement(350, 350, 100, 32, "Next", SCREEN_ALL, _eventEnable, UI_drawButton, _clickNextEvent, NOFUNC);
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, _eventEnable, UI_drawButton, _clickNextEvent, NOFUNC);

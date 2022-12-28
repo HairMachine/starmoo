@@ -1,4 +1,5 @@
 #include <string.h>
+#include "raylib.h"
 
 #include "sector.h"
 #include "unit.h"
@@ -77,6 +78,7 @@ int unitnum = 0;
 
 Unit_Entity* Unit_create(Unit_Design* design) {
     Unit_Entity* u = &units[unitnum];
+    strcpy(u->name, TextFormat("%s %d", design->name, unitnum));
     u->hpMax = 0;
     u->shieldMax = 0;
     u->warpDriveLevel = 0;
@@ -96,6 +98,7 @@ Unit_Entity* Unit_create(Unit_Design* design) {
         u->popMax += c->habitationSpace;
         u->mining += c->miningVolume;
         u->farming += c->foodProduction;
+        u->production += c->unitProductionVolume;
     }
     u->hp = u->hpMax;
     u->shields = u->shieldMax;

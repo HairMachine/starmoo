@@ -24,13 +24,10 @@ void _drawMiningShipSelect(UI_Element *el) {
     UI_drawPanel(el);
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     Unit_Entity* u = 0;
-    Unit_Design* d = 0;
     for (int i = 0; i < f->unitmax; i++) {
-        
         u = Unit_getPointer(f->units[i]);
         if (u->mining > 0) {
-            d = Unit_getDesignPointer(u->design);
-            UI_drawSelectListItem(el, i, 16, d->name, chooseShipForMining - 2 >= 0 && chooseShipForMining - 2 == i);    
+            UI_drawSelectListItem(el, i, 16, u->name, chooseShipForMining - 2 >= 0 && chooseShipForMining - 2 == i);    
         }
     }
 }
@@ -169,8 +166,7 @@ void _drawDeployedShipSelect(UI_Element *el) {
     UI_drawPanel(el);
     for (int i = 0; i < currentPlanetInfo->unitnum; i++) {
         Unit_Entity* u = Unit_getPointer(currentPlanetInfo->units[i]);
-        Unit_Design* d = Unit_getDesignPointer(u->design);
-        UI_drawSelectListItem(el, i, 16, d->name, chooseShipForRetrieval - 2 == i);
+        UI_drawSelectListItem(el, i, 16, u->name, chooseShipForRetrieval - 2 == i);
     }
 }
 

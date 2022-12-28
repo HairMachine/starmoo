@@ -42,6 +42,7 @@ Unit_Design* Unit_getDesignPointer(int id);
 int Unit_designProductionCost(Unit_Design* d);
 
 typedef struct {
+    char name[32];
     int hp;
     int hpMax;
     Unit_Component components[8];
