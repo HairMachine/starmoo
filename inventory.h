@@ -1,4 +1,5 @@
 typedef struct {
+    char name[32];
     int storedGoodId;
     int storedResourceId;
     int storedComponentId;

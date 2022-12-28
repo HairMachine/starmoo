@@ -68,4 +68,4 @@ Unit_Entity Unit_getCopy(int uid);
 Unit_Entity* Unit_getPointer(int uid);
 int Unit_count();
 void Unit_storeItem(Unit_Entity*, int invId);
-void Unit_removeItem(Unit_Entity*, int invId);
+void Unit_removeItemByIndex(Unit_Entity*, int index);

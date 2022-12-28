@@ -3,6 +3,7 @@
 #include "screen_map.h"
 #include "screen_system.h"
 #include "screen_fleet.h"
+#include "screen_cargo.h"
 #include "world.h"
 #include "sector.h"
 
@@ -28,6 +29,18 @@ void _clickSystemTab(UI_Element *el, Vector2 mpos) {
 
 void _clickFleetTab(UI_Element *el, Vector2 mpos) {
     UI_enableScreen(SCREEN_FLEET);
+}
+
+void _cargoSelectedEnable(UI_Element *el) {
+    if (currentSectorInfo && currentSectorInfo->fleet > -1) {
+        el->enabled = 1;
+    } else {
+        el->enabled = 0;
+    }
+}
+
+void _clickCargoTab(UI_Element *el, Vector2 mpos) {
+    UI_enableScreen(SCREEN_CARGO);
 }
 
 void _eventEnable(UI_Element* el) {
@@ -76,7 +89,8 @@ void _clickEndTurn(UI_Element *el, Vector2 mpos) {
 void ScreenManager_init() {
     UI_createElement(0, 0, 100, 32, "Galaxy", SCREEN_ALL, NOFUNC, UI_drawButton, _clickGalaxyTab, NOFUNC);
     UI_createElement(100, 0, 100, 32, "System", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickSystemTab, NOFUNC);
-    UI_createElement(200, 0, 100, 32, "Fleet", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickFleetTab, NOFUNC);
+    UI_createElement(200, 0, 100, 32, "Ships", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickFleetTab, NOFUNC);
+    UI_createElement(300, 0, 100, 32, "Cargo", SCREEN_ALL, _cargoSelectedEnable, UI_drawButton, _clickCargoTab, NOFUNC);
     
     UI_createElement(350, 350, 100, 32, "Next", SCREEN_ALL, _eventEnable, UI_drawButton, _clickNextEvent, NOFUNC);
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, _eventEnable, UI_drawButton, _clickNextEvent, NOFUNC);
@@ -87,6 +101,7 @@ void ScreenManager_init() {
     ScreenMap_init();
     ScreenSystem_init();
     ScreenFleet_init();
+    ScreenCargo_init();
     
     UI_enableScreen(SCREEN_MAP);
     UI_updateEnabled();

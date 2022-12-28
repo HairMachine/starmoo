@@ -126,8 +126,8 @@ void Unit_storeItem(Unit_Entity* u, int invId) {
     u->storednum++;
 }
 
-void Unit_removeItem(Unit_Entity* u, int invId) {
-    for (int i = invId; i < u->storednum; i++) {
+void Unit_removeItemByIndex(Unit_Entity* u, int index) {
+    for (int i = index; i < u->storednum; i++) {
         u->stored[i] = u->stored[i + 1];
     }
     u->storednum--;

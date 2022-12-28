@@ -1,0 +1,1 @@
+void ScreenCargo_init();

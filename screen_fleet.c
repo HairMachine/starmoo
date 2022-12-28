@@ -39,18 +39,25 @@ void _drawFleetScreen(UI_Element *el) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     Unit_Entity* u = 0;
     for (int i = 0; i < f->unitmax; i++) {
+        int storage = 100;
         u = Unit_getPointer(f->units[i]);
-        UI_drawSelectListItem(el, i, 16, u->name, selectedShip == i); 
+        if (u->storage > 0) {
+            storage = (u->totalStored * 100) / u->storage;
+        }
+        UI_drawSelectListItem(el, i, 16, TextFormat("%s %d%%", u->name, storage), selectedShip == i);
     }
 }
 
 void _clickFleetScreen(UI_Element *el, Vector2 mpos) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     selectedShip = UI_handleSelectList(el, mpos, f->unitmax, 16);
+    if (selectedShip >= f->unitmax) {
+        selectedShip = -1;
+    }
 }
 
 void _enableBuildShipButton(UI_Element *el) {
-    if (selectedShip == -1) {
+    if (UI_getScreen() != SCREEN_FLEET || selectedShip == -1) {
         el->visible = 0;
     } else {
         el->visible = 1;

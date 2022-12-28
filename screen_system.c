@@ -126,9 +126,9 @@ void _clickCollectResource(UI_Element* el) {
             for (int k = 0; k < f->unitmax; k++) {
                 ul = Unit_getPointer(f->units[k]);
                 if (ul->storage - ul->totalStored > inv->quantity) {
-                    Unit_removeItem(uc, j);
+                    Unit_removeItemByIndex(uc, j);
                     uc->totalStored -= inv->quantity;
-                    Unit_storeItem(ul, j);
+                    Unit_storeItem(ul, uc->stored[j]);
                     ul->totalStored += inv->quantity;
                     Event_create("Got stuff!", "You have collected resources.");
                     collected = 1;

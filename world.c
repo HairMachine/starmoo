@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "raylib.h"
 
 #include "sector.h"
@@ -177,6 +178,7 @@ void World_update() {
                         }
                         if (!inv) {
                             inv = Inventory_create();
+                            strcpy(inv->name, Sector_resourceStrings[u->resourceMining.type]);
                             inv->quantity = amount;
                             inv->storedResourceId = u->resourceMining.type;
                             Unit_storeItem(u, Inventory_count() - 1);
