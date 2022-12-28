@@ -182,6 +182,7 @@ void World_update() {
                             inv->quantity = amount;
                             inv->storedResourceId = u->resourceMining.type;
                             Unit_storeItem(u, Inventory_count() - 1);
+                            break;
                         }
                     }
                 }
