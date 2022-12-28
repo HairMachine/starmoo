@@ -10,7 +10,7 @@ int buildShip = 0;
 int selectedShip = -1;
 
 void _enableBuildShipMenu(UI_Element *el) {
-    el->visible = UI_getScreen() == SCREEN_FLEET && buildShip;
+    el->visible = buildShip;
 }
 
 void _drawBuildShipMenu(UI_Element* el) {
@@ -57,7 +57,7 @@ void _clickFleetScreen(UI_Element *el, Vector2 mpos) {
 }
 
 void _enableBuildShipButton(UI_Element *el) {
-    if (UI_getScreen() != SCREEN_FLEET || selectedShip == -1) {
+    if (selectedShip == -1) {
         el->visible = 0;
     } else {
         el->visible = 1;

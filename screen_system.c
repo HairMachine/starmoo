@@ -74,7 +74,7 @@ void _clickResourceSelect(UI_Element* el, Vector2 mpos) {
 }
 
 void _deployMineEnable(UI_Element *el, Vector2 mpos) {
-    if (UI_getScreen() != SCREEN_SYSTEM || !currentPlanetInfo) {
+    if (!currentPlanetInfo) {
         el->visible = 0;
         return;
     }
@@ -95,7 +95,7 @@ void _clickMineEnable(UI_Element *el, Vector2 mpos) {
 }
 
 void _collectResourceEnable(UI_Element *el) {
-    if (UI_getScreen() == SCREEN_SYSTEM &&  currentPlanetInfo) {
+    if (currentPlanetInfo) {
         el->visible = 1;
         if (currentPlanetInfo->unitnum > 0) {
             for (int i = 0; i < currentPlanetInfo->unitnum; i++) {
@@ -144,7 +144,7 @@ void _clickCollectResource(UI_Element* el) {
 }
 
 void _retrieveMineEnable(UI_Element *el) {
-    if (UI_getScreen() == SCREEN_SYSTEM && currentPlanetInfo && currentPlanetInfo->unitnum > 0) {
+    if (currentPlanetInfo && currentPlanetInfo->unitnum > 0) {
         el->visible = 1;
     } else {
         el->visible = 0;

@@ -63,7 +63,11 @@ void UI_enableScreen(UI_Screen screen) {
 void UI_updateEnabled() {
     for (int e = 0; e < elementEnd; e++) {
         if (elements[e].enableFunc) {
-            elements[e].enableFunc(&elements[e]);
+            if (elements[e].screen == SCREEN_ALL || elements[e].screen == UI_getScreen()) {
+                elements[e].enableFunc(&elements[e]);
+            } else {
+                elements[e].visible = 0;
+            }
         }
     }
 }
