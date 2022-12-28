@@ -224,6 +224,13 @@ void Sector_deployUnitToPlanet(Sector_Planet* p, int uid) {
     p->unitnum++;
 }
 
+void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index) {
+    for (int i = index; i < p->unitnum; i++) {
+        p->units[i] = p->units[i + 1];
+    }
+    p->unitnum--;
+}
+
 /**
  * Simulates an individual sector of the galaxy.
  * Less detail than fleet simulation; random events, create resources and goods, etc.

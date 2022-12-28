@@ -9,6 +9,7 @@
 
 int chooseResourcesForMining = 0;
 int chooseShipForMining = 0;
+int chooseShipForRetrieval = 0;
 Sector_Planet* currentPlanetInfo = 0;
 
 void _resourceSelectEnable(UI_Element* el) {
@@ -144,6 +145,47 @@ void _clickCollectResource(UI_Element* el) {
     }
 }
 
+void _retrieveMineEnable(UI_Element *el) {
+    if (UI_getScreen() == SCREEN_SYSTEM && currentPlanetInfo && currentPlanetInfo->unitnum > 0) {
+        el->visible = 1;
+    } else {
+        el->visible = 0;
+    }
+}
+
+void _clickRetrieveMine(UI_Element *el, Vector2 mpos) {
+    chooseShipForRetrieval = 1;
+}
+
+void _deployedShipSelectEnable(UI_Element *el) {
+    if (chooseShipForRetrieval) {
+        el->visible = 1;
+    } else {
+        el->visible = 0;
+    }
+}
+
+void _drawDeployedShipSelect(UI_Element *el) {
+    UI_drawPanel(el);
+    for (int i = 0; i < currentPlanetInfo->unitnum; i++) {
+        Unit_Entity* u = Unit_getPointer(currentPlanetInfo->units[i]);
+        Unit_Design* d = Unit_getDesignPointer(u->design);
+        UI_drawSelectListItem(el, i, 16, d->name, chooseShipForRetrieval - 2 == i);
+    }
+}
+
+void _clickDeployedShipSelect(UI_Element *el, Vector2 mpos) {
+    chooseShipForRetrieval = UI_handleSelectList(el, mpos, currentPlanetInfo->unitnum, 16) + 2;
+}
+
+void _clickConfirmDeployedShipSelect(UI_Element *el) {
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    int uid = currentPlanetInfo->units[chooseShipForRetrieval - 2];
+    Fleet_addUnit(f, uid);
+    Sector_removeUnitFromPlanetByIndex(currentPlanetInfo, chooseShipForRetrieval - 2);
+    chooseShipForRetrieval = 0;
+}
+
 int _calcRingChange(Sector_Planet* p) {
     return (p->size / 20 > 15) ? p->size / 20 + 5: 15;
 }
@@ -260,6 +302,12 @@ void ScreenSystem_init() {
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _resourceSelectEnable, UI_drawButton, _clickConfirmResourceSelection, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Resource select", SCREEN_SYSTEM, _resourceSelectEnable, _drawResourceSelect, _clickResourceSelect, NOFUNC);
     UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
+    
     UI_createElement(500, 432, 200, 32, "Collect resources", SCREEN_SYSTEM, _collectResourceEnable, UI_drawButton, _clickCollectResource, NOFUNC);
+    
+    UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _deployedShipSelectEnable, UI_drawButton, _clickConfirmDeployedShipSelect, NOFUNC);
+    UI_createElement(100, 200, 400, 200, "Deployed ship select", SCREEN_SYSTEM, _deployedShipSelectEnable, _drawDeployedShipSelect, _clickDeployedShipSelect, NOFUNC);
+    UI_createElement(500, 464, 200, 32, "Retrieve ship", SCREEN_SYSTEM, _retrieveMineEnable, UI_drawButton, _clickRetrieveMine, NOFUNC);
+    
     UI_createElement(0, 40, SCREENX, SCREENY, "System display", SCREEN_SYSTEM, NOFUNC, _drawSystem, _clickSystem, NOFUNC);
 }

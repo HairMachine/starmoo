@@ -76,5 +76,6 @@ void Sector_simulate(Sector_Entity* s);
 void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abundance);
 Sector_Planet Sector_getPlanet(Sector_Entity* s, int index);
 void Sector_deployUnitToPlanet(Sector_Planet* p, int uid);
+void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index);
 
 #endif
