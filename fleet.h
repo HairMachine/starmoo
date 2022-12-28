@@ -26,7 +26,7 @@ typedef struct {
 
 Fleet_Entity* Fleet_create();
 void Fleet_addUnit(Fleet_Entity* f, int uid);
-void Fleet_removeUnit(Fleet_Entity* f, int uid);
+void Fleet_removeUnitAtIndex(Fleet_Entity* f, int index);
 Fleet_Entity* Fleet_getPointer(int index);
 void Fleet_destroy(int index);
 int Fleet_count();

@@ -122,3 +122,10 @@ void Unit_storeItem(Unit_Entity* u, int invId) {
     u->stored[u->storednum] = invId;
     u->storednum++;
 }
+
+void Unit_removeItem(Unit_Entity* u, int invId) {
+    for (int i = invId; i < u->storednum; i++) {
+        u->stored[i] = u->stored[i + 1];
+    }
+    u->storednum--;
+}

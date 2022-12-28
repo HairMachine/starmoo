@@ -1,8 +1,10 @@
 #include <math.h>
 
+#include "event.h"
 #include "fleet.h"
 #include "unit.h"
 #include "ui.h"
+#include "inventory.h"
 #include "screen_manager.h"
 
 int chooseResourcesForMining = 0;
@@ -48,10 +50,11 @@ void _clickConfirmResourceSelection(UI_Element* el, Vector2 mpos) {
         return;
     }
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
-    Unit_Entity* u = Unit_getPointer(chooseShipForMining - 2);
-    Sector_deployUnitToPlanet(currentPlanetInfo, chooseShipForMining - 2);
+    int chosenShip = f->units[chooseShipForMining - 2];
+    Unit_Entity* u = Unit_getPointer(chosenShip);
+    Sector_deployUnitToPlanet(currentPlanetInfo, chosenShip);
     u->resourceMining = currentPlanetInfo->resources[chooseResourcesForMining - 2];
-    Fleet_removeUnit(f, chooseShipForMining - 2);
+    Fleet_removeUnitAtIndex(f, chooseShipForMining - 2);
     chooseResourcesForMining = 0;
     chooseShipForMining = 0;
 }
@@ -91,6 +94,54 @@ void _deployMineEnable(UI_Element *el, Vector2 mpos) {
 
 void _clickMineEnable(UI_Element *el, Vector2 mpos) {
     chooseShipForMining = 1;
+}
+
+void _collectResourceEnable(UI_Element *el) {
+    if (UI_getScreen() == SCREEN_SYSTEM &&  currentPlanetInfo) {
+        el->visible = 1;
+        if (currentPlanetInfo->unitnum > 0) {
+            for (int i = 0; i < currentPlanetInfo->unitnum; i++) {
+                Unit_Entity* uc = Unit_getPointer(currentPlanetInfo->units[i]);
+                if (uc->storednum > 0) {
+                    el->enabled = 1;
+                    return;
+                }
+            }
+        }
+        el->enabled = 0;
+    } else {
+        el->visible = 0;
+    }
+}
+
+void _clickCollectResource(UI_Element* el) {
+    Unit_Entity* uc = 0;
+    Unit_Entity* ul = 0;
+    Inventory_Entity* inv = 0;
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    int collected = 0;
+    for (int i = 0; i < currentPlanetInfo->unitnum; i++) {
+        uc = Unit_getPointer(currentPlanetInfo->units[i]);
+        for (int j = 0; j < uc->storednum; j++) {
+            inv = Inventory_getPointer(uc->stored[j]);
+            // Find the closes ship in the fleet with space
+            for (int k = 0; k < f->unitmax; k++) {
+                ul = Unit_getPointer(f->units[k]);
+                if (ul->storage - ul->totalStored > inv->quantity) {
+                    Unit_removeItem(uc, j);
+                    uc->totalStored -= inv->quantity;
+                    Unit_storeItem(ul, j);
+                    ul->totalStored += inv->quantity;
+                    Event_create("Got stuff!", "You have collected resources.");
+                    collected = 1;
+                }
+            }
+        }
+        if (!collected) {
+            Event_create("Didn't got stuff!", "No room to collect resources.");
+        }
+        collected = 0;
+    }
 }
 
 int _calcRingChange(Sector_Planet* p) {
@@ -209,5 +260,6 @@ void ScreenSystem_init() {
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _resourceSelectEnable, UI_drawButton, _clickConfirmResourceSelection, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Resource select", SCREEN_SYSTEM, _resourceSelectEnable, _drawResourceSelect, _clickResourceSelect, NOFUNC);
     UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
+    UI_createElement(500, 432, 200, 32, "Collect resources", SCREEN_SYSTEM, _collectResourceEnable, UI_drawButton, _clickCollectResource, NOFUNC);
     UI_createElement(0, 40, SCREENX, SCREENY, "System display", SCREEN_SYSTEM, NOFUNC, _drawSystem, _clickSystem, NOFUNC);
 }

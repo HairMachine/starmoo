@@ -29,8 +29,8 @@ void Fleet_addUnit(Fleet_Entity* f, int uid) {
     f->food += newUnit.farming;
 }
 
-void Fleet_removeUnit(Fleet_Entity* f, int uid) {
-    for (int i = uid; i < f->unitmax; i++) {
+void Fleet_removeUnitAtIndex(Fleet_Entity* f, int index) {
+    for (int i = index; i < f->unitmax; i++) {
         f->units[i] = f->units[i + 1];
     }
     f->unitmax--;

@@ -41,6 +41,12 @@ int main()
     ud->components[0] = Unit_getComponent(4);
     ud->components[1] = Unit_getComponent(2);
 
+    ud = Unit_createDesign();
+    strcpy(ud->name, "Cargo Ship");
+    ud->componentnum = 2;
+    ud->components[0] = Unit_getComponent(2);
+    ud->components[1] = Unit_getComponent(2);
+
     // Main game loop
     while (!WindowShouldClose()) {
         BeginDrawing();
