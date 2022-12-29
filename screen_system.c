@@ -212,7 +212,9 @@ void _drawSellPanel(UI_Element* el) {
         u = Unit_getPointer(f->units[i]);
         for (int j = 0; j < u->storednum; j++) {
             UI_drawSelectListItem(
-                el, sellableItemNo, 16, Sector_resourceStrings[u->stored[j].storedResourceId], sellPanel == i
+                el, sellableItemNo, 16,
+                Sector_resourceStrings[u->stored[j].storedResourceId],
+                sellPanel == sellableItemNo
             );
             sellableItemNo++;
         }
@@ -249,11 +251,55 @@ void _clickBuyPanel(UI_Element* el, Vector2 mpos) {
 }
 
 void _clickBuyButton(UI_Element* el, Vector2 mpos) {
-    //Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    Sector_Resource r = currentPlanetInfo->resources[buyPanel];
+    int price = Sector_resourceBasePrice(currentPlanetInfo, r.type);
+    if (f->credits < price) {
+        Event_create("No cash", "You've run out of credits.");
+        buyPanel = -1;
+        return;
+    }
+    int bought = 0;
+    Unit_Inventory ui = {r.type, 1};
+    for (int k = 0; k < f->unitmax; k++) {
+        Unit_Entity* u = Unit_getPointer(f->units[k]);
+        if (u->totalStored < u->storage) {
+            Unit_storeItem(u, ui);
+            f->credits -= price;
+            bought = 1;
+            break;
+        }
+    }
+    if (!bought) {
+        Event_create("No space", "No space to store bought stuff.");
+        buyPanel = -1;
+    }
 }
 
 void _clickSellButton(UI_Element* el, Vector2 mpos) {
+    // Reveres engineer the given sell number
+    int countup = 0;
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    Unit_Entity* u = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        u = Unit_getPointer(f->units[i]);
+        for (int j = 0; j < u->storednum; j++) {
+            if (countup == sellPanel) {
+                f->credits += Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId);
+                u->stored[j].quantity--;
+                if (u->stored[j].quantity == 0) {
+                    Unit_removeItemByIndex(u, j);
+                }
+                return;
+            }
+            countup++;
+        }
+    }
+}
 
+void _clickDoneBuySell(UI_Element* el, Vector2 mpos) {
+    buyPanel = -1;
+    sellPanel = -1;
 }
 
 int _calcRingChange(Sector_Planet* p) {
@@ -373,8 +419,10 @@ void ScreenSystem_init() {
     UI_createElement(100, 200, 400, 200, "Resource select", SCREEN_SYSTEM, _resourceSelectEnable, _drawResourceSelect, _clickResourceSelect, NOFUNC);
     UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
     
+    UI_createElement(250, 350, 100, 32, "Done", SCREEN_SYSTEM, _enableBuyPanel, UI_drawButton, _clickDoneBuySell, NOFUNC);
     UI_createElement(350, 350, 100, 32, "Buy", SCREEN_SYSTEM, _enableBuyPanel, UI_drawButton, _clickBuyButton, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Buy panel", SCREEN_SYSTEM, _enableBuyPanel, _drawBuyPanel, _clickBuyPanel, NOFUNC);
+    UI_createElement(250, 350, 100, 32, "Done", SCREEN_SYSTEM, _enableSellPanel, UI_drawButton, _clickDoneBuySell, NOFUNC);    
     UI_createElement(350, 350, 100, 32, "Sell", SCREEN_SYSTEM, _enableSellPanel, UI_drawButton, _clickSellButton, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Sell panel", SCREEN_SYSTEM, _enableSellPanel, _drawSellPanel, _clickSellPanel, NOFUNC);
     UI_createElement(500, 400, 200, 32, "Buy", SCREEN_SYSTEM, _enableTrade, UI_drawButton, _clickBuy, NOFUNC);

@@ -27,7 +27,6 @@ extern char Sector_resourceStrings[RES_ALL][16];
 typedef struct {
     Sector_ResourceType type;
     int abundance;
-    int basePrice;
 } Sector_Resource;
 
 #define RESOURCE_MAX 8
@@ -78,5 +77,6 @@ void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abund
 Sector_Planet Sector_getPlanet(Sector_Entity* s, int index);
 void Sector_deployUnitToPlanet(Sector_Planet* p, int uid);
 void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index);
+int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r);
 
 #endif

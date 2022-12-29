@@ -231,6 +231,21 @@ void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index) {
     p->unitnum--;
 }
 
+int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r) {
+    int bp = 0;
+    switch (r) {
+        default:
+            bp = 100;
+            break;
+    }
+    for (int i = 0; i < p->resourcenum; i++) {
+        if (p->resources[i].type == r) {
+            return bp - ((p->resources[i].abundance * 100) / bp);
+        }
+    }
+    return bp;
+}
+
 /**
  * Simulates an individual sector of the galaxy.
  * Less detail than fleet simulation; random events, create resources and goods, etc.

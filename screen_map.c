@@ -185,9 +185,10 @@ void _drawSectorInfo(UI_Element* el) {
         Fleet_Entity* f = Fleet_getPointer(lastFleet);
         DrawText(
             TextFormat(
-                "Total ships: %d\nPopulation: %d\nFuel: %d/%d\nFood: %d\nStorage: %d/%d",
+                "Total ships: %d\nPopulation: %d\nFuel: %d/%d\nFood: %d\nStorage: %d/%d\nCredits: %d",
                 f->unitmax, FLEET_BASIC_NEEDS, f->fuel, f->fuelMax, f->food,
-                Fleet_getUsedStorage(f), Fleet_getMaxStorage(f)),
+                Fleet_getUsedStorage(f), Fleet_getMaxStorage(f), f->credits
+            ),
             el->x, el->y + 128, 8, RAYWHITE
         );
     }
