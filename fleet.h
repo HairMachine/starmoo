@@ -22,6 +22,7 @@ typedef struct {
     int scientists;
     int unrest;
     int development;
+    int credits;
 } Fleet_Entity;
 
 Fleet_Entity* Fleet_create();

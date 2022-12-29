@@ -82,7 +82,6 @@ void UI_drawButton(UI_Element* el) {
     } else {
         DrawRectangle(el->x, el->y, el->width, el->height, DARKGRAY);
     }
-
     DrawRectangleLines(el->x, el->y, el->width, el->height, RAYWHITE);
     DrawText(el->btnText, el->x + 5, el->y + 5, 16, RAYWHITE);
 }

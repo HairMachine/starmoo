@@ -131,12 +131,26 @@ int Unit_count() {
     return unitnum;
 }
 
-void Unit_storeItem(Unit_Entity* u, int invId) {
-    u->stored[u->storednum] = invId;
+void Unit_storeItem(Unit_Entity* u, Unit_Inventory inv) {
+    u->totalStored += inv.quantity;
+    for (int i = 0; i < u->storednum; i++) {
+        Unit_Inventory* existingInv = &u->stored[i];
+        if (existingInv->storedResourceId == inv.storedResourceId) {
+            existingInv->quantity += inv.quantity;
+            return;
+        }
+    }
+    u->stored[u->storednum] = inv;
     u->storednum++;
 }
 
+void Unit_inventoryTransfer(Unit_Entity* from, int invIndex, Unit_Entity* to) {
+    Unit_storeItem(to, from->stored[invIndex]);
+    Unit_removeItemByIndex(from, invIndex);
+}
+
 void Unit_removeItemByIndex(Unit_Entity* u, int index) {
+    u->totalStored -= u->stored[index].quantity;
     for (int i = index; i < u->storednum; i++) {
         u->stored[i] = u->stored[i + 1];
     }

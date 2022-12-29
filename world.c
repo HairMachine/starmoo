@@ -7,7 +7,6 @@
 #include "order.h"
 #include "unit.h"
 #include "fleet.h"
-#include "inventory.h"
 #include "world.h"
 
 Sector_Entity World_sectors[World_sizeY * World_sizeX];
@@ -158,31 +157,16 @@ void World_update() {
                         continue;
                     }
                     if (u->resourceMining.type != RES_NONE) {
-                        Inventory_Entity* inv = 0;
                         amount = (u->mining * u->resourceMining.abundance) / 100;
                         amount = u->totalStored + amount <= u->storage ? amount : u->storage - u->totalStored;
                         if (amount <= 0) {
                             Event_create("Could not mine", TextFormat("Mining ship at %d, %d could not mine", x, y));
                             continue;
                         }
-                        u->totalStored += amount;
+                        Unit_Inventory inv = {u->resourceMining.type, amount};
+                        Unit_storeItem(u, inv);
                         if (u->storage - u->totalStored <= 0) {
                             Event_create("Out of space", TextFormat("Mining ship at %d, %d has run out of storage space.", x, y));
-                        }
-                        for (int si = 0; si < u->storednum; si++) {
-                            inv = Inventory_getPointer(u->stored[si]);
-                            if (inv->storedResourceId == u->resourceMining.type) {
-                                inv->quantity += amount;
-                                break;
-                            }
-                        }
-                        if (!inv) {
-                            inv = Inventory_create();
-                            strcpy(inv->name, Sector_resourceStrings[u->resourceMining.type]);
-                            inv->quantity = amount;
-                            inv->storedResourceId = u->resourceMining.type;
-                            Unit_storeItem(u, Inventory_count() - 1);
-                            break;
                         }
                     }
                 }

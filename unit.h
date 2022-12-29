@@ -44,6 +44,11 @@ Unit_Design* Unit_getDesignPointer(int id);
 int Unit_designProductionCost(Unit_Design* d);
 
 typedef struct {
+    int storedResourceId;
+    int quantity;
+} Unit_Inventory;
+
+typedef struct {
     char name[32];
     int hp;
     int hpMax;
@@ -60,7 +65,7 @@ typedef struct {
     int mining;
     Sector_Resource resourceMining;
     int farming;
-    int stored[32];
+    Unit_Inventory stored[32];
     int storednum;
     int totalStored;
 } Unit_Entity;
@@ -69,5 +74,6 @@ Unit_Entity* Unit_create(Unit_Design* design);
 Unit_Entity Unit_getCopy(int uid);
 Unit_Entity* Unit_getPointer(int uid);
 int Unit_count();
-void Unit_storeItem(Unit_Entity*, int invId);
+void Unit_storeItem(Unit_Entity* u, Unit_Inventory inv);
+void Unit_inventoryTransfer(Unit_Entity* from, int invIndex, Unit_Entity* to);
 void Unit_removeItemByIndex(Unit_Entity*, int index);

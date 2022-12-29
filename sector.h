@@ -27,6 +27,7 @@ extern char Sector_resourceStrings[RES_ALL][16];
 typedef struct {
     Sector_ResourceType type;
     int abundance;
+    int basePrice;
 } Sector_Resource;
 
 #define RESOURCE_MAX 8

@@ -4,12 +4,14 @@
 #include "fleet.h"
 #include "unit.h"
 #include "ui.h"
-#include "inventory.h"
 #include "screen_manager.h"
 
 int chooseResourcesForMining = 0;
 int chooseShipForMining = 0;
 int chooseShipForRetrieval = 0;
+int buyPanel = -1;
+int sellPanel = -1;
+int sellableItemNo = 0;
 Sector_Planet* currentPlanetInfo = 0;
 
 void _resourceSelectEnable(UI_Element* el) {
@@ -68,13 +70,12 @@ void _drawResourceSelect(UI_Element* el) {
     }
 }
 
-
 void _clickResourceSelect(UI_Element* el, Vector2 mpos) {
     chooseResourcesForMining = UI_handleSelectList(el, mpos, currentPlanetInfo->resourcenum, 16) + 2;
 }
 
 void _deployMineEnable(UI_Element *el, Vector2 mpos) {
-    if (!currentPlanetInfo) {
+    if (!currentPlanetInfo || currentPlanetInfo->pop > 0) {
         el->visible = 0;
         return;
     }
@@ -95,7 +96,7 @@ void _clickMineEnable(UI_Element *el, Vector2 mpos) {
 }
 
 void _collectResourceEnable(UI_Element *el) {
-    if (currentPlanetInfo) {
+    if (currentPlanetInfo && !currentPlanetInfo->pop) {
         el->visible = 1;
         if (currentPlanetInfo->unitnum > 0) {
             for (int i = 0; i < currentPlanetInfo->unitnum; i++) {
@@ -115,21 +116,16 @@ void _collectResourceEnable(UI_Element *el) {
 void _clickCollectResource(UI_Element* el) {
     Unit_Entity* uc = 0;
     Unit_Entity* ul = 0;
-    Inventory_Entity* inv = 0;
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     int collected = 0;
     for (int i = 0; i < currentPlanetInfo->unitnum; i++) {
         uc = Unit_getPointer(currentPlanetInfo->units[i]);
         for (int j = 0; j < uc->storednum; j++) {
-            inv = Inventory_getPointer(uc->stored[j]);
             // Find the closes ship in the fleet with space
             for (int k = 0; k < f->unitmax; k++) {
                 ul = Unit_getPointer(f->units[k]);
-                if (ul->storage - ul->totalStored > inv->quantity) {
-                    Unit_storeItem(ul, uc->stored[j]);
-                    ul->totalStored += inv->quantity;
-                    Unit_removeItemByIndex(uc, j);
-                    uc->totalStored -= inv->quantity;
+                if (ul->storage - ul->totalStored > uc->totalStored) {
+                    Unit_inventoryTransfer(uc, i, ul);
                     Event_create("Got stuff!", "You have collected resources.");
                     collected = 1;
                     break;
@@ -181,6 +177,83 @@ void _clickConfirmDeployedShipSelect(UI_Element *el) {
     Fleet_addUnit(f, uid);
     Sector_removeUnitFromPlanetByIndex(currentPlanetInfo, chooseShipForRetrieval - 2);
     chooseShipForRetrieval = 0;
+}
+
+void _enableTrade(UI_Element* el) {
+    if (currentPlanetInfo && currentPlanetInfo->pop > 0) {
+        el->visible = 1;
+    } else {
+        el->visible = 0;
+    }
+}
+
+void _clickBuy(UI_Element *el, Vector2 mpos) {
+    buyPanel = 0;
+}
+
+void _clickSell(UI_Element *el, Vector2 mpos) {
+    sellPanel = 0;
+}
+
+void _enableSellPanel(UI_Element *el) {
+    if (sellPanel > -1) {
+        el->visible = 1;
+    } else {
+        el->visible = 0;
+    }
+}
+
+void _drawSellPanel(UI_Element* el) {
+    UI_drawPanel(el);
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    Unit_Entity* u = 0;
+    sellableItemNo = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        u = Unit_getPointer(f->units[i]);
+        for (int j = 0; j < u->storednum; j++) {
+            UI_drawSelectListItem(
+                el, sellableItemNo, 16, Sector_resourceStrings[u->stored[j].storedResourceId], sellPanel == i
+            );
+            sellableItemNo++;
+        }
+    }
+    if (sellableItemNo == 0) {
+        sellPanel = -1;
+        Event_create("Cannot trade", "You have nothing to trade!");
+        UI_updateEnabled();
+    }
+}
+
+
+void _clickSellPanel(UI_Element* el, Vector2 mpos) {
+    sellPanel = UI_handleSelectList(el, mpos, sellableItemNo, 16);
+}
+
+void _enableBuyPanel(UI_Element *el) {
+    if (buyPanel > -1) {
+        el->visible = 1;
+    } else {
+        el->visible = 0;
+    }
+}
+
+void _drawBuyPanel(UI_Element* el) {
+    UI_drawPanel(el);
+    for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
+        UI_drawSelectListItem(el, i, 16, Sector_resourceStrings[currentPlanetInfo->resources[i].type], buyPanel == i);
+    }
+}
+
+void _clickBuyPanel(UI_Element* el, Vector2 mpos) {
+    buyPanel = UI_handleSelectList(el, mpos, currentPlanetInfo->resourcenum, 16);
+}
+
+void _clickBuyButton(UI_Element* el, Vector2 mpos) {
+    //Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+}
+
+void _clickSellButton(UI_Element* el, Vector2 mpos) {
+
 }
 
 int _calcRingChange(Sector_Planet* p) {
@@ -299,6 +372,13 @@ void ScreenSystem_init() {
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _resourceSelectEnable, UI_drawButton, _clickConfirmResourceSelection, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Resource select", SCREEN_SYSTEM, _resourceSelectEnable, _drawResourceSelect, _clickResourceSelect, NOFUNC);
     UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
+    
+    UI_createElement(350, 350, 100, 32, "Buy", SCREEN_SYSTEM, _enableBuyPanel, UI_drawButton, _clickBuyButton, NOFUNC);
+    UI_createElement(100, 200, 400, 200, "Buy panel", SCREEN_SYSTEM, _enableBuyPanel, _drawBuyPanel, _clickBuyPanel, NOFUNC);
+    UI_createElement(350, 350, 100, 32, "Sell", SCREEN_SYSTEM, _enableSellPanel, UI_drawButton, _clickSellButton, NOFUNC);
+    UI_createElement(100, 200, 400, 200, "Sell panel", SCREEN_SYSTEM, _enableSellPanel, _drawSellPanel, _clickSellPanel, NOFUNC);
+    UI_createElement(500, 400, 200, 32, "Buy", SCREEN_SYSTEM, _enableTrade, UI_drawButton, _clickBuy, NOFUNC);
+    UI_createElement(500, 432, 200, 32, "Sell", SCREEN_SYSTEM, _enableTrade, UI_drawButton, _clickSell, NOFUNC);
     
     UI_createElement(500, 432, 200, 32, "Collect resources", SCREEN_SYSTEM, _collectResourceEnable, UI_drawButton, _clickCollectResource, NOFUNC);
     
