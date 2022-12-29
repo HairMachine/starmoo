@@ -146,7 +146,7 @@ void World_update() {
         for (int y = 0; y < World_sizeY; y++) {
             Sector_Entity* s = &World_sectors[y * World_sizeX + x];
             Sector_simulate(s);
-            // Perform any mining and research tasks
+            // Perform any mining and research tasks on planets
             Sector_Planet* p = 0;
             Unit_Entity* u = 0;
             int amount = 0;

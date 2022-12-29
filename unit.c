@@ -1,13 +1,14 @@
 #include <string.h>
 #include "raylib.h"
 
+#include "research.h"
 #include "sector.h"
 #include "unit.h"
 
 Unit_Design designs[8];
 int designnum = 0;
 
-Unit_Component Unit_allComponents[6] = {};
+Unit_Component Unit_allComponents[7] = {};
 
 void Unit_initComponents() {
     // Warp Device I
@@ -35,6 +36,12 @@ void Unit_initComponents() {
     Unit_allComponents[5].foodProduction = 25;
     Unit_allComponents[5].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 10};
     Unit_allComponents[5].buildCosts[1] = (Sector_Resource) {RES_FERTILE_SOIL, 100};
+    // Research lab
+    strcpy(Unit_allComponents[6].name, "Research Lab");
+    for (int i = 0; i < FIELD_ALL; i++) {
+        Unit_allComponents[6].researchVolume[i] = 25;
+    }
+    Unit_allComponents[6].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 100};
 }
 
 Unit_Component Unit_getComponent(int index) {
@@ -99,6 +106,9 @@ Unit_Entity* Unit_create(Unit_Design* design) {
         u->mining += c->miningVolume;
         u->farming += c->foodProduction;
         u->production += c->unitProductionVolume;
+        for (int j = 0; j < FIELD_ALL; j++) {
+            u->research[j] += c->researchVolume[j];
+        }
     }
     u->hp = u->hpMax;
     u->shields = u->shieldMax;

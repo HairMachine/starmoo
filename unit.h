@@ -1,4 +1,5 @@
 #include "sector.h"
+#include "research.h"
 
 #define UNIT_COMPONENT_MAX 32
 
@@ -23,6 +24,7 @@ typedef struct {
     int size;
     int productionCost;
     Sector_Resource buildCosts[4];
+    int researchVolume[FIELD_ALL];
 } Unit_Component;
 
 typedef struct {
@@ -52,7 +54,7 @@ typedef struct {
     int popMax;
     int warpDriveLevel; // Able to carry other ships in the fleet through a space warp if > 0
     int design;
-    int research;
+    int research[FIELD_ALL];
     int production;
     int storage;
     int mining;

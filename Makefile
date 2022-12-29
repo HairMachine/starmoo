@@ -354,7 +354,7 @@ OBJ_DIR = obj
 # Define all object files from source files
 SRC = $(call rwildcard, *.c, *.h)
 #OBJS = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-OBJS ?= main.c event.c sector.c order.c inventory.c unit.c fleet.c world.c ui.c screen_manager.c screen_map.c screen_system.c screen_fleet.c screen_cargo.c
+OBJS ?= main.c event.c sector.c order.c inventory.c research.c unit.c fleet.c world.c ui.c screen_manager.c screen_map.c screen_system.c screen_fleet.c screen_cargo.c
 
 # For Android platform we call a custom Makefile.Android
 ifeq ($(PLATFORM),PLATFORM_ANDROID)
