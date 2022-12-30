@@ -32,7 +32,7 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     int designToBuild = floor((mpos.y - el->y) / 32);
     Unit_create(Unit_getDesignPointer(designToBuild));
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
-    Fleet_addUnit(f, Unit_count() - 1);
+    Fleet_addUnit(f, Unit_lastAddedIndex());
 }
 
 void _drawFleetScreen(UI_Element *el) {

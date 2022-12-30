@@ -34,7 +34,7 @@ int main()
     // Build one to start them off with
     Unit_create(ud);
     
-    Fleet_addUnit(Fleet_getPointer(0), Unit_count() - 1);
+    Fleet_addUnit(Fleet_getPointer(0), Unit_lastAddedIndex());
     Fleet_getPointer(0)->lowpop = 25;
     Fleet_getPointer(0)->fuel = 100;
     Fleet_getPointer(0)->credits = 1000;

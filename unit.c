@@ -93,10 +93,11 @@ Unit_Design* Unit_getDesignPointer(int id) {
 
 Unit_Entity units[1024];
 int unitnum = 0;
+int addIndex = 0;
 
 Unit_Entity Unit_generate(Unit_Design* design) {
     Unit_Entity u = (Unit_Entity) {};
-    strcpy(u.name, TextFormat("%s %d", design->name, unitnum));
+    strcpy(u.name, TextFormat("%s %d", design->name, addIndex));
     u.hpMax = 100;
     Unit_Component* c = 0;
     int numweapons = 0;
@@ -131,7 +132,7 @@ Unit_Entity Unit_generate(Unit_Design* design) {
 }
 
 Unit_Entity* Unit_create(Unit_Design* design) {
-    int addIndex = unitnum;
+    addIndex = unitnum;
     for (int i = 0; i < unitnum; i++) {
         if (units[i].hp <= 0) {
             addIndex = i;
@@ -155,6 +156,10 @@ Unit_Entity* Unit_getPointer(int uid) {
 
 int Unit_count() {
     return unitnum;
+}
+
+int Unit_lastAddedIndex() {
+    return addIndex;
 }
 
 void Unit_storeItem(Unit_Entity* u, Unit_Inventory inv) {

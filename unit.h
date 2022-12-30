@@ -80,6 +80,7 @@ Unit_Entity* Unit_create(Unit_Design* design);
 Unit_Entity Unit_getCopy(int uid);
 Unit_Entity* Unit_getPointer(int uid);
 int Unit_count();
+int Unit_lastAddedIndex();
 void Unit_storeItem(Unit_Entity* u, Unit_Inventory inv);
 void Unit_inventoryTransfer(Unit_Entity* from, int invIndex, Unit_Entity* to);
 void Unit_removeItemByIndex(Unit_Entity*, int index);
