@@ -1,20 +1,29 @@
+#include <stdlib.h>
+
 #include "event.h"
 #include "ui.h"
 #include "screen_map.h"
 #include "screen_system.h"
 #include "screen_fleet.h"
 #include "screen_cargo.h"
+#include "screen_combat.h"
 #include "world.h"
 #include "sector.h"
+#include "combat.h"
+#include "fleet.h"
 
 Sector_Entity* currentSectorInfo = 0;
+
+void _galaxySelectedEnable(UI_Element* el) {
+    el->enabled = !Combat_active();
+}
 
 void _clickGalaxyTab(UI_Element *el, Vector2 mpos) {
     UI_enableScreen(SCREEN_MAP);
 }
 
 void _fleetSelectedEnable(UI_Element* el) {
-    if (currentSectorInfo && currentSectorInfo->fleet > -1) {
+    if (currentSectorInfo && currentSectorInfo->fleet > -1 && !Combat_active()) {
         el->enabled = 1;
     } else {
         el->enabled = 0;
@@ -22,7 +31,7 @@ void _fleetSelectedEnable(UI_Element* el) {
 }
 
 void _clickSystemTab(UI_Element *el, Vector2 mpos) {
-    if (currentSectorInfo->fleet > -1) {
+    if (currentSectorInfo && currentSectorInfo->fleet > -1) {
         UI_enableScreen(SCREEN_SYSTEM);
     }
 }
@@ -32,7 +41,7 @@ void _clickFleetTab(UI_Element *el, Vector2 mpos) {
 }
 
 void _cargoSelectedEnable(UI_Element *el) {
-    if (currentSectorInfo && currentSectorInfo->fleet > -1) {
+    if (currentSectorInfo && currentSectorInfo->fleet > -1 && !Combat_active()) {
         el->enabled = 1;
     } else {
         el->enabled = 0;
@@ -84,10 +93,24 @@ void _endTurnEnable(UI_Element *el, Vector2 mpos) {
 
 void _clickEndTurn(UI_Element *el, Vector2 mpos) {
     World_update();
+    // TODO: See if combat should be generated here properly, not this shite
+    if (rand() % 100 < 25) {
+        Combat_setupRandomEncounter();
+        // TODO: this is wrong and bad, but what to do?
+        Fleet_Entity* f = Fleet_getPointer(0);
+        for (int i = 0; i < f->unitmax; i++) {
+            Unit_Entity u = Unit_getCopy(f->units[i]);
+            if (u.canFight) {
+                Combat_addShipToCombat(u, PLAYER_SIDE, f->units[i]);
+            }
+        }
+        Combat_run();
+        UI_enableScreen(SCREEN_COMBAT);
+    }
 }
 
 void ScreenManager_init() {
-    UI_createElement(0, 0, 100, 32, "Galaxy", SCREEN_ALL, NOFUNC, UI_drawButton, _clickGalaxyTab, NOFUNC);
+    UI_createElement(0, 0, 100, 32, "Galaxy", SCREEN_ALL, _galaxySelectedEnable, UI_drawButton, _clickGalaxyTab, NOFUNC);
     UI_createElement(100, 0, 100, 32, "System", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickSystemTab, NOFUNC);
     UI_createElement(200, 0, 100, 32, "Ships", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickFleetTab, NOFUNC);
     UI_createElement(300, 0, 100, 32, "Cargo", SCREEN_ALL, _cargoSelectedEnable, UI_drawButton, _clickCargoTab, NOFUNC);
@@ -102,6 +125,7 @@ void ScreenManager_init() {
     ScreenSystem_init();
     ScreenFleet_init();
     ScreenCargo_init();
+    ScreenCombat_init();
     
     UI_enableScreen(SCREEN_MAP);
     UI_updateEnabled();

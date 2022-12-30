@@ -1,14 +1,16 @@
+#ifndef UNIT_H
+#define UNIT_H
+
 #include "sector.h"
 #include "research.h"
 
 #define UNIT_COMPONENT_MAX 32
+#define WEAPON_MAX 8
 
 typedef struct {
     char name[32];
     int shotPower; // Raw damage output
     int shotPenetration; // How much it can bypass energy shields
-    int shotProjectileSpeed; // How quickly the projectile moves; 0 is a direct damage weapon
-    int shotCooldown; // Cooldown between each shot
     int armourStrength;
     int shieldStrength;
     int sheildRechargeRate;
@@ -33,6 +35,7 @@ typedef struct {
     int shipSize;
     Unit_Component components[UNIT_COMPONENT_MAX];
     int componentnum;
+    int playerCanBuild;
 } Unit_Design;
 
 void Unit_initComponents();
@@ -52,9 +55,10 @@ typedef struct {
     char name[32];
     int hp;
     int hpMax;
-    Unit_Component components[8];
+    Unit_Component weapons[WEAPON_MAX];
     int shields;
     int shieldMax;
+    int shieldRechargeRate;
     int fuelMax;
     int popMax;
     int warpDriveLevel; // Able to carry other ships in the fleet through a space warp if > 0
@@ -68,8 +72,10 @@ typedef struct {
     Unit_Inventory stored[32];
     int storednum;
     int totalStored;
+    int canFight;
 } Unit_Entity;
 
+Unit_Entity Unit_generate(Unit_Design* design);
 Unit_Entity* Unit_create(Unit_Design* design);
 Unit_Entity Unit_getCopy(int uid);
 Unit_Entity* Unit_getPointer(int uid);
@@ -77,3 +83,5 @@ int Unit_count();
 void Unit_storeItem(Unit_Entity* u, Unit_Inventory inv);
 void Unit_inventoryTransfer(Unit_Entity* from, int invIndex, Unit_Entity* to);
 void Unit_removeItemByIndex(Unit_Entity*, int index);
+
+#endif

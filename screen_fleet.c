@@ -17,13 +17,13 @@ void _drawBuildShipMenu(UI_Element* el) {
     UI_drawPanel(el);
     for (int i = 0; i < Unit_designCount(); i++) {
         Unit_Design d = Unit_getDesignCopy(i);
-        int num = Fleet_getUnitCountByDesign(Fleet_getPointer(ScreenManager_currentSector()->fleet), i);
-        int cost = Unit_designProductionCost(&d);
-        DrawRectangleLines(el->x, el->y + i * 32, el->width, 32, RAYWHITE);
-        if (strcmp(d.name, "")) {
-            DrawText(TextFormat("Build %s (%d owned) - %d production", d.name, num, cost), el->x, el->y + i * 32, 16, RAYWHITE);
-        } else {
-            DrawText("+ New design", el->x, el->y + i *32, 16, RAYWHITE);
+        if (d.playerCanBuild) {
+            int num = Fleet_getUnitCountByDesign(Fleet_getPointer(ScreenManager_currentSector()->fleet), i);
+            int cost = Unit_designProductionCost(&d);
+            DrawRectangleLines(el->x, el->y + i * 32, el->width, 32, RAYWHITE);
+            if (strcmp(d.name, "")) {
+                DrawText(TextFormat("Build %s (%d owned) - %d production", d.name, num, cost), el->x, el->y + i * 32, 16, RAYWHITE);
+            }
         }
     }
 }

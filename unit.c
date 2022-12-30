@@ -8,7 +8,7 @@
 Unit_Design designs[8];
 int designnum = 0;
 
-Unit_Component Unit_allComponents[7] = {};
+Unit_Component Unit_allComponents[9] = {};
 
 void Unit_initComponents() {
     // Warp Device I
@@ -42,6 +42,17 @@ void Unit_initComponents() {
         Unit_allComponents[6].researchVolume[i] = 25;
     }
     Unit_allComponents[6].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 100};
+    // Laser cannon
+    strcpy(Unit_allComponents[7].name, "Laser Cannon");
+    Unit_allComponents[7].shotPower = 10;
+    Unit_allComponents[7].shotPenetration = 25;
+    Unit_allComponents[7].buildCosts[0] = (Sector_Resource) {RES_BASE_METALS, 25};
+    // Shield I
+    strcpy(Unit_allComponents[8].name, "Sheild I");
+    Unit_allComponents[8].shieldStrength = 10;
+    Unit_allComponents[8].sheildRechargeRate = 1;
+    Unit_allComponents[8].buildCosts[0] = (Sector_Resource) {RES_ANTIMATTER, 50};
+    Unit_allComponents[8].buildCosts[1] = (Sector_Resource) {RES_BASE_METALS, 50};
 }
 
 Unit_Component Unit_getComponent(int index) {
@@ -69,7 +80,7 @@ int Unit_designProductionCost(Unit_Design* d) {
 }
 
 int Unit_designCount() {
-    return 8;
+    return designnum;
 }
 
 Unit_Design Unit_getDesignCopy(int id) {
@@ -83,38 +94,45 @@ Unit_Design* Unit_getDesignPointer(int id) {
 Unit_Entity units[1024];
 int unitnum = 0;
 
-Unit_Entity* Unit_create(Unit_Design* design) {
-    Unit_Entity* u = &units[unitnum];
-    strcpy(u->name, TextFormat("%s %d", design->name, unitnum));
-    u->hpMax = 0;
-    u->shieldMax = 0;
-    u->warpDriveLevel = 0;
-    u->storage = 0;
-    u->popMax = 0;
-    u->mining = 0;
-    u->resourceMining = (Sector_Resource) {RES_NONE, 0};
+Unit_Entity Unit_generate(Unit_Design* design) {
+    Unit_Entity u = (Unit_Entity) {};
+    strcpy(u.name, TextFormat("%s %d", design->name, unitnum));
+    u.hpMax = 100;
     Unit_Component* c = 0;
+    int numweapons = 0;
     for (int i = 0; i < design->componentnum; i++) {
         c = &design->components[i];
-        u->hpMax += c->armourStrength;
-        u->shieldMax += c->shieldStrength;
-        if (c->warpDriveLevel > u->warpDriveLevel) {
-            u->warpDriveLevel = c->warpDriveLevel;
+        u.hpMax += c->armourStrength;
+        u.shieldMax += c->shieldStrength;
+        if (c->warpDriveLevel > u.warpDriveLevel) {
+            u.warpDriveLevel = c->warpDriveLevel;
         }
-        u->storage += c->storageCapacity;
-        u->popMax += c->habitationSpace;
-        u->mining += c->miningVolume;
-        u->farming += c->foodProduction;
-        u->production += c->unitProductionVolume;
+        u.storage += c->storageCapacity;
+        u.popMax += c->habitationSpace;
+        u.mining += c->miningVolume;
+        u.farming += c->foodProduction;
+        u.production += c->unitProductionVolume;
         for (int j = 0; j < FIELD_ALL; j++) {
-            u->research[j] += c->researchVolume[j];
+            u.research[j] += c->researchVolume[j];
+        }
+        // if it's a weapon put the component into the weapons slot
+        if (c->shotPower || c->shotPenetration) {
+            u.weapons[numweapons] = *c;
+            numweapons++;
+            u.canFight = 1;
         }
     }
-    u->hp = u->hpMax;
-    u->shields = u->shieldMax;
+    u.hp = u.hpMax;
+    u.shields = u.shieldMax;
     // Not sure what we're doing about this
-    u->fuelMax = 100;
-    u->design = design->id;
+    u.fuelMax = 100;
+    u.design = design->id;
+    return u;
+}
+
+Unit_Entity* Unit_create(Unit_Design* design) {
+    units[unitnum] = Unit_generate(design);
+    Unit_Entity* u = &units[unitnum];
     unitnum++;
     return u;
 }

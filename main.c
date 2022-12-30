@@ -9,6 +9,10 @@
 #include "ui.h"
 #include "screen_manager.h"
 
+#include "combat.h"
+
+int framecounter = 0;
+
 int main() 
 {
     InitWindow(SCREENX, SCREENY, "4x COOL");
@@ -41,20 +45,36 @@ int main()
     ud->componentnum = 2;
     ud->components[0] = Unit_getComponent(4);
     ud->components[1] = Unit_getComponent(2);
+    ud->playerCanBuild = 1;
 
     ud = Unit_createDesign();
     strcpy(ud->name, "Cargo Ship");
     ud->componentnum = 2;
     ud->components[0] = Unit_getComponent(2);
     ud->components[1] = Unit_getComponent(2);
+    ud->playerCanBuild = 1;
 
     ud = Unit_createDesign();
     strcpy(ud->name, "Science Ship");
     ud->componentnum = 1;
     ud->components[0] = Unit_getComponent(6);
+    ud->playerCanBuild = 1;
+
+    ud = Unit_createDesign();
+    strcpy(ud->name, "Laser Fighter");
+    ud->componentnum = 1;
+    ud->components[0] = Unit_getComponent(7);
+    ud->components[1] = Unit_getComponent(8);
+    ud->playerCanBuild = 1;
+
+    Combat_createEnemyDesigns();
 
     // Main game loop
     while (!WindowShouldClose()) {
+        if (framecounter == 0 && Combat_active()) {
+            Combat_run();
+            UI_updateEnabled();
+        }
         BeginDrawing();
             ClearBackground(BLACK);
             UI_drawElements();
@@ -62,6 +82,10 @@ int main()
                 UI_handleMouse();
             }
         EndDrawing();
+        framecounter++;
+        if (framecounter == 60) {
+            framecounter = 0;
+        }
     }
 
     CloseWindow();                 
