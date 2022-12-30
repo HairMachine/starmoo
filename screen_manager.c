@@ -98,12 +98,7 @@ void _clickEndTurn(UI_Element *el, Vector2 mpos) {
         Combat_setupRandomEncounter();
         // TODO: this is wrong and bad, but what to do?
         Fleet_Entity* f = Fleet_getPointer(0);
-        for (int i = 0; i < f->unitmax; i++) {
-            Unit_Entity u = Unit_getCopy(f->units[i]);
-            if (u.canFight) {
-                Combat_addShipToCombat(u, PLAYER_SIDE, f->units[i]);
-            }
-        }
+        Combat_addFleetShipsToCombat(f);
         Combat_run();
         UI_enableScreen(SCREEN_COMBAT);
     }

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "fleet.h"
 #include "unit.h"
 #include "combat.h"
 
@@ -9,6 +10,7 @@ int c_unitnum = 0;
 int active = 0;
 int startDesign = 0;
 int endDesign = 0;
+Fleet_Entity* playerFleet = 0;
 
 void Combat_createEnemyDesigns() {
     startDesign = Unit_designCount();
@@ -21,9 +23,19 @@ void Combat_createEnemyDesigns() {
     endDesign = Unit_designCount();
 }
 
-void Combat_addShipToCombat(Unit_Entity u, int side, int originalIndex) {
-    c_units[c_unitnum] = (Combat_Unit) {u, side, originalIndex};
+void Combat_addShipToCombat(Unit_Entity u, int side, int originalIndex, int fleetIndex) {
+    c_units[c_unitnum] = (Combat_Unit) {u, side, originalIndex, fleetIndex};
     c_unitnum++;
+}
+
+void Combat_addFleetShipsToCombat(Fleet_Entity* f) {
+    for (int i = 0; i < f->unitmax; i++) {
+        Unit_Entity u = Unit_getCopy(f->units[i]);
+        if (u.canFight) {
+            Combat_addShipToCombat(u, PLAYER_SIDE, f->units[i], i);
+        }
+    }
+    playerFleet = f;
 }
 
 void Combat_setupRandomEncounter() {
@@ -31,7 +43,7 @@ void Combat_setupRandomEncounter() {
     for (int i = 0; i < rand() % 5 + 5; i++) {
         Unit_Design* d = Unit_getDesignPointer(startDesign);
         Unit_Entity u = Unit_generate(d);
-        Combat_addShipToCombat(u, ENEMY_SIDE, -1);
+        Combat_addShipToCombat(u, ENEMY_SIDE, -1, -1);
     }
 }
 
@@ -45,6 +57,12 @@ void _removeUnit(int index) {
 void _destroyc_units() {
     for (int i = c_unitnum - 1; i >= 0; i--) {
         if (c_units[i].entity.hp <= 0) {
+            if (c_units[i].unitIndex > -1) {
+                Unit_getPointer(c_units[i].unitIndex)->hp = c_units[i].entity.hp;
+            }
+            if (c_units[i].fleetIndex > -1) {
+                Fleet_removeUnitAtIndex(playerFleet, c_units[i].fleetIndex);
+            }
             _removeUnit(i);
         }
     }

@@ -131,8 +131,16 @@ Unit_Entity Unit_generate(Unit_Design* design) {
 }
 
 Unit_Entity* Unit_create(Unit_Design* design) {
-    units[unitnum] = Unit_generate(design);
-    Unit_Entity* u = &units[unitnum];
+    int addIndex = unitnum;
+    for (int i = 0; i < unitnum; i++) {
+        if (units[i].hp <= 0) {
+            addIndex = i;
+            unitnum--;
+            break;
+        }
+    }
+    units[addIndex] = Unit_generate(design);
+    Unit_Entity* u = &units[addIndex];
     unitnum++;
     return u;
 }

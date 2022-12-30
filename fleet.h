@@ -1,4 +1,7 @@
 
+#ifndef FLEET_H
+#define FLEET_H
+
 #define FLEET_BASIC_NEEDS f->lowpop + f->medpop + f->highpop + f->ultrapop
 #define FLEET_STANDARD_NEEDS f->medpop + f->highpop + f->ultrapop
 #define FLEET_HIGH_NEEDS f->highpop + f->ultrapop
@@ -36,4 +39,6 @@ void Fleet_simulate(Fleet_Entity* f);
 int Fleet_canMine(Fleet_Entity *f);
 int Fleet_getUsedStorage(Fleet_Entity *f);
 int Fleet_getMaxStorage(Fleet_Entity *f);
+
+#endif
 
