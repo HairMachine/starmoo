@@ -1,6 +1,7 @@
 #include <string.h>
 #include <math.h>
 
+#include "event.h"
 #include "order.h"
 #include "unit.h"
 #include "fleet.h"
@@ -43,6 +44,16 @@ void _drawBuildShipMenu(UI_Element* el) {
 
 void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     int designToBuild = floor((mpos.y - el->y) / 32);
+    Unit_Design* d = Unit_getDesignPointer(designToBuild);
+    // Check resources are available
+    for (int i = 0; i < d->componentnum; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (!Unit_consumeItem(Unit_getPointer(selectedShip), d->components[i].buildCosts[j])) {
+                Event_create("Could not build", "Not enough stuff to build ship.");
+                return;
+            }
+        }
+    }
     Unit_create(Unit_getDesignPointer(designToBuild));
     Order_Entity* o = Order_create();
     o->type = ORDER_BUILD_SHIP;

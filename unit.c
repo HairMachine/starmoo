@@ -179,6 +179,23 @@ void Unit_storeItem(Unit_Entity* u, Unit_Inventory inv) {
     u->storednum++;
 }
 
+int Unit_consumeItem(Unit_Entity* u, Sector_Resource r) {
+    if (u->storednum == 0) {
+        return 0;
+    }
+    for (int i = 0; i < u->storednum; i++) {
+        Unit_Inventory* existingInv = &u->stored[i];
+        if (existingInv->storedResourceId == r.type) {
+            if (existingInv->quantity >= r.abundance) {
+                existingInv->quantity -= r.abundance;
+            } else {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
 void Unit_inventoryTransfer(Unit_Entity* from, int invIndex, Unit_Entity* to) {
     Unit_storeItem(to, from->stored[invIndex]);
     Unit_removeItemByIndex(from, invIndex);
