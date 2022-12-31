@@ -1,6 +1,7 @@
 #include <string.h>
 #include <math.h>
 
+#include "order.h"
 #include "unit.h"
 #include "fleet.h"
 #include "ui.h"
@@ -26,13 +27,28 @@ void _drawBuildShipMenu(UI_Element* el) {
             }
         }
     }
+    // Show orders queue
+    int line = 0;
+    Order_Entity* o = 0;
+    Unit_Entity* u = 0;
+    for (int i = 0; i < Order_count(); i++) {
+        o = Order_getPointer(i);
+        if (o->type == ORDER_BUILD_SHIP && o->param2 == selectedShip) {
+            u = Unit_getPointer(o->param1);
+            DrawText(TextFormat("%s (%d)", u->name, u->costToBuild), el->x + 400, el->y + 32 + 16*line, 16, RAYWHITE);
+            line++;
+        }
+    }
 }
 
 void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     int designToBuild = floor((mpos.y - el->y) / 32);
     Unit_create(Unit_getDesignPointer(designToBuild));
-    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
-    Fleet_addUnit(f, Unit_lastAddedIndex());
+    Order_Entity* o = Order_create();
+    o->type = ORDER_BUILD_SHIP;
+    o->fleet = ScreenManager_currentSector()->fleet;
+    o->param1 = Unit_lastAddedIndex();
+    o->param2 = selectedShip;
 }
 
 void _drawFleetScreen(UI_Element *el) {

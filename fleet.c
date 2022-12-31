@@ -196,6 +196,12 @@ void Fleet_simulate(Fleet_Entity* f) {
     _changePop(f, excessDeaths);
     _generateResources(f);
     _research(f);
+    // Reset all unit turn state
+    Unit_Entity* u = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        u = Unit_getPointer(f->units[i]);
+        u->hasBuiltThisTurn = 0;
+    }
 }
 
 int Fleet_canMine(Fleet_Entity* f) {

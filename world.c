@@ -102,7 +102,7 @@ void World_resupplyFleet(Sector_Entity* s) {
  */
 void World_update() {
     // Process player orders
-    for (int i = Order_count() - 1; i >= 0; i--) {
+    for (int i = 0 ; i < Order_count(); i++) {
         Order_Entity* o = Order_getPointer(i);
         switch (o->type) {
             case ORDER_MOVE_FLEET: {
@@ -131,15 +131,31 @@ void World_update() {
                         }
                         se->explored = 1;
                         f->orders = -1;
-                        Order_complete(i);
+                        o->completed = 1;
                         break;
                     }
                 }
+            } break;
+            case ORDER_BUILD_SHIP: {
+                Unit_Entity* builder = Unit_getPointer(o->param2);
+                if (builder->hasBuiltThisTurn) {
+                    break;
+                }
+                Unit_Entity* building = Unit_getPointer(o->param1);
+                building->costToBuild -= builder->production;
+                if (building->costToBuild <= 0) {
+                    Event_create("Build finished", "Finished building ship");
+                    o->completed = 1;
+                    Fleet_Entity* f = Fleet_getPointer(o->fleet);
+                    Fleet_addUnit(f, o->param1);
+                }
+                builder->hasBuiltThisTurn = 1;
             } break;
             default:
                 break;
         }
     }
+    Order_completeAll();
     // Simulate all sectors
     for (int x = 0; x < World_sizeX; x++) {
         for (int y = 0; y < World_sizeY; y++) {

@@ -24,6 +24,14 @@ void Order_complete(int index) {
     ordernum--;
 }
 
+void Order_completeAll() {
+    for (int i = ordernum - 1; i >= 0; i--) {
+        if (Order_list[i].completed) {
+            Order_complete(i);
+        }
+    }
+}
+
 int Order_count() {
     return ordernum;
 }

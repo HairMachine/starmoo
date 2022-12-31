@@ -122,6 +122,10 @@ Unit_Entity Unit_generate(Unit_Design* design) {
             numweapons++;
             u.canFight = 1;
         }
+        // Calculate production cost
+        for (int j = 0; j < 4; j++) {
+            u.costToBuild += c->buildCosts[j].abundance;
+        }
     }
     u.hp = u.hpMax;
     u.shields = u.shieldMax;
