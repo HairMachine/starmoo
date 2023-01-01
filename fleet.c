@@ -12,7 +12,6 @@ int fleetnum;
 Fleet_Entity* Fleet_create() {
     Fleet_Entity* f = &fleets[fleetnum];
     f->orders = -1;
-    f->fuel = 0;
     fleetnum++;
     return f;
 }
@@ -22,7 +21,6 @@ void Fleet_addUnit(Fleet_Entity* f, int uid) {
     f->unitmax++;
     // Recalculate supplies
     Unit_Entity newUnit = Unit_getCopy(uid);
-    f->fuelMax += newUnit.fuelMax;
     // Set warp factor
     if (newUnit.warpDriveLevel > 0 && newUnit.warpDriveLevel > f->warpFactor) {
         f->warpFactor = newUnit.warpDriveLevel;

@@ -287,6 +287,7 @@ void _clickSellButton(UI_Element* el, Vector2 mpos) {
             if (countup == sellPanel) {
                 f->credits += Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId);
                 u->stored[j].quantity--;
+                u->totalStored--;
                 if (u->stored[j].quantity == 0) {
                     Unit_removeItemByIndex(u, j);
                 }

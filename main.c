@@ -26,17 +26,17 @@ int main()
 
     Unit_Design* ud = Unit_createDesign();
     strcpy(ud->name, "Mothership");
-    ud->componentnum = 4;
+    ud->componentnum = 5;
     ud->components[0] = Unit_getComponent(0);
     ud->components[1] = Unit_getComponent(1);
     ud->components[2] = Unit_getComponent(3);
     ud->components[3] = Unit_getComponent(5);
+    ud->components[4] = Unit_getComponent(2);
     // Build one to start them off with
     Unit_create(ud);
     
     Fleet_addUnit(Fleet_getPointer(0), Unit_lastAddedIndex());
     Fleet_getPointer(0)->lowpop = 25;
-    Fleet_getPointer(0)->fuel = 100;
     Fleet_getPointer(0)->credits = 1000;
 
     // Some crappy base designs for testing

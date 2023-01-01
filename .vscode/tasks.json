@@ -16,7 +16,6 @@
                 "args": [
                     "RAYLIB_PATH=C:/raylib/raylib",
                     "BUILD_MODE=DEBUG",
-                    "PROJECT_NAME=${fileBasenameNoExtension}",
                 ],
             },
             "osx": {

@@ -130,7 +130,6 @@ Unit_Entity Unit_generate(Unit_Design* design) {
     u.hp = u.hpMax;
     u.shields = u.shieldMax;
     // Not sure what we're doing about this
-    u.fuelMax = 100;
     u.design = design->id;
     return u;
 }

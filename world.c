@@ -60,43 +60,6 @@ void World_create() {
     }
 }
 
-void World_resupplyFleet(Sector_Entity* s) {
-    if (s->fleet == -1) {
-        return;
-    }
-    Fleet_Entity* f = Fleet_getPointer(s->fleet);
-    if (f->fuel >= f->fuelMax) {
-        return;
-    }
-    int refuelChance = 0;
-    if (s->pop > 0) {
-        // TODO: More complex resupply logic, consuming resources, taking into account infrastructure etc.
-        refuelChance = 100;
-    } else if (s->star > STAR_NONE) {
-        refuelChance = 10;
-    }
-    if (refuelChance <= 0) {
-        return;
-    }
-    // Supply ships have extra fuel generators on board
-    for (int i = 0; i < f->unitmax; i++) {
-        if (Unit_getCopy(f->units[i]).fuelMax > 0) {
-            refuelChance += 5;
-        }
-    }
-    // % chance of refuelling; values > 100 give extra chances to gain a fuel unit
-    while (refuelChance > 0) {
-        if (rand() % 100 < refuelChance) {
-            f->fuel++;
-        }
-        refuelChance -= 100;
-    }
-    // Send an event if the fleet has been fully refuelled
-    if (f->fuel >= f->fuelMax) {
-        f->fuel = f->fuelMax;
-    }
-}
-
 /**
  * Called each turn; updates the universe. 
  */
@@ -110,11 +73,6 @@ void World_update() {
                 Sector_Entity* se = &World_sectors[o->originY * World_sizeX + o->originX];
                 Fleet_Entity* f = Fleet_getPointer(se->fleet);
                 for (int m = 0; m < f->warpFactor; m++) {
-                    // Consume supplies - if the fleet has no supplies, it can't move until it generates more
-                    if (f->fuel <= 0) {
-                        break;
-                    }
-                    f->fuel--;
                     // Calculate move
                     dirx = o->targetX - o->originX;
                     diry = o->targetY - o->originY;
@@ -187,7 +145,6 @@ void World_update() {
                     }
                 }
             }
-            World_resupplyFleet(s);
             if (s->fleet > -1) {
                 Fleet_simulate(Fleet_getPointer(s->fleet));
             }

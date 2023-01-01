@@ -5,6 +5,7 @@ int ordernum = 0;
 
 Order_Entity* Order_create() {
     Order_Entity* o = &Order_list[ordernum];
+    o->completed = 0;
     ordernum++;
     return o;
 }

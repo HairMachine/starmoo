@@ -162,8 +162,7 @@ void _setDestinationAvailable(UI_Element *el) {
 
 void _clickSetDestination(UI_Element *el, Vector2 mpos) {
     // Get the max range from the fleet's supply
-    int range = Fleet_getPointer(ScreenManager_currentSector()->fleet)->fuel;
-    _createTargeter(el, ScreenManager_currentSector()->x, ScreenManager_currentSector()->y, range);
+    _createTargeter(el, ScreenManager_currentSector()->x, ScreenManager_currentSector()->y, 6);
 }
 
 void _drawSectorInfo(UI_Element* el) {
@@ -185,8 +184,8 @@ void _drawSectorInfo(UI_Element* el) {
         Fleet_Entity* f = Fleet_getPointer(lastFleet);
         DrawText(
             TextFormat(
-                "Total ships: %d\nPopulation: %d\nFuel: %d/%d\nFood: %d\nStorage: %d/%d\nCredits: %d",
-                f->unitmax, FLEET_BASIC_NEEDS, f->fuel, f->fuelMax, f->food,
+                "Total ships: %d\nPopulation: %d\nFood: %d\nStorage: %d/%d\nCredits: %d",
+                f->unitmax, FLEET_BASIC_NEEDS,f->food,
                 Fleet_getUsedStorage(f), Fleet_getMaxStorage(f), f->credits
             ),
             el->x, el->y + 128, 8, RAYWHITE

@@ -8,8 +8,6 @@
 #define FLEET_ULTRAHIGH_NEEDS f->ultrapop
 
 typedef struct {
-    int fuel;
-    int fuelMax;
     int orders;
     int units[64];
     int unitmax;

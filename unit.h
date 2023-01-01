@@ -59,7 +59,6 @@ typedef struct {
     int shields;
     int shieldMax;
     int shieldRechargeRate;
-    int fuelMax;
     int popMax;
     int warpDriveLevel; // Able to carry other ships in the fleet through a space warp if > 0
     int design;
