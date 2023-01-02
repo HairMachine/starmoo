@@ -32,6 +32,7 @@ int main()
     ud->components[2] = Unit_getComponent(3);
     ud->components[3] = Unit_getComponent(5);
     ud->components[4] = Unit_getComponent(2);
+    ud->components[4] = Unit_getComponent(6);
     // Build one to start them off with
     Unit_create(ud);
     
