@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 #include "raylib.h"
 
 #include "research.h"
@@ -157,7 +158,7 @@ void Research_advance(Research_Field field, int amount) {
         }
     }
     // Increase points
-    rt->points += amount;
+    rt->points += amount - ceil(rand() % amount/4) + ceil(rand() % amount/4);
     if (!rt->discovered && rt->points >= rt->pointsRequired/5) {
         rt->discovered = 1;
         Event_create(
