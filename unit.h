@@ -30,6 +30,7 @@ typedef struct {
     int productionCost;
     Sector_Resource buildCosts[4];
     int researchVolume[FIELD_ALL];
+    Research_TechType techRequired;
 } Unit_Component;
 
 typedef struct {

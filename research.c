@@ -12,19 +12,18 @@ Research_Tech* researching[FIELD_ALL] = {0, 0, 0};
 
 int techLevel = 0;
 
-#define NUMTECHS 3
-
-Research_Tech techs[NUMTECHS] = {
+Research_Tech techs[RT_ALL] = {
+    (Research_Tech) {"None", FIELD_ALL, 0, 0, 1, 1},
     (Research_Tech) {"Warp 2", FIELD_PROPULSION, 0, 1000},
     (Research_Tech) {"Construction 2", FIELD_CONSTRUCTION, 0, 750},
     (Research_Tech) {"Laser 2", FIELD_WEAPONS, 0, 500}
 };
 
 Research_Tech* _getRandomTech(Research_Field field) {
-    Research_Tech* availableTechs[NUMTECHS];
+    Research_Tech* availableTechs[RT_ALL];
     int lasttech = 0;
     // Filter out all the techs that don't meet the criteria
-    for (int i = 0; i < NUMTECHS; i++) {
+    for (int i = 0; i < RT_ALL; i++) {
         if (
             techs[i].field == field &&
             techs[i].level <= techLevel &&
@@ -68,7 +67,10 @@ void Research_advance(Research_Field field, int amount) {
             techLevel++;
         }
         researching[field] = 0;
-        // TODO: Unlock components somehow
     }
+}
+
+int Research_techIsDeveloped(Research_TechType rt) {
+    return techs[rt].developed;
 }
 
