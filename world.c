@@ -5,6 +5,7 @@
 #include "sector.h"
 #include "event.h"
 #include "order.h"
+#include "combat.h"
 #include "unit.h"
 #include "fleet.h"
 #include "world.h"
@@ -53,6 +54,9 @@ void World_create() {
                 Sector_Entity newSector = Sector_create(st);
                 newSector.x = x + xoffs;
                 newSector.y = y + yoffs;
+                if (rand() % 100 < 20) {
+                    newSector.hostile = 1;
+                }
                 World_sectors[newSector.y * World_sizeX + newSector.x] = newSector;
                 ok = 1;
             }
@@ -90,6 +94,15 @@ void World_update() {
                         se->explored = 1;
                         f->orders = -1;
                         o->completed = 1;
+                        // Check if this system is hostile and generate combat if it is
+                        if (se->hostile) {
+                            Combat_setupRandomEncounter();
+                            // TODO: Do not tie this to only having a single fleet!
+                            Fleet_Entity* f = Fleet_getPointer(0);
+                            Combat_addFleetShipsToCombat(f);
+                            Combat_run();
+                            Event_create("Attack!", "Captain, an enemy force is approaching...");
+                        }
                         break;
                     }
                 }

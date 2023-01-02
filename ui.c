@@ -128,6 +128,10 @@ void UI_checkSpecialEvents() {
         UI_enableScreen(SCREEN_SYSTEM);
         return;
     }
+    if (strcmp(e->title, "Attack!") == 0) {
+        UI_enableScreen(SCREEN_COMBAT);
+        return;
+    }
 }
 
 void UI_handleMouse() {

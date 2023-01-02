@@ -93,15 +93,6 @@ void _endTurnEnable(UI_Element *el, Vector2 mpos) {
 
 void _clickEndTurn(UI_Element *el, Vector2 mpos) {
     World_update();
-    // TODO: See if combat should be generated here properly, not this shite
-    if (rand() % 100 < 5) {
-        Combat_setupRandomEncounter();
-        // TODO: this is wrong and bad, but what to do?
-        Fleet_Entity* f = Fleet_getPointer(0);
-        Combat_addFleetShipsToCombat(f);
-        Combat_run();
-        UI_enableScreen(SCREEN_COMBAT);
-    }
 }
 
 void ScreenManager_init() {

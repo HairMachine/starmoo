@@ -70,8 +70,7 @@ void _getPossibleResourcesByPlanet(Sector_Planet p, Sector_Resource rt[]) {
 }
 
 Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
-    Sector_Planet p;
-    p.unitnum = 0;
+    Sector_Planet p = (Sector_Planet) {};
     p.temperature = distFromStar <= TEMP_X_COLD ? distFromStar : TEMP_X_COLD;
     // Generate appropriate type, some types don't work with particular temperatures
     int typeOk = 0;
@@ -93,12 +92,6 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
                 typeOk = p.temperature <= TEMP_HOT;
                 break;
             case PLANET_NONE:
-                p.size = 0;
-                p.pop = 0;
-                p.popMax = 0;
-                p.artefacts = 0;
-                p.abandoned = 0;
-                p.resourcenum = 0;
                 return p;
             default:
                 typeOk = 1;
@@ -153,22 +146,17 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
         p.pop = round(p.popMax * (rand() % 25 + 50) / 100);
     } else {
         p.pop = 0;
-    }
-    p.artefacts = 0;
-    p.abandoned = 0;
-    
+    }    
     // TODO: Phenomena
     // TODO: Make adjustments up / down by star type
     return p;
 }
 
 Sector_Entity Sector_create(Sector_Template st) {
-    Sector_Entity s;
+    Sector_Entity s = (Sector_Entity) {};
     s.star = st.star;
-    s.pop = 0;
-    s.popMax = 0;
     for (int i = 0; i < PLANET_MAX; i++) {
-        Sector_Planet p = {PLANET_NONE, 0, TEMP_X_COLD, 0, 0, 0, 0, {}, 0, {}, 0};
+        Sector_Planet p = (Sector_Planet) {};
         s.planets[i] = p;
     }
     if (st.startingLocation) {
@@ -182,9 +170,7 @@ Sector_Entity Sector_create(Sector_Template st) {
         s.planets[3] = homeworld;
         s.planetnum = 6;
     } else {
-        s.explored = 0;
         s.fleet = -1;
-        s.planetnum = 0;
     }
     if (s.star == STAR_NONE) {
         return s;

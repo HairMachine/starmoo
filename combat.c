@@ -104,10 +104,13 @@ int _shipsAlive(int side) {
     return 0;
 }
 
+void Combat_start() {
+    active = 1;
+}
+
 void Combat_run() {
     if (_shipsAlive(PLAYER_SIDE) && _shipsAlive(ENEMY_SIDE)) {
         _processRound();
-        active = 1;
     } else {
         active = 0;
     }

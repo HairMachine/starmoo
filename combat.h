@@ -15,6 +15,7 @@ void Combat_createEnemyDesigns();
 void Combat_addShipToCombat(Unit_Entity u, int side, int originalIndex, int fleetIndex);
 void Combat_addFleetShipsToCombat(Fleet_Entity* f);
 void Combat_setupRandomEncounter();
+void Combat_start();
 void Combat_run();
 int Combat_unitCount();
 Combat_Unit Combat_getUnitCopy(int index);

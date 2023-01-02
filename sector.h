@@ -34,15 +34,14 @@ typedef struct {
 typedef struct {
     Sector_PlanetType type;
     int size;
-    Sector_PlanetTemperature temperature;
-    int artefacts;
-    int abandoned;
+    Sector_PlanetTemperature temperature;    
     int pop;
     int popMax;
     Sector_Resource resources[RESOURCE_MAX];
     int resourcenum;
     int units[8]; // Units deployed at this planet for mining, research etc.
     int unitnum;
+    int hostile;
 } Sector_Planet;
 
 typedef enum {
@@ -64,6 +63,7 @@ typedef struct {
     int planetnum;
     Sector_Phenomena phenomena[PHENOMENA_MAX];
     int phenomenanum;
+    int hostile;
 } Sector_Entity;
 
 typedef struct {
