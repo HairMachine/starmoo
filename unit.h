@@ -4,8 +4,11 @@
 #include "sector.h"
 #include "research.h"
 
-#define UNIT_COMPONENT_MAX 32
+#define UNIT_COMPONENT_MAX 16
+#define COMPONENTS_ALL 9
 #define WEAPON_MAX 8
+#define DESIGN_MAX 64
+#define DESIGN_USER 8
 
 typedef struct {
     char name[32];

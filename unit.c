@@ -5,10 +5,10 @@
 #include "sector.h"
 #include "unit.h"
 
-Unit_Design designs[8];
+Unit_Design designs[DESIGN_MAX];
 int designnum = 0;
 
-Unit_Component Unit_allComponents[9] = {};
+Unit_Component Unit_allComponents[COMPONENTS_ALL] = {};
 
 void Unit_initComponents() {
     // Warp Device I

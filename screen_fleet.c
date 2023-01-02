@@ -10,6 +10,10 @@
 
 int buildShip = 0;
 int selectedShip = -1;
+int newDesign = 0;
+Unit_Component newDesignComponents[UNIT_COMPONENT_MAX] = {};
+int newDesignComponentNum = 0;
+int newDesignBuildCosts[RES_ALL];
 
 void _enableBuildShipMenu(UI_Element *el) {
     el->visible = buildShip;
@@ -17,19 +21,25 @@ void _enableBuildShipMenu(UI_Element *el) {
 
 void _drawBuildShipMenu(UI_Element* el) {
     UI_drawPanel(el);
-    for (int i = 0; i < Unit_designCount(); i++) {
-        Unit_Design d = Unit_getDesignCopy(i);
-        if (d.playerCanBuild) {
-            int num = Fleet_getUnitCountByDesign(Fleet_getPointer(ScreenManager_currentSector()->fleet), i);
-            int cost = Unit_designProductionCost(&d);
-            DrawRectangleLines(el->x, el->y + i * 32, el->width, 32, RAYWHITE);
-            if (strcmp(d.name, "")) {
-                DrawText(TextFormat("Build %s (%d owned) - %d production", d.name, num, cost), el->x, el->y + i * 32, 16, RAYWHITE);
+    int line = 0;
+    for (int i = 0; i < DESIGN_MAX; i++) {
+        if (i < Unit_designCount()) {
+            Unit_Design d = Unit_getDesignCopy(i);
+            if (d.playerCanBuild) {
+                int num = Fleet_getUnitCountByDesign(Fleet_getPointer(ScreenManager_currentSector()->fleet), i);
+                int cost = Unit_designProductionCost(&d);
+                if (strcmp(d.name, "")) {
+                    DrawText(TextFormat("Build %s (%d owned) - %d production", d.name, num, cost), el->x, el->y + line*32, 16, RAYWHITE);
+                }
+                line++;
             }
+        } else {
+            DrawText("+ New design", el->x, el->y + line*32, 16, RAYWHITE);
+            break;
         }
     }
     // Show orders queue
-    int line = 0;
+    line = 0;
     Order_Entity* o = 0;
     Unit_Entity* u = 0;
     for (int i = 0; i < Order_count(); i++) {
@@ -43,7 +53,22 @@ void _drawBuildShipMenu(UI_Element* el) {
 }
 
 void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
-    int designToBuild = floor((mpos.y - el->y) / 32);
+    int designToBuild = 0;
+    int clicked = floor((mpos.y - el->y) / 32);
+    for (int i = 0; i < DESIGN_MAX; i++) {
+        Unit_Design* d = Unit_getDesignPointer(i);
+        if (d->playerCanBuild) {
+            clicked--;
+        }
+        if (clicked == -1) {
+            designToBuild = i;
+            break;
+        }
+        if (i >= Unit_designCount()) {
+            newDesign = 1;
+            return;
+        }
+    }
     Unit_Design* d = Unit_getDesignPointer(designToBuild);
     // Check resources are available
     for (int i = 0; i < d->componentnum; i++) {
@@ -60,27 +85,6 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     o->fleet = ScreenManager_currentSector()->fleet;
     o->param1 = Unit_lastAddedIndex();
     o->param2 = selectedShip;
-}
-
-void _drawFleetScreen(UI_Element *el) {
-    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
-    Unit_Entity* u = 0;
-    for (int i = 0; i < f->unitmax; i++) {
-        int storage = 100;
-        u = Unit_getPointer(f->units[i]);
-        if (u->storage > 0) {
-            storage = (u->totalStored * 100) / u->storage;
-        }
-        UI_drawSelectListItem(el, i, 16, TextFormat("%s %d%%", u->name, storage), selectedShip == i);
-    }
-}
-
-void _clickFleetScreen(UI_Element *el, Vector2 mpos) {
-    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
-    selectedShip = UI_handleSelectList(el, mpos, f->unitmax, 16);
-    if (selectedShip >= f->unitmax) {
-        selectedShip = -1;
-    }
 }
 
 void _enableBuildShipButton(UI_Element *el) {
@@ -106,9 +110,105 @@ void _clickBuildShipDoneButton(UI_Element *el, Vector2 mpos) {
     buildShip = 0;
 }
 
+void _enableDesignShip(UI_Element* el) {
+    el->visible = newDesign;
+}
+
+void _drawDesignShip(UI_Element* el) {
+    UI_drawPanel(el);
+    DrawText("Add components", el->x, el->y, 32, RAYWHITE);
+    for (int i = 0; i < COMPONENTS_ALL; i++) {
+        DrawText(Unit_getComponent(i).name, el->x, 32 + el->y + i*16, 16, RAYWHITE);
+    }
+    int secondWindow = el->x + el->width / 2;
+    DrawText("New Ship", secondWindow, el->y, 32, RAYWHITE);
+    for (int i = 0; i < newDesignComponentNum; i++) {
+        DrawText(newDesignComponents[i].name, secondWindow, 32 + el->y + i*16, 16, RAYWHITE);
+    }
+    // Show cost of ship
+    int line = 0;
+    for (int i = 0; i < RES_ALL; i++) {
+        if (newDesignBuildCosts[i]) {
+            DrawText(
+                TextFormat("%s: %d", Sector_resourceStrings[i], newDesignBuildCosts[i]),
+                el->x + line, el->y + el->height, 16, RAYWHITE 
+            );
+            int slen = strlen(Sector_resourceStrings[i]);
+            int log = (int) log10(newDesignBuildCosts[i]);
+            line += (slen + log + 4) * 8;
+        }
+    }
+}
+
+void _clickDesignShip(UI_Element* el, Vector2 mpos) {
+    if (mpos.x - el->x > el->width / 2) {
+        return;
+    }
+    int clicked = floor((mpos.y - (el->y + 32)) / 16);
+    newDesignComponents[newDesignComponentNum] = Unit_getComponent(clicked);
+    newDesignComponentNum++;
+    // Calculate ship costs
+    for (int i = 0; i < newDesignComponentNum; i++) {
+        for (int j = 0; j < 4; j++) {
+            Sector_Resource r = newDesignComponents[i].buildCosts[j];
+            if (r.abundance) {
+                newDesignBuildCosts[r.type] += r.abundance;
+            }
+        }
+    }
+}
+
+void _clickDesignShipBuildButton(UI_Element* el, Vector2 mpos) {
+    Unit_Design* ud = Unit_createDesign();
+    strcpy(ud->name, TextFormat("User Ship %d", Unit_designCount()));
+    ud->componentnum = newDesignComponentNum;
+    ud->playerCanBuild = 1;
+    for (int i = 0; i < newDesignComponentNum; i++) {
+        ud->components[i] = newDesignComponents[i];
+    }
+    newDesign = 0;
+}
+
+void _clickDesignShipClearButton(UI_Element* el, Vector2 mpos) {
+    newDesignComponentNum = 0;
+    for (int i = 0; i < RES_ALL; i++) {
+        newDesignBuildCosts[i] = 0;
+    }
+}
+
+void _clickDesignShipCancelButton(UI_Element* el, Vector2 mpos) {
+    newDesign = 0;
+}
+
+void _drawFleetScreen(UI_Element *el) {
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    Unit_Entity* u = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        int storage = 100;
+        u = Unit_getPointer(f->units[i]);
+        if (u->storage > 0) {
+            storage = (u->totalStored * 100) / u->storage;
+        }
+        UI_drawSelectListItem(el, i, 16, TextFormat("%s %d%%", u->name, storage), selectedShip == i);
+    }
+}
+
+void _clickFleetScreen(UI_Element *el, Vector2 mpos) {
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    selectedShip = UI_handleSelectList(el, mpos, f->unitmax, 16);
+    if (selectedShip >= f->unitmax) {
+        selectedShip = -1;
+    }
+}
+
 void ScreenFleet_init() {
+    UI_createElement(364, 464, 100, 32, "Build", SCREEN_FLEET, _enableDesignShip, UI_drawButton, _clickDesignShipBuildButton, NOFUNC);
+    UI_createElement(464, 464, 100, 32, "Clear", SCREEN_FLEET, _enableDesignShip, UI_drawButton, _clickDesignShipClearButton, NOFUNC);
+    UI_createElement(564, 464, 100, 32, "Cancel", SCREEN_FLEET, _enableDesignShip, UI_drawButton, _clickDesignShipCancelButton, NOFUNC);
+    UI_createElement(100, 100, 600, 400, "Design ship display", SCREEN_FLEET, _enableDesignShip, _drawDesignShip, _clickDesignShip, NOFUNC);
+
     UI_createElement(364, 464, 100, 32, "Done", SCREEN_FLEET, _enableBuildShipMenu, UI_drawButton, _clickBuildShipDoneButton, NOFUNC);
-    UI_createElement(100, 100, 400, 400, "Build ship display", SCREEN_FLEET, _enableBuildShipMenu, _drawBuildShipMenu, _clickBuildShipMenu, NOFUNC);
+    UI_createElement(100, 100, 600, 400, "Build ship display", SCREEN_FLEET, _enableBuildShipMenu, _drawBuildShipMenu, _clickBuildShipMenu, NOFUNC);
 
     UI_createElement(500, 100, 132, 32, "Build ship", SCREEN_FLEET, _enableBuildShipButton, UI_drawButton, _clickBuildShipButton, NOFUNC);
     UI_createElement(0, 64, 400, SCREENY, "Fleet screen", SCREEN_FLEET, NOFUNC, _drawFleetScreen, _clickFleetScreen, NOFUNC);
