@@ -37,7 +37,7 @@ int main()
     
     Fleet_addUnit(Fleet_getPointer(0), Unit_lastAddedIndex());
     Fleet_getPointer(0)->lowpop = 25;
-    Fleet_getPointer(0)->credits = 1000;
+    Fleet_getPointer(0)->credits = 10000;
 
     // Some crappy base designs for testing
     ud = Unit_createDesign();

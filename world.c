@@ -54,9 +54,6 @@ void World_create() {
                 Sector_Entity newSector = Sector_create(st);
                 newSector.x = x + xoffs;
                 newSector.y = y + yoffs;
-                if (rand() % 100 < 20) {
-                    newSector.hostile = 1;
-                }
                 World_sectors[newSector.y * World_sizeX + newSector.x] = newSector;
                 ok = 1;
             }

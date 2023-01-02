@@ -59,7 +59,7 @@ void Unit_initComponents() {
     strcpy(Unit_allComponents[8].name, "Sheild I");
     Unit_allComponents[8].shieldStrength = 10;
     Unit_allComponents[8].sheildRechargeRate = 1;
-    Unit_allComponents[8].buildCosts[0] = (Sector_Resource) {RES_ANTIMATTER, 50};
+    Unit_allComponents[8].buildCosts[0] = (Sector_Resource) {RES_MAGNETRIUM, 50};
     Unit_allComponents[8].buildCosts[1] = (Sector_Resource) {RES_BASE_METALS, 50};
     Unit_allComponents[8].techRequired = RT_NONE;
 }

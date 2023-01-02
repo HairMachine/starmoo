@@ -253,14 +253,14 @@ void _clickBuyPanel(UI_Element* el, Vector2 mpos) {
 void _clickBuyButton(UI_Element* el, Vector2 mpos) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     Sector_Resource r = currentPlanetInfo->resources[buyPanel];
-    int price = Sector_resourceBasePrice(currentPlanetInfo, r.type);
+    int price = Sector_resourceBasePrice(currentPlanetInfo, r.type) * 100;
     if (f->credits < price) {
-        Event_create("No cash", "You've run out of credits.");
+        Event_create("No cash", "Not enough credits to buy this.");
         buyPanel = -1;
         return;
     }
     int bought = 0;
-    Unit_Inventory ui = {r.type, 1};
+    Unit_Inventory ui = {r.type, 100};
     for (int k = 0; k < f->unitmax; k++) {
         Unit_Entity* u = Unit_getPointer(f->units[k]);
         if (u->totalStored < u->storage) {
@@ -285,12 +285,17 @@ void _clickSellButton(UI_Element* el, Vector2 mpos) {
         u = Unit_getPointer(f->units[i]);
         for (int j = 0; j < u->storednum; j++) {
             if (countup == sellPanel) {
-                f->credits += Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId);
-                u->stored[j].quantity--;
-                u->totalStored--;
+                int amount = 100;
+                u->stored[j].quantity -= 100;
+                if (u->stored[j].quantity < 0) {
+                    amount += u->stored[j].quantity;
+                    u->stored[j].quantity = 0;
+                }
+                u->totalStored -= amount;
                 if (u->stored[j].quantity == 0) {
                     Unit_removeItemByIndex(u, j);
                 }
+                f->credits += Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId) * amount;
                 return;
             }
             countup++;
