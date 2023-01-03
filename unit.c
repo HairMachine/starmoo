@@ -280,6 +280,61 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .techRequired = RT_ARMOUR_6
     },
+    (Unit_Component) {
+        .name="Miner 2",
+        .miningVolume = 50,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_MINING_2
+    },
+    (Unit_Component) {
+        .name="Miner 3",
+        .miningVolume = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_MINING_3
+    },
+    (Unit_Component) {
+        .name="Miner 4",
+        .miningVolume = 200,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_MINING_4
+    },
+    (Unit_Component) {
+        .name="Miner 5",
+        .miningVolume = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_MINING_5
+    },
+    (Unit_Component) {
+        .name="Miner 6",
+        .miningVolume = 800,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_MINING_6
+    },
 };
 
 Unit_Component Unit_getComponent(int index) {
