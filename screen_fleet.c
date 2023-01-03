@@ -117,10 +117,12 @@ void _enableDesignShip(UI_Element* el) {
 void _drawDesignShip(UI_Element* el) {
     UI_drawPanel(el);
     DrawText("Add components", el->x, el->y, 32, RAYWHITE);
+    int line = 0;
     for (int i = 0; i < COMPONENTS_ALL; i++) {
         Unit_Component uc = Unit_getComponent(i);
         if (Research_techIsDeveloped(uc.techRequired)) {
-            DrawText(uc.name, el->x, 32 + el->y + i*16, 16, RAYWHITE);
+            DrawText(uc.name, el->x, 32 + el->y + line*16, 16, RAYWHITE);
+            line++;
         }
     }
     int secondWindow = el->x + el->width / 2;
@@ -129,7 +131,7 @@ void _drawDesignShip(UI_Element* el) {
         DrawText(newDesignComponents[i].name, secondWindow, 32 + el->y + i*16, 16, RAYWHITE);
     }
     // Show cost of ship
-    int line = 0;
+    line = 0;
     for (int i = 0; i < RES_ALL; i++) {
         if (newDesignBuildCosts[i]) {
             DrawText(
@@ -148,10 +150,17 @@ void _clickDesignShip(UI_Element* el, Vector2 mpos) {
         return;
     }
     int clicked = floor((mpos.y - (el->y + 32)) / 16);
-    Unit_Component c = Unit_getComponent(clicked);
-    if (!Research_techIsDeveloped(c.techRequired)) {
-        return;
+    int build = 0;
+    for (int i = 0; i < COMPONENTS_ALL; i++) {
+        Unit_Component uc = Unit_getComponent(i);
+        if (Research_techIsDeveloped(uc.techRequired)) {
+            clicked--;
+            if (clicked == -1) {
+                build = i;
+            }
+        }
     }
+    Unit_Component c = Unit_getComponent(build);
     newDesignComponents[newDesignComponentNum] = c;
     newDesignComponentNum++;
     // Calculate ship costs
