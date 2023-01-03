@@ -114,7 +114,17 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    // Warp techs
+    (Unit_Component) {
+        .name="Titanium Armour",
+        .armourStrength = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        }
+    },
+    // Warp components
     (Unit_Component) {
         .name = "Warp Device II",
         .warpDriveLevel = 2,
@@ -214,7 +224,62 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .techRequired = RT_WARP_10
     },
-
+    // Construction components
+    (Unit_Component) {
+        .name="Armour 2",
+        .armourStrength = 200,
+        .buildCosts = {
+            {RES_BASE_METALS, 75},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_ARMOUR_2
+    },
+    (Unit_Component) {
+        .name="Armour 3",
+        .armourStrength = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 120},
+            {RES_HYPERALLOYS, 10},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_ARMOUR_3
+    },
+    (Unit_Component) {
+        .name="Armour 4",
+        .armourStrength = 800,
+        .buildCosts = {
+            {RES_BASE_METALS, 120},
+            {RES_HYPERALLOYS, 10},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_ARMOUR_4
+    },
+    (Unit_Component) {
+        .name="Armour 5",
+        .armourStrength = 1600,
+        .buildCosts = {
+            {RES_BASE_METALS, 120},
+            {RES_HYPERALLOYS, 10},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_ARMOUR_5
+    },
+    (Unit_Component) {
+        .name="Armour 6",
+        .armourStrength = 3200,
+        .buildCosts = {
+            {RES_BASE_METALS, 120},
+            {RES_HYPERALLOYS, 10},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_ARMOUR_6
+    },
 };
 
 Unit_Component Unit_getComponent(int index) {
