@@ -375,6 +375,66 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .techRequired = RT_MINING_6
     },
+    (Unit_Component) {
+        .name="Moderate Ship Bay",
+        .maxAllowedShipSize = 1000,
+        .totalShipSize = 6000,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CARRIER_1
+    },
+    (Unit_Component) {
+        .name="Medium Ship Bay",
+        .maxAllowedShipSize = 1000,
+        .totalShipSize = 6000,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CARRIER_2
+    },
+    (Unit_Component) {
+        .name="Large Ship Bay",
+        .maxAllowedShipSize = 2000,
+        .totalShipSize = 12000,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CARRIER_3
+    },
+    (Unit_Component) {
+        .name="Huge Ship Bay",
+        .maxAllowedShipSize = 4000,
+        .totalShipSize = 24000,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CARRIER_4
+    },
+    (Unit_Component) {
+        .name="Massive Ship Bay",
+        .maxAllowedShipSize = 8000,
+        .totalShipSize = 48000,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CARRIER_5
+    },
 };
 
 Unit_Component Unit_getComponent(int index) {

@@ -77,11 +77,11 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     for (int i = 0; i < d->componentnum; i++) {
         designSize += d->components[i].size;
         if (designSize > allowedSize) {
-            Event_create("No space", "Not enough carrier space available\nto build this ship.");
+            Event_create("No space", "Not enough ship bay space available\nto build this ship.");
             return;
         }
         if (designSize > f->largestAllowedShip) {
-            Event_create("Ship too big", "This ship is too large to fit into your carriers.");
+            Event_create("Ship too big", "This ship is too large to fit into your available\nship bays.");
             return;
         }
         for (int j = 0; j < 4; j++) {
