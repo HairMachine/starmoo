@@ -435,6 +435,66 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .techRequired = RT_CARRIER_5
     },
+    (Unit_Component) {
+        .name = "Improved Fabricator",
+        .unitProductionVolume = 100,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_1
+    },
+    (Unit_Component) {
+        .name = "Advanced Fabricator",
+        .unitProductionVolume = 200,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_2
+    },
+    (Unit_Component) {
+        .name = "Molecular Replicator",
+        .unitProductionVolume = 400,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_3
+    },
+    (Unit_Component) {
+        .name = "Advanced Replication",
+        .unitProductionVolume = 1600,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_4
+    },
+    (Unit_Component) {
+        .name = "Quantum Constructor",
+        .unitProductionVolume = 3200,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_5
+    },
 };
 
 Unit_Component Unit_getComponent(int index) {
