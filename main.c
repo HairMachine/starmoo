@@ -18,7 +18,6 @@ int main()
     InitWindow(SCREENX, SCREENY, "4x COOL");
     SetTargetFPS(120);
     World_create();
-    Unit_initComponents();
     ScreenManager_init();
 
     // Create initial warp ship design available to player

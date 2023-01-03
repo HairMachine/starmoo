@@ -5,7 +5,7 @@
 #include "research.h"
 
 #define UNIT_COMPONENT_MAX 16
-#define COMPONENTS_ALL 9
+#define COMPONENTS_ALL 10
 #define WEAPON_MAX 8
 #define DESIGN_MAX 64
 #define DESIGN_USER 8
@@ -42,7 +42,6 @@ typedef struct {
     int playerCanBuild;
 } Unit_Design;
 
-void Unit_initComponents();
 Unit_Component Unit_getComponent(int index);
 Unit_Design* Unit_createDesign();
 int Unit_designCount();
