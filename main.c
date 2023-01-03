@@ -25,47 +25,20 @@ int main()
 
     Unit_Design* ud = Unit_createDesign();
     strcpy(ud->name, "Mothership");
-    ud->componentnum = 5;
+    ud->componentnum = 6;
     ud->components[0] = Unit_getComponent(0);
     ud->components[1] = Unit_getComponent(1);
     ud->components[2] = Unit_getComponent(3);
     ud->components[3] = Unit_getComponent(5);
     ud->components[4] = Unit_getComponent(2);
     ud->components[4] = Unit_getComponent(6);
+    ud->components[5] = Unit_getComponent(11);
     // Build one to start them off with
     Unit_create(ud);
     
     Fleet_addUnit(Fleet_getPointer(0), Unit_lastAddedIndex());
     Fleet_getPointer(0)->lowpop = 25;
     Fleet_getPointer(0)->credits = 10000;
-
-    // Some crappy base designs for testing
-    ud = Unit_createDesign();
-    strcpy(ud->name, "Mining Vessel");
-    ud->componentnum = 2;
-    ud->components[0] = Unit_getComponent(4);
-    ud->components[1] = Unit_getComponent(2);
-    ud->playerCanBuild = 1;
-
-    ud = Unit_createDesign();
-    strcpy(ud->name, "Cargo Ship");
-    ud->componentnum = 2;
-    ud->components[0] = Unit_getComponent(2);
-    ud->components[1] = Unit_getComponent(2);
-    ud->playerCanBuild = 1;
-
-    ud = Unit_createDesign();
-    strcpy(ud->name, "Science Ship");
-    ud->componentnum = 1;
-    ud->components[0] = Unit_getComponent(6);
-    ud->playerCanBuild = 1;
-
-    ud = Unit_createDesign();
-    strcpy(ud->name, "Laser Fighter");
-    ud->componentnum = 1;
-    ud->components[0] = Unit_getComponent(7);
-    ud->components[1] = Unit_getComponent(8);
-    ud->playerCanBuild = 1;
 
     Combat_createEnemyDesigns();
 

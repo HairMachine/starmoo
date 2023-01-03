@@ -26,6 +26,11 @@ void Fleet_addUnit(Fleet_Entity* f, int uid) {
         f->warpFactor = newUnit.warpDriveLevel;
     }
     f->food += newUnit.farming;
+    f->size += newUnit.size;
+    f->maxSize += newUnit.totalShipStorage;
+    if (f->largestAllowedShip < newUnit.allowsShipSize) {
+        f->largestAllowedShip = newUnit.allowsShipSize;
+    }
 }
 
 void Fleet_removeUnitAtIndex(Fleet_Entity* f, int index) {

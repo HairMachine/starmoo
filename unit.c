@@ -12,6 +12,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name = "Warp Device I",
         .warpDriveLevel = 1,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -22,6 +23,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name = "Basic Habitation",
         .habitationSpace = 50,
+        .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 25},
             {RES_FABRICS, 10},
@@ -32,6 +34,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name = "Basic Storage",
         .storageCapacity = 50,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 25},
             {RES_NONE, 0},
@@ -42,6 +45,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name = "Basic Fabricator",
         .unitProductionVolume = 50,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -52,6 +56,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Basic Miner",
         .miningVolume = 25,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -62,6 +67,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Basic Farm",
         .foodProduction = 25,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 10},
             {RES_FERTILE_SOIL, 100},
@@ -74,6 +80,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .researchVolume = {
             25, 25, 25, 25, 25, 25
         },
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 100},
             {RES_NONE, 0},
@@ -85,6 +92,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .name="Laser Cannon",
         .shotPower = 10,
         .shotPenetration = 25,
+        .size = 25,
         .buildCosts = {
             {RES_BASE_METALS, 25},
             {RES_NONE, 0},
@@ -96,6 +104,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .name="Shield I",
         .shieldStrength = 10,
         .sheildRechargeRate = 1,
+        .size = 50,
         .buildCosts = {
             {RES_BASE_METALS, 25},
             {RES_MAGNETRIUM, 25},
@@ -107,6 +116,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .name="Gun Battery",
         .shotPower = 25,
         .shotPenetration = 10,
+        .size = 25,
         .buildCosts = {
             {RES_BASE_METALS, 25},
             {RES_NONE, 0},
@@ -124,10 +134,22 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
+    (Unit_Component) {
+        .name="Small Ship Bay",
+        .maxAllowedShipSize = 500,
+        .totalShipSize = 3000,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        }
+    },
     // Warp components
     (Unit_Component) {
         .name = "Warp Device II",
         .warpDriveLevel = 2,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -138,7 +160,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name = "Warp Device III",
-        .warpDriveLevel = 2,
+        .warpDriveLevel = 3,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -149,7 +172,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name = "Warp Device IV",
-        .warpDriveLevel = 2,
+        .warpDriveLevel = 4,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -160,7 +184,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name = "Warp Device V",
-        .warpDriveLevel = 2,
+        .warpDriveLevel = 5,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -171,7 +196,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name = "Warp Device VI",
-        .warpDriveLevel = 2,
+        .warpDriveLevel = 6,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -182,7 +208,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name = "Warp Device VII",
-        .warpDriveLevel = 2,
+        .warpDriveLevel = 7,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -192,8 +219,9 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_7
     },
     (Unit_Component) {
-        .name = "Warp Device VII",
-        .warpDriveLevel = 2,
+        .name = "Warp Device VIII",
+        .warpDriveLevel = 8,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -204,7 +232,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name = "Warp Device IX",
-        .warpDriveLevel = 2,
+        .warpDriveLevel = 9,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -215,7 +244,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name = "Warp Device X",
-        .warpDriveLevel = 2,
+        .warpDriveLevel = 10,
+        .size = 1000,
         .buildCosts = {
             {RES_WARP_SEEDS, 1},
             {RES_NONE, 0},
@@ -228,6 +258,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Armour 2",
         .armourStrength = 200,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 75},
             {RES_NONE, 0},
@@ -239,6 +270,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Armour 3",
         .armourStrength = 400,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 120},
             {RES_HYPERALLOYS, 10},
@@ -250,6 +282,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Armour 4",
         .armourStrength = 800,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 120},
             {RES_HYPERALLOYS, 10},
@@ -261,6 +294,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Armour 5",
         .armourStrength = 1600,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 120},
             {RES_HYPERALLOYS, 10},
@@ -272,6 +306,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Armour 6",
         .armourStrength = 3200,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 120},
             {RES_HYPERALLOYS, 10},
@@ -283,6 +318,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 2",
         .miningVolume = 50,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -294,6 +330,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 3",
         .miningVolume = 100,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -305,6 +342,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 4",
         .miningVolume = 200,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -316,6 +354,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 5",
         .miningVolume = 400,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -327,6 +366,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 6",
         .miningVolume = 800,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -407,6 +447,11 @@ Unit_Entity Unit_generate(Unit_Design* design) {
         // Calculate production cost
         for (int j = 0; j < 4; j++) {
             u.costToBuild += c->buildCosts[j].abundance;
+        }
+        u.size += c->size;
+        u.totalShipStorage += c->totalShipSize;
+        if (c->maxAllowedShipSize > u.allowsShipSize) {
+            u.allowsShipSize = c->maxAllowedShipSize;
         }
     }
     u.hp = u.hpMax;

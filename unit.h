@@ -30,6 +30,8 @@ typedef struct {
     int productionCost;
     Sector_Resource buildCosts[4];
     int researchVolume[FIELD_ALL];
+    int maxAllowedShipSize;
+    int totalShipSize;
     Research_TechType techRequired;
 } Unit_Component;
 
@@ -71,6 +73,9 @@ typedef struct {
     int mining;
     Sector_Resource resourceMining;
     int farming;
+    int allowsShipSize;
+    int totalShipStorage;
+    int size;
     Unit_Inventory stored[32];
     int storednum;
     int totalStored;

@@ -71,7 +71,19 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     }
     Unit_Design* d = Unit_getDesignPointer(designToBuild);
     // Check resources are available
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    int allowedSize = f->maxSize - f->size;
+    int designSize = 0;
     for (int i = 0; i < d->componentnum; i++) {
+        designSize += d->components[i].size;
+        if (designSize > allowedSize) {
+            Event_create("No space", "Not enough carrier space available\nto build this ship.");
+            return;
+        }
+        if (designSize > f->largestAllowedShip) {
+            Event_create("Ship too big", "This ship is too large to fit into your carriers.");
+            return;
+        }
         for (int j = 0; j < 4; j++) {
             if (!Unit_consumeItem(Unit_getPointer(selectedShip), d->components[i].buildCosts[j])) {
                 Event_create("Could not build", "Not enough stuff to build ship.");

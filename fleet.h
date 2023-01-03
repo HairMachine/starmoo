@@ -24,6 +24,9 @@ typedef struct {
     int unrest;
     int development;
     int credits;
+    int size;
+    int maxSize;
+    int largestAllowedShip;
 } Fleet_Entity;
 
 Fleet_Entity* Fleet_create();
