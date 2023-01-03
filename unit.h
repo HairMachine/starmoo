@@ -5,7 +5,7 @@
 #include "research.h"
 
 #define UNIT_COMPONENT_MAX 16
-#define COMPONENTS_ALL 10
+#define COMPONENTS_ALL 128
 #define WEAPON_MAX 8
 #define DESIGN_MAX 64
 #define DESIGN_USER 8

@@ -155,6 +155,9 @@ void _clickDesignShip(UI_Element* el, Vector2 mpos) {
     newDesignComponents[newDesignComponentNum] = c;
     newDesignComponentNum++;
     // Calculate ship costs
+    for (int i = 0; i < RES_ALL; i++) {
+        newDesignBuildCosts[i] = 0;
+    }
     for (int i = 0; i < newDesignComponentNum; i++) {
         for (int j = 0; j < 4; j++) {
             Sector_Resource r = newDesignComponents[i].buildCosts[j];

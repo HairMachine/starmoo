@@ -113,7 +113,107 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         }
-    }
+    },
+    // Warp techs
+    (Unit_Component) {
+        .name = "Warp Device II",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_2
+    },
+    (Unit_Component) {
+        .name = "Warp Device III",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_3
+    },
+    (Unit_Component) {
+        .name = "Warp Device IV",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_4
+    },
+    (Unit_Component) {
+        .name = "Warp Device V",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_5
+    },
+    (Unit_Component) {
+        .name = "Warp Device VI",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_6
+    },
+    (Unit_Component) {
+        .name = "Warp Device VII",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_7
+    },
+    (Unit_Component) {
+        .name = "Warp Device VII",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_8
+    },
+    (Unit_Component) {
+        .name = "Warp Device IX",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_9
+    },
+    (Unit_Component) {
+        .name = "Warp Device X",
+        .warpDriveLevel = 2,
+        .buildCosts = {
+            {RES_WARP_SEEDS, 1},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_WARP_10
+    },
 
 };
 
