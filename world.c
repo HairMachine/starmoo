@@ -19,6 +19,7 @@ void World_create() {
     for (int x = 0; x < World_sizeX; x+=3) {
         for (int y = 0; y < World_sizeY; y+=3) {
             Sector_Template st = {STAR_NONE, 0};
+            st.distFromCentre = abs((x + y) - (World_sizeX / 2 + World_sizeY / 2));
             for (int x1 = 0; x1 < 3; x1++) {
                 for (int y1 = 0; y1 < 3; y1++) {
                     Sector_Entity newSector = Sector_create(st);
@@ -54,7 +55,6 @@ void World_create() {
                     st.star = star;
                     st.specialLocation = 0;
                 }
-                st.distFromCentre = abs((x + y) - (World_sizeX / 2 + World_sizeY / 2));
                 Sector_Entity newSector = Sector_create(st);
                 newSector.x = x + xoffs;
                 newSector.y = y + yoffs;

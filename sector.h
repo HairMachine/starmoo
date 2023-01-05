@@ -19,13 +19,23 @@ typedef enum {
 extern char Sector_tempStrings[TEMP_X_COLD+1][16];
 
 typedef enum {
+    // Basic resources
     RES_NONE, RES_BASE_METALS, RES_FERTILE_SOIL, RES_FABRICS, RES_DEUTERIUM, RES_SILICON, 
     RES_WARP_SEEDS, RES_CYTRONIUM, RES_MAGNETRIUM, RES_SUBFILAMENTS, RES_PRECIOUS_ORES,
     RES_STIM_CELLS, RES_FINE_FRUIT, RES_REGENATRONS, RES_HYPERALLOYS,
+    // Goods
+    RES_WINE_1, RES_STIM_1, RES_MEDICAL_1, RES_LUXURY_1,
+    RES_WINE_2, RES_STIM_2, RES_MEDICAL_2, RES_LUXURY_2,
+    RES_WINE_3, RES_STIM_3, RES_MEDICAL_3, RES_LUXURY_3,
+    RES_WINE_4, RES_STIM_4, RES_MEDICAL_4, RES_LURUXY_4,
+    RES_WINE_5, RES_STIM_5, RES_MEDICAL_5, RES_LURUXY_5,
+    RES_WINE_6, RES_STIM_6, RES_MEDICAL_6, RES_LURUXY_6,
     RES_ALL
 } Sector_ResourceType;
 
-extern char Sector_resourceStrings[RES_ALL][16];
+#define GOOD_TYPES 4
+
+extern char Sector_resourceStrings[RES_ALL][18];
 
 typedef struct {
     Sector_ResourceType type;
@@ -83,5 +93,6 @@ Sector_Planet Sector_getPlanet(Sector_Entity* s, int index);
 void Sector_deployUnitToPlanet(Sector_Planet* p, int uid);
 void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index);
 int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r);
+int Sector_resourceQuality(Sector_ResourceType r);
 
 #endif

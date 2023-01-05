@@ -3,10 +3,18 @@
 
 #include "sector.h"
 
-char Sector_resourceStrings[RES_ALL][16] = {
+char Sector_resourceStrings[RES_ALL][18] = {
+    // Base resources
     "None", "Base Metals", "Fertile Soil", "Fabrics", "Deuterium", "Silicon",
     "Warp Seeds", "Cytronium", "Magnetrium", "Subfilaments", "Precious Ores",
-    "Stim Cells", "Fine Fruit", "Regenatrons", "Hyperalloys"
+    "Stim Cells", "Fine Fruit", "Regenatrons", "Hyperalloys",
+    // Goods
+    "Barathian Wine 1", "Stims 1", "Medicine 1", "Luxury Goods 1",
+    "Barathian Wine 2", "Stims 2", "Medicine 2", "Luxury Goods 2",
+    "Barathian Wine 3", "Stims 3", "Medicine 3", "Luxury Goods 3",
+    "Barathian Wine 4", "Stims 4", "Medicine 4", "Luxury Goods 4",
+    "Barathian Wine 5", "Stims 5", "Medicine 5", "Luxury Goods 5",
+    "Barathian Wine 6", "Stims 6", "Medicine 6", "Luxury Goods 6",
 };
 
 char Sector_tempStrings[TEMP_X_COLD+1][16] = {
@@ -78,7 +86,7 @@ void _getPossibleResourcesByPlanet(Sector_Planet p, Sector_Resource rt[]) {
     }
 }
 
-Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
+Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar, int wealthLevel) {
     Sector_Planet p = (Sector_Planet) {};
     p.temperature = distFromStar <= TEMP_X_COLD ? distFromStar : TEMP_X_COLD;
     // Generate appropriate type, some types don't work with particular temperatures
@@ -113,16 +121,7 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
     } else {
         p.size = (rand() % 250) + 50;
     }
-    // Create some resources
-    p.resourcenum = 0;
-    Sector_Resource resourceTemplate[RESOURCE_MAX] = {};
-    _getPossibleResourcesByPlanet(p, resourceTemplate);
-    for (int i = 0; i < RESOURCE_MAX; i++) {
-        if (resourceTemplate[i].type != RES_NONE) {
-            int rq = resourceTemplate[i].abundance + (rand() % 25 + 1) - (rand() % 50 + 1);
-            Sector_planetAddResource(&p, resourceTemplate[i].type, rq);
-        }
-    }
+    
     // Population based on size and other factors
     if (p.type == PLANET_GAS_GIANT) {
         p.popMax = 0;
@@ -155,6 +154,41 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar) {
         p.pop = round(p.popMax * (rand() % 25 + 50) / 100);
     } else {
         p.pop = 0;
+    }
+    // Create some resources
+    p.resourcenum = 0;
+    Sector_Resource resourceTemplate[RESOURCE_MAX] = {};
+    _getPossibleResourcesByPlanet(p, resourceTemplate);
+    for (int i = 0; i < RESOURCE_MAX; i++) {
+        if (resourceTemplate[i].type != RES_NONE && (p.pop == 0 || wealthLevel <= Sector_resourceQuality(resourceTemplate[i].type))) {
+            int rq = resourceTemplate[i].abundance + (rand() % 25 + 1) - (rand() % 50 + 1);
+            Sector_planetAddResource(&p, resourceTemplate[i].type, rq);
+        }
+    }
+    if (p.pop > 0 && wealthLevel >= 10) {
+        int possibleGoods = RESOURCE_MAX - p.resourcenum;
+        if (possibleGoods > GOOD_TYPES) {
+            possibleGoods = GOOD_TYPES;
+        }
+        int goods = rand() % possibleGoods + 1;
+        Sector_ResourceType startGood = wealthLevel / 20 * GOOD_TYPES + RES_HYPERALLOYS + 1;
+        Sector_ResourceType endGood = startGood + GOOD_TYPES;
+        Sector_ResourceType goodsList[5] = {};
+        int i = 0;
+        for (Sector_ResourceType good = startGood; good < endGood; good++) {
+            goodsList[i] = good;
+            i++;
+        }
+        for (int j = 0; j < goods; j++) {
+            int roll = rand() % i;
+            Sector_ResourceType good = goodsList[roll];
+            int abundance = 101 + rand() % 75;
+            Sector_planetAddResource(&p, good, abundance);
+            for (int k = roll; k < i; k++) {
+                goodsList[k] = goodsList[k + 1];
+            }
+            i--;
+        }
     }    
     // TODO: Phenomena
     // TODO: Make adjustments up / down by star type
@@ -178,7 +212,7 @@ Sector_Entity Sector_create(Sector_Template st) {
         homeworld.pop = 1000;
         s.planets[3] = homeworld;
         s.planetnum = 6;
-        s.wealthLevel = 25;
+        s.wealthLevel = 0;
     } else if (st.specialLocation == 2) {
         s.hostile = 1;
         Sector_Planet enemyworld = {PLANET_GAIA, 300, TEMP_GOLDILOCKS, 0, 0, 1000, 2000, {} ,0};
@@ -192,7 +226,7 @@ Sector_Entity Sector_create(Sector_Template st) {
         if (rand() % 100 < 80 - st.distFromCentre*2) {
             s.hostile = 1;
         }
-        s.wealthLevel = 75 - (st.distFromCentre * 2);
+        s.wealthLevel = 100 - (st.distFromCentre / 3) * 10;
         if (s.wealthLevel < 0) {
             s.wealthLevel = 0;
         }
@@ -206,7 +240,7 @@ Sector_Entity Sector_create(Sector_Template st) {
     }
     for (int i = 0; i < s.planetnum; i++) {
         if (s.planets[i].type == PLANET_NONE) {
-            s.planets[i] = _generatePlanet(s.star, i);
+            s.planets[i] = _generatePlanet(s.star, i, s.wealthLevel);
         }
     }
     // Add up population
@@ -221,8 +255,12 @@ void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abund
     if (abundance <= 0) {
         return;
     }
-    if (rand() % 100 > abundance*2) {
-        return;
+    if (abundance > 100) {
+        abundance -= 100;
+    } else {
+        if (rand() % 100 > abundance*2) {
+            return;
+        }
     }
     Sector_Resource newResource = {t, abundance};
     p->resources[p->resourcenum] = newResource;
@@ -258,6 +296,13 @@ int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r) {
         }
     }
     return bp;
+}
+
+int Sector_resourceQuality(Sector_ResourceType r) {
+    if (r < RES_HYPERALLOYS) {
+        return 0;
+    }
+    return ceil((r - RES_HYPERALLOYS) / 4) * 10;
 }
 
 /**
