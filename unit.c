@@ -9,7 +9,7 @@ Unit_Design designs[DESIGN_MAX];
 int designnum = 0;
 
 Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
-    (Unit_Component) {
+    (Unit_Component) { // 0
         .name = "Warp Device I",
         .warpDriveLevel = 1,
         .size = 1000,
@@ -20,7 +20,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 1
         .name = "Basic Habitation",
         .habitationSpace = 50,
         .size = 500,
@@ -31,9 +31,9 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 2
         .name = "Basic Storage",
-        .storageCapacity = 50,
+        .storageCapacity = 1000,
         .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 25},

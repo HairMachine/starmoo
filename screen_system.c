@@ -213,7 +213,11 @@ void _drawSellPanel(UI_Element* el) {
         for (int j = 0; j < u->storednum; j++) {
             UI_drawSelectListItem(
                 el, sellableItemNo, 16,
-                Sector_resourceStrings[u->stored[j].storedResourceId],
+                TextFormat(
+                    "%s x 100 - %dC",
+                    Sector_resourceStrings[u->stored[j].storedResourceId],
+                    Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId)
+                ),
                 sellPanel == sellableItemNo
             );
             sellableItemNo++;
@@ -242,7 +246,11 @@ void _enableBuyPanel(UI_Element *el) {
 void _drawBuyPanel(UI_Element* el) {
     UI_drawPanel(el);
     for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
-        UI_drawSelectListItem(el, i, 16, Sector_resourceStrings[currentPlanetInfo->resources[i].type], buyPanel == i);
+        UI_drawSelectListItem(el, i, 16, TextFormat(
+            "%s x 100 - %dC",
+            Sector_resourceStrings[currentPlanetInfo->resources[i].type],
+            Sector_resourceBasePrice(currentPlanetInfo, currentPlanetInfo->resources[i].type)
+        ), buyPanel == i);
     }
 }
 
