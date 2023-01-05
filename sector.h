@@ -67,11 +67,13 @@ typedef struct {
     Sector_Phenomena phenomena[PHENOMENA_MAX];
     int phenomenanum;
     int hostile;
+    int wealthLevel;
 } Sector_Entity;
 
 typedef struct {
     Sector_StarType star;
-    int startingLocation;
+    int specialLocation;
+    int distFromCentre;
 } Sector_Template;
 
 Sector_Entity Sector_create(Sector_Template st);

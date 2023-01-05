@@ -1,5 +1,6 @@
 #include "unit.h"
 #include "fleet.h"
+#include "sector.h"
 
 #define PLAYER_SIDE 0
 #define ENEMY_SIDE 1
@@ -14,7 +15,7 @@ typedef struct {
 void Combat_createEnemyDesigns();
 void Combat_addShipToCombat(Unit_Entity u, int side, int originalIndex, int fleetIndex);
 void Combat_addFleetShipsToCombat(Fleet_Entity* f);
-void Combat_setupRandomEncounter();
+void Combat_setupRandomEncounter(Sector_Entity* s);
 void Combat_start();
 void Combat_run();
 int Combat_unitCount();

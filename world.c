@@ -45,12 +45,16 @@ void World_create() {
                 // The player's starting position is an established colony
                 if (x == 0 && y == 0) {
                     st.star = STAR_YELLOW;
-                    st.startingLocation = 1;
+                    st.specialLocation = 1;
+                } else if (x / 3 == World_sizeX / 6 && y / 3 == World_sizeY / 6) {
+                    st.star = STAR_YELLOW;
+                    st.specialLocation = 2;
                 } else {
                     Sector_StarType star = rand() % (STAR_END - 1) + 1;
                     st.star = star;
-                    st.startingLocation = 0;
+                    st.specialLocation = 0;
                 }
+                st.distFromCentre = abs((x + y) - (World_sizeX / 2 + World_sizeY / 2));
                 Sector_Entity newSector = Sector_create(st);
                 newSector.x = x + xoffs;
                 newSector.y = y + yoffs;
@@ -93,7 +97,7 @@ void World_update() {
                         o->completed = 1;
                         // Check if this system is hostile and generate combat if it is
                         if (se->hostile) {
-                            Combat_setupRandomEncounter();
+                            Combat_setupRandomEncounter(se);
                             // TODO: Do not tie this to only having a single fleet!
                             Fleet_Entity* f = Fleet_getPointer(0);
                             Combat_addFleetShipsToCombat(f);

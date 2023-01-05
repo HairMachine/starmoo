@@ -168,9 +168,8 @@ Sector_Entity Sector_create(Sector_Template st) {
         Sector_Planet p = (Sector_Planet) {};
         s.planets[i] = p;
     }
-    if (st.startingLocation) {
+    if (st.specialLocation == 1) {
         s.explored = 1;
-        s.fleet = 0;
         Sector_Planet homeworld = {PLANET_TERRAN, 300, TEMP_GOLDILOCKS, 0, 0, 1000, 2000, {} ,0};
         Sector_planetAddResource(&homeworld, RES_BASE_METALS, 50);
         Sector_planetAddResource(&homeworld, RES_SILICON, 25);
@@ -179,11 +178,23 @@ Sector_Entity Sector_create(Sector_Template st) {
         homeworld.pop = 1000;
         s.planets[3] = homeworld;
         s.planetnum = 6;
-        s.hostile = 0;
+        s.wealthLevel = 25;
+    } else if (st.specialLocation == 2) {
+        s.hostile = 1;
+        Sector_Planet enemyworld = {PLANET_GAIA, 300, TEMP_GOLDILOCKS, 0, 0, 1000, 2000, {} ,0};
+        enemyworld.pop = 5000;
+        s.planets[3] = enemyworld;
+        s.planetnum = 6;
+        s.wealthLevel = 100;
+        s.fleet = -1;
     } else {
         s.fleet = -1;
-        if (rand() % 100 < 20) {
+        if (rand() % 100 < 80 - st.distFromCentre*2) {
             s.hostile = 1;
+        }
+        s.wealthLevel = 75 - (st.distFromCentre * 2);
+        if (s.wealthLevel < 0) {
+            s.wealthLevel = 0;
         }
     }
     if (s.star == STAR_NONE) {

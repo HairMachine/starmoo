@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "fleet.h"
 #include "unit.h"
 #include "combat.h"
+#include "sector.h"
 
 Combat_Unit c_units[128];
 int c_unitnum = 0;
@@ -38,9 +40,14 @@ void Combat_addFleetShipsToCombat(Fleet_Entity* f) {
     playerFleet = f;
 }
 
-void Combat_setupRandomEncounter() {
+void Combat_setupRandomEncounter(Sector_Entity* s) {
     c_unitnum = 0;
-    for (int i = 0; i < rand() % 5 + 5; i++) {
+    int fleetSize = s->wealthLevel * 100;
+    // TODO: A much more sophisticated design that creates enemies that fit into the given
+    // fleet size; larger fleet size means more dangerous enemies can be spawned
+    int fart = ceil(fleetSize / 125);
+    int numShips = ceil(fleetSize / 250) + rand() % fart;
+    for (int i = 0; i < numShips; i++) {
         Unit_Design* d = Unit_getDesignPointer(startDesign);
         Unit_Entity u = Unit_generate(d);
         Combat_addShipToCombat(u, ENEMY_SIDE, -1, -1);
