@@ -295,10 +295,9 @@ int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r) {
     } else {
         bp = 2000 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
     }
-    
     for (int i = 0; i < p->resourcenum; i++) {
         if (p->resources[i].type == r) {
-            return bp - ((p->resources[i].abundance * 100) / bp);
+            return (p->resources[i].abundance * bp) / 100;
         }
     }
     return bp;
