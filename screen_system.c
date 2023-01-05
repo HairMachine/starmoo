@@ -216,7 +216,7 @@ void _drawSellPanel(UI_Element* el) {
                 TextFormat(
                     "%s x 100 - %dC",
                     Sector_resourceStrings[u->stored[j].storedResourceId],
-                    Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId)
+                    Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId) * 100
                 ),
                 sellPanel == sellableItemNo
             );
@@ -249,7 +249,7 @@ void _drawBuyPanel(UI_Element* el) {
         UI_drawSelectListItem(el, i, 16, TextFormat(
             "%s x 100 - %dC",
             Sector_resourceStrings[currentPlanetInfo->resources[i].type],
-            Sector_resourceBasePrice(currentPlanetInfo, currentPlanetInfo->resources[i].type)
+            Sector_resourceBasePrice(currentPlanetInfo, currentPlanetInfo->resources[i].type) * 100
         ), buyPanel == i);
     }
 }
