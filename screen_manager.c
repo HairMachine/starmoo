@@ -105,7 +105,7 @@ void ScreenManager_init() {
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, _eventEnable, UI_drawButton, _clickNextEvent, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Event Panel", SCREEN_ALL, _eventEnable, _drawEventPanel, NOFUNC, NOFUNC);
 
-    UI_createElement(600, 500, 100, 32, "End Turn", SCREEN_MAP, _endTurnEnable, UI_drawButton, _clickEndTurn, NOFUNC);
+    UI_createElement(600, 500, 100, 32, "End Turn", SCREEN_ALL, _endTurnEnable, UI_drawButton, _clickEndTurn, NOFUNC);
 
     ScreenMap_init();
     ScreenSystem_init();
