@@ -287,13 +287,13 @@ void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index) {
 int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r) {
     int bp = 0;
     if (r <= RES_FABRICS) {
-        bp = 100;
+        bp = 10;
     } else if (r <= RES_HYPERALLOYS) {
-        bp = 500;
+        bp = 50;
     } else if (r <= RES_PRECIOUS_ORES) {
-        bp = 1000;
+        bp = 100;
     } else {
-        bp = 2000 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
+        bp = 200 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
     }
     for (int i = 0; i < p->resourcenum; i++) {
         if (p->resources[i].type == r) {
