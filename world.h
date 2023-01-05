@@ -1,6 +1,6 @@
 #include "sector.h"
 
-#define World_sizeX 36
+#define World_sizeX 30
 #define World_sizeY 30
 
 void World_create();

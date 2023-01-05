@@ -19,7 +19,10 @@ void World_create() {
     for (int x = 0; x < World_sizeX; x+=3) {
         for (int y = 0; y < World_sizeY; y+=3) {
             Sector_Template st = {STAR_NONE, 0};
-            st.distFromCentre = abs((x + y) - (World_sizeX / 2 + World_sizeY / 2));
+            int distx = abs(x - World_sizeX / 2);
+            int disty = abs(y - World_sizeY / 2);
+            int fudge = rand() % 3;
+            st.distFromCentre = (distx > disty ? distx : disty) * 2 - fudge;
             for (int x1 = 0; x1 < 3; x1++) {
                 for (int y1 = 0; y1 < 3; y1++) {
                     Sector_Entity newSector = Sector_create(st);

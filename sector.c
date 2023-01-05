@@ -6,8 +6,8 @@
 char Sector_resourceStrings[RES_ALL][18] = {
     // Base resources
     "None", "Base Metals", "Fertile Soil", "Fabrics", "Deuterium", "Silicon",
-    "Warp Seeds", "Cytronium", "Magnetrium", "Subfilaments", "Precious Ores",
-    "Stim Cells", "Fine Fruit", "Regenatrons", "Hyperalloys",
+    "Warp Seeds", "Cytronium", "Magnetrium", "Subfilaments", "Hyperalloys",
+    "Stim Cells", "Fine Fruit", "Regenatrons", "Precious Ores",
     // Goods
     "Barathian Wine 1", "Stims 1", "Medicine 1", "Luxury Goods 1",
     "Barathian Wine 2", "Stims 2", "Medicine 2", "Luxury Goods 2",
@@ -166,13 +166,14 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar, int wealth
         }
     }
     if (p.pop > 0 && wealthLevel >= 10) {
+        Sector_ResourceType baseGood = wealthLevel / 20 * GOOD_TYPES + RES_PRECIOUS_ORES + 1;
+        Sector_ResourceType startGood = baseGood - GOOD_TYPES;
+        Sector_ResourceType endGood = baseGood + GOOD_TYPES;
         int possibleGoods = RESOURCE_MAX - p.resourcenum;
-        if (possibleGoods > GOOD_TYPES) {
-            possibleGoods = GOOD_TYPES;
+        if (possibleGoods > endGood - startGood) {
+            possibleGoods = endGood - startGood;
         }
         int goods = rand() % possibleGoods + 1;
-        Sector_ResourceType startGood = wealthLevel / 20 * GOOD_TYPES + RES_HYPERALLOYS + 1;
-        Sector_ResourceType endGood = startGood + GOOD_TYPES;
         Sector_ResourceType goodsList[5] = {};
         int i = 0;
         for (Sector_ResourceType good = startGood; good < endGood; good++) {

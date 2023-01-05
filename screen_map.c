@@ -169,17 +169,18 @@ void _drawSectorInfo(UI_Element* el) {
     if (!ScreenManager_currentSector()) {
         return;
     }
-    if (ScreenManager_currentSector()->explored) {
-        DrawText(TextFormat("Population: %iM", ScreenManager_currentSector()->pop), el->x, el->y, 16, RAYWHITE);
-        int line = 2;
-        for (int i = 0; i < ScreenManager_currentSector()->planetnum; i++) {
-            Sector_Planet p = Sector_getPlanet(ScreenManager_currentSector(), i);
-            DrawText(TextFormat("- %s %dM", Sector_planetStrings[p.type], p.pop), el->x, el->y + 8*line, 8, RAYWHITE);
-            line++;
-        }
-    } else {
-        DrawText("System unexplored", el->x, el->y, 16, RAYWHITE);
+    DrawText(TextFormat(
+        "Population: %iM\nWealth Lvl: %i",
+        ScreenManager_currentSector()->pop,
+        ScreenManager_currentSector()->wealthLevel
+    ), el->x, el->y, 16, RAYWHITE); 
+    int line = 6;
+    for (int i = 0; i < ScreenManager_currentSector()->planetnum; i++) {
+        Sector_Planet p = Sector_getPlanet(ScreenManager_currentSector(), i);
+        DrawText(TextFormat("- %s %dM", Sector_planetStrings[p.type], p.pop), el->x, el->y + 8*line, 8, RAYWHITE);
+        line++;
     }
+    
     if (lastFleet > -1) {
         Fleet_Entity* f = Fleet_getPointer(lastFleet);
         DrawText(
@@ -188,7 +189,7 @@ void _drawSectorInfo(UI_Element* el) {
                 f->unitmax, FLEET_BASIC_NEEDS,f->food,
                 Fleet_getUsedStorage(f), Fleet_getMaxStorage(f), f->credits
             ),
-            el->x, el->y + 128, 8, RAYWHITE
+            el->x, el->y + 192, 8, RAYWHITE
         );
     }
 }
