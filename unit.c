@@ -78,7 +78,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Research Lab",
         .researchVolume = {
-            25, 25, 25, 25, 25, 25
+            5, 5, 5, 5, 5, 5
         },
         .size = 100,
         .buildCosts = {
