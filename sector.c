@@ -327,6 +327,12 @@ int Sector_resourceQuality(Sector_ResourceType r) {
  * Less detail than fleet simulation; random events, create resources and goods, etc.
  */
 void Sector_simulate(Sector_Entity* s) {
-    
+    for (int i = 0; i < s->planetnum; s++) {
+        Sector_Planet* p = &s->planets[i];
+        int baseFunds = p->pop * (s->wealthLevel+1);
+        if (p->funds < baseFunds) {
+            p->funds += ceil((p->pop * (s->wealthLevel+1)) / 100);
+        }
+    }
 }
 
