@@ -22,8 +22,8 @@ void _clickGalaxyTab(UI_Element *el, Vector2 mpos) {
     UI_enableScreen(SCREEN_MAP);
 }
 
-void _fleetSelectedEnable(UI_Element* el) {
-    if (currentSectorInfo && currentSectorInfo->fleet > -1 && !Combat_active()) {
+void _systemSelectedEnable(UI_Element* el) {
+    if (currentSectorInfo && currentSectorInfo->explored) {
         el->enabled = 1;
     } else {
         el->enabled = 0;
@@ -31,8 +31,16 @@ void _fleetSelectedEnable(UI_Element* el) {
 }
 
 void _clickSystemTab(UI_Element *el, Vector2 mpos) {
-    if (currentSectorInfo && currentSectorInfo->fleet > -1) {
+    if (currentSectorInfo) {
         UI_enableScreen(SCREEN_SYSTEM);
+    }
+}
+
+void _fleetSelectedEnable(UI_Element* el) {
+    if (currentSectorInfo && currentSectorInfo->fleet > -1 && !Combat_active()) {
+        el->enabled = 1;
+    } else {
+        el->enabled = 0;
     }
 }
 
@@ -108,7 +116,7 @@ void _clickEndTurn(UI_Element *el, Vector2 mpos) {
 
 void ScreenManager_init() {
     UI_createElement(0, 0, 100, 32, "Galaxy", SCREEN_ALL, _galaxySelectedEnable, UI_drawButton, _clickGalaxyTab, NOFUNC);
-    UI_createElement(100, 0, 100, 32, "System", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickSystemTab, NOFUNC);
+    UI_createElement(100, 0, 100, 32, "System", SCREEN_ALL, _systemSelectedEnable, UI_drawButton, _clickSystemTab, NOFUNC);
     UI_createElement(200, 0, 100, 32, "Ships", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickFleetTab, NOFUNC);
     UI_createElement(300, 0, 100, 32, "Cargo", SCREEN_ALL, _cargoSelectedEnable, UI_drawButton, _clickCargoTab, NOFUNC);
     UI_createElement(400, 0, 100, 32, "Legitimacy", SCREEN_ALL, NOFUNC, _drawLegitimacy, NOFUNC, NOFUNC);

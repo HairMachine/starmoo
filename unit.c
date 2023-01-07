@@ -42,9 +42,9 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 3
         .name = "Basic Fabricator",
-        .unitProductionVolume = 50,
+        .unitProductionVolume = 100,
         .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 10},
@@ -53,7 +53,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 4
         .name="Basic Miner",
         .miningVolume = 50,
         .size = 100,
@@ -64,7 +64,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 5
         .name="Basic Farm",
         .foodProduction = 25,
         .size = 100,
@@ -75,7 +75,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 6
         .name="Research Lab",
         .researchVolume = {
             5, 5, 5, 5, 5, 5
@@ -88,7 +88,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 7
         .name="Laser Cannon",
         .shotPower = 10,
         .shotPenetration = 25,
@@ -100,7 +100,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 8
         .name="Shield I",
         .shieldStrength = 10,
         .sheildRechargeRate = 1,
@@ -112,7 +112,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) {
+    (Unit_Component) { // 9
         .name="Gun Battery",
         .shotPower = 25,
         .shotPenetration = 10,
