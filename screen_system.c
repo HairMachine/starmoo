@@ -413,11 +413,24 @@ void _drawSystem(UI_Element* el) {
                             break;
                         }
                     }
-                    if (isBeingMined) {
-                        DrawText(TextFormat("%s: %d%% (being mined)", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 150 + i * 24, 16, RAYWHITE);
+                    if (p->pop == 0) {
+                        if (isBeingMined) {
+                            DrawText(TextFormat("%s: %d%% (being mined)", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 150 + i * 24, 16, RAYWHITE);
+                        } else {
+                            DrawText(TextFormat("%s: %d%%", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 150 + i * 24, 16, RAYWHITE);
+                        }
                     } else {
-                        DrawText(TextFormat("%s: %d%%", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 150 + i * 24, 16, RAYWHITE);
+                        DrawText(TextFormat(
+                            "%s: %dC",
+                            Sector_resourceStrings[p->resources[i].type],
+                            Sector_resourceBasePrice(
+                                p,
+                                p->resources[i].type,
+                                ScreenManager_currentSector()->wealthLevel
+                            )
+                        ), 500, 150 + i * 24, 16, RAYWHITE);
                     }
+                    
                 }
             }
         }

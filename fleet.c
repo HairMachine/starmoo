@@ -129,7 +129,7 @@ void _changePop(Fleet_Entity* f, int excessDeaths) {
     }
     int popCurrent = FLEET_BASIC_NEEDS;
     int births = 0;
-    if (popCurrent <= popMax) {
+    if (popCurrent < popMax) {
         switch (f->development) {
             case 0:
                 births = _newPop(f, 0.1) - excessDeaths;
@@ -256,5 +256,13 @@ void Fleet_consumeItems(Fleet_Entity* f, Sector_Resource r) {
         }
     }
     return;
+}
+
+int Fleet_getAssignedPop(Fleet_Entity* f) {
+    int pop = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        pop += Unit_getPointer(f->units[i])->pop;
+    }
+    return pop;
 }
 

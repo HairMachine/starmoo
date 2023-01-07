@@ -76,6 +76,10 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     int designSize = 0;
     for (int i = 0; i < d->componentnum; i++) {
         designSize += d->components[i].size;
+        if (FLEET_BASIC_NEEDS - Fleet_getAssignedPop(f) - d->componentnum < 0) {
+            Event_create("No workers", "Not enough people to work this ship.\nBuild farms!");
+            return;
+        }
         if (designSize > allowedSize) {
             Event_create("No space", "Not enough ship bay space available\nto build this ship.");
             return;

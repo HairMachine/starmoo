@@ -1361,6 +1361,7 @@ Unit_Entity Unit_generate(Unit_Design* design) {
     Unit_Component* c = 0;
     int numweapons = 0;
     for (int i = 0; i < design->componentnum; i++) {
+        u.pop++;
         c = &design->components[i];
         u.hpMax += c->armourStrength;
         u.shieldMax += c->shieldStrength;

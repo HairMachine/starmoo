@@ -76,6 +76,7 @@ typedef struct {
     int allowsShipSize;
     int totalShipStorage;
     int size;
+    int pop;
     Unit_Inventory stored[32];
     int storednum;
     int totalStored;
