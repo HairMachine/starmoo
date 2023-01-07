@@ -11,6 +11,7 @@
 #include "world.h"
 
 Sector_Entity World_sectors[World_sizeY * World_sizeX];
+int legitimacy = 1000;
 
 /**
  * Algorithm that creates a universe. 
@@ -164,6 +165,8 @@ void World_update() {
             }
         }
     }
+    // Your people become more annoyed over time
+    World_changeLegitimacy(-1);
 }
 
 Sector_Entity World_getSectorCopy(int x, int y) {
@@ -172,4 +175,15 @@ Sector_Entity World_getSectorCopy(int x, int y) {
 
 Sector_Entity* World_getSectorPointer(int x, int y) {
     return &World_sectors[y * World_sizeX + x];
+}
+
+int World_getLegitimacy() {
+    return legitimacy;
+}
+
+void World_changeLegitimacy(int amnt) {
+    legitimacy += amnt;
+    if (legitimacy > 1000) {
+        legitimacy = 1000;
+    }
 }

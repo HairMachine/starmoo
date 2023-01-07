@@ -75,9 +75,6 @@ void _drawMap(UI_Element* el) {
                 default:
                     break;
             }
-            if (s->star && s->hostile) {
-                DrawRectangleLines(el->x + x*UI_tileSize, el->y + y*UI_tileSize, UI_tileSize, UI_tileSize, RED);
-            }
             if (ScreenManager_currentSector() == s) {
                 DrawRectangleLines(el->x + x*UI_tileSize - 1, el->y + y*UI_tileSize - 1, UI_tileSize + 2, UI_tileSize + 2, WHITE);
             }
@@ -106,16 +103,6 @@ void _drawMap(UI_Element* el) {
                 }
             }
             
-        }
-    }
-    // Show targeter
-    if (targeter.range > 0) {
-        for (int x = targeter.x - targeter.range; x <= targeter.x + targeter.range; x++) {
-            for (int y = targeter.y - targeter.range; y <= targeter.y + targeter.range; y++) {
-                if (x >= 0 && y >= 0 && x < World_sizeX - 1 && y < World_sizeY - 1) {
-                    DrawRectangleLines(el->x + x*UI_tileSize - 1, el->y + y*UI_tileSize - 1, UI_tileSize + 2, UI_tileSize + 2, GREEN);
-                }
-            }
         }
     }
     // Show orders (where applicable)

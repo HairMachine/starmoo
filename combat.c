@@ -42,11 +42,14 @@ void Combat_addFleetShipsToCombat(Fleet_Entity* f) {
 
 void Combat_setupRandomEncounter(Sector_Entity* s) {
     c_unitnum = 0;
-    int fleetSize = s->wealthLevel * 100;
+    int fleetSize = s->wealthLevel * 10;
     // TODO: A much more sophisticated design that creates enemies that fit into the given
     // fleet size; larger fleet size means more dangerous enemies can be spawned
-    int fart = ceil(fleetSize / 125);
-    int numShips = ceil(fleetSize / 250) + rand() % fart;
+    int fart = ceil(fleetSize / 50);
+    int numShips = ceil(fleetSize / 25) + rand() % fart;
+    if (numShips > 128) {
+        numShips = 128;
+    }
     for (int i = 0; i < numShips; i++) {
         Unit_Design* d = Unit_getDesignPointer(startDesign);
         Unit_Entity u = Unit_generate(d);
@@ -102,7 +105,7 @@ void _processRound() {
     _destroyc_units();
 }
 
-int _shipsAlive(int side) {
+int Combat_shipsAlive(int side) {
     for (int i = 0; i < c_unitnum; i++) {
         if (c_units[i].side == side) {
             return 1;
@@ -116,7 +119,7 @@ void Combat_start() {
 }
 
 void Combat_run() {
-    if (_shipsAlive(PLAYER_SIDE) && _shipsAlive(ENEMY_SIDE)) {
+    if (Combat_shipsAlive(PLAYER_SIDE) && Combat_shipsAlive(ENEMY_SIDE)) {
         _processRound();
     } else {
         active = 0;

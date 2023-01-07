@@ -58,6 +58,10 @@ int main()
         if (framecounter == 60) {
             framecounter = 0;
         }
+        // End game conditions
+        if (World_getLegitimacy() <= 0) {
+            return 0;
+        }
     }
 
     CloseWindow();                 

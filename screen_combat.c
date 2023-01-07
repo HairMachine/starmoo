@@ -1,5 +1,6 @@
 #include "ui.h"
 #include "combat.h"
+#include "world.h"
 
 int pline = 0;
 int eline = 0;
@@ -10,6 +11,11 @@ void _enableOkBtn(UI_Element* el) {
 }
 
 void _clickOkBtn(UI_Element* el, Vector2 mpos) {
+    if (Combat_shipsAlive(PLAYER_SIDE)) {
+        World_changeLegitimacy(50);
+    } else {
+        World_changeLegitimacy(-50);
+    }
     UI_enableScreen(SCREEN_MAP);
     begun = 0;
 }
@@ -44,6 +50,7 @@ void _clickFightButton(UI_Element* el, Vector2 mpos) {
 }
 
 void _clickRunButton(UI_Element* el, Vector2 mpos) {
+    World_changeLegitimacy(-25);
     UI_enableScreen(SCREEN_MAP);
 }
 
