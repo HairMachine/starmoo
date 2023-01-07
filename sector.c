@@ -245,7 +245,7 @@ Sector_Entity Sector_create(Sector_Template st) {
             s.planets[i] = _generatePlanet(s.star, i, s.wealthLevel);
         }
         // Generate some funds based on pop and wealth level
-        s.planets[i].funds = s.planets[i].pop * (s.wealthLevel+1);
+        s.planets[i].funds = Sector_planetBaseFunds(&s, &s.planets[i]);
     }
     // Add up population
     for (int i = 0; i < s.planetnum; i++) {
@@ -290,13 +290,13 @@ void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index) {
 int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r, int wealthLevel) {
     int bp = 0;
     if (r <= RES_FABRICS) {
-        bp = 10;
-    } else if (r <= RES_HYPERALLOYS) {
-        bp = 50;
-    } else if (r <= RES_PRECIOUS_ORES) {
         bp = 100;
+    } else if (r <= RES_HYPERALLOYS) {
+        bp = 200;
+    } else if (r <= RES_PRECIOUS_ORES) {
+        bp = 400;
     } else {
-        bp = 200 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
+        bp = 800 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
     }
     // Alter by quality compared to wealth level
     if (wealthLevel > 0) {
@@ -322,6 +322,10 @@ int Sector_resourceQuality(Sector_ResourceType r) {
     return 10 + ceil((r - RES_PRECIOUS_ORES) / 4) * 10;
 }
 
+int Sector_planetBaseFunds(Sector_Entity* s, Sector_Planet* p) {
+    return p->pop * (s->wealthLevel+1);
+}
+
 /**
  * Simulates an individual sector of the galaxy.
  * Less detail than fleet simulation; random events, create resources and goods, etc.
@@ -329,7 +333,7 @@ int Sector_resourceQuality(Sector_ResourceType r) {
 void Sector_simulate(Sector_Entity* s) {
     for (int i = 0; i < s->planetnum; s++) {
         Sector_Planet* p = &s->planets[i];
-        int baseFunds = p->pop * (s->wealthLevel+1);
+        int baseFunds = Sector_planetBaseFunds(s, p);
         if (p->funds < baseFunds) {
             p->funds += ceil((p->pop * (s->wealthLevel+1)) / 100);
         }

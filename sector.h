@@ -96,5 +96,6 @@ void Sector_deployUnitToPlanet(Sector_Planet* p, int uid);
 void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index);
 int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r, int wealthLevel);
 int Sector_resourceQuality(Sector_ResourceType r);
+int Sector_planetBaseFunds(Sector_Entity* s, Sector_Planet* p);
 
 #endif

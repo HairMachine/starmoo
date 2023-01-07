@@ -144,21 +144,18 @@ void World_update() {
                 p = &s->planets[pi];
                 for (int ui = 0; ui < p->unitnum; ui++) {
                     u = Unit_getPointer(p->units[ui]);
-                    if (u->storage - u->totalStored <= 0) {
-                        continue;
-                    }
                     if (u->resourceMining.type != RES_NONE) {
-                        amount = (u->mining * u->resourceMining.abundance) / 100;
-                        amount = u->totalStored + amount <= u->storage ? amount : u->storage - u->totalStored;
-                        if (amount <= 0) {
-                            Event_create("Could not mine", TextFormat("Mining ship at %d, %d could not mine", x, y));
-                            continue;
+                        amount = 0;
+                        int chance = (u->mining * u->resourceMining.abundance) / 100;
+                        while (chance > 100) {
+                            amount++;
+                            chance -= 100;
+                        }
+                        if (rand() % 100 <= chance) {
+                            amount++;
                         }
                         Unit_Inventory inv = {u->resourceMining.type, amount};
                         Unit_storeItem(u, inv);
-                        if (u->storage - u->totalStored <= 0) {
-                            Event_create("Out of space", TextFormat("Mining ship at %d, %d has run out of storage space.", x, y));
-                        }
                     }
                 }
             }

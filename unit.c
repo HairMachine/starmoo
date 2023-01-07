@@ -55,7 +55,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name="Basic Miner",
-        .miningVolume = 5,
+        .miningVolume = 50,
         .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 5},
@@ -566,7 +566,7 @@ Unit_Entity Unit_generate(Unit_Design* design) {
         }
         // Calculate production cost
         for (int j = 0; j < 4; j++) {
-            u.costToBuild += c->buildCosts[j].abundance;
+            u.costToBuild += c->buildCosts[j].abundance * 100;
         }
         u.size += c->size;
         u.totalShipStorage += c->totalShipSize;

@@ -37,7 +37,7 @@ int main()
     
     Fleet_addUnit(Fleet_getPointer(0), Unit_lastAddedIndex());
     Fleet_getPointer(0)->lowpop = 25;
-    Fleet_getPointer(0)->credits = 100;
+    Fleet_getPointer(0)->credits = 1000;
 
     Combat_createEnemyDesigns();
 
