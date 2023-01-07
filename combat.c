@@ -42,7 +42,7 @@ void Combat_addFleetShipsToCombat(Fleet_Entity* f) {
 
 void Combat_setupRandomEncounter(Sector_Entity* s) {
     c_unitnum = 0;
-    int fleetSize = s->wealthLevel * 10;
+    int fleetSize = ceil(s->wealthLevel * 10);
     // TODO: A much more sophisticated design that creates enemies that fit into the given
     // fleet size; larger fleet size means more dangerous enemies can be spawned
     int fart = ceil(fleetSize / 50);

@@ -234,3 +234,27 @@ int Fleet_getMaxStorage(Fleet_Entity* f) {
     }
     return total;
 }
+
+int Fleet_hasEnoughItems(Fleet_Entity* f, Sector_Resource r) {
+    int totalStored = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        totalStored += Unit_getTotalStored(Unit_getPointer(f->units[i]), r);
+    }
+    return totalStored >= r.abundance;
+}
+
+void Fleet_consumeItems(Fleet_Entity* f, Sector_Resource r) {
+    Unit_Entity* u;
+    for (int i = 0; i < f->unitmax; i++) {
+        u = Unit_getPointer(f->units[i]);
+        int stored = Unit_getTotalStored(u, r);
+        int amountToTake = r.abundance > stored ? stored : r.abundance;
+        Unit_consumeItem(u, (Sector_Resource) {r.type, amountToTake});
+        r.abundance -= amountToTake;
+        if (r.abundance <= 0) {
+            return;
+        }
+    }
+    return;
+}
+

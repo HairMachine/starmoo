@@ -78,6 +78,9 @@ void _drawMap(UI_Element* el) {
             if (ScreenManager_currentSector() == s) {
                 DrawRectangleLines(el->x + x*UI_tileSize - 1, el->y + y*UI_tileSize - 1, UI_tileSize + 2, UI_tileSize + 2, WHITE);
             }
+            if (s->hostile && s->explored) {
+                DrawRectangleLines(el->x + x*UI_tileSize, el->y + y*UI_tileSize, UI_tileSize, UI_tileSize, RED);
+            }
             if (s->pop > 0 && s->star == STAR_NONE) {
                 s->pop++;
             }

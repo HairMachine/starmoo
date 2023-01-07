@@ -92,6 +92,7 @@ int Unit_count();
 int Unit_lastAddedIndex();
 void Unit_storeItem(Unit_Entity* u, Unit_Inventory inv);
 int Unit_consumeItem(Unit_Entity* u, Sector_Resource r);
+int Unit_getTotalStored(Unit_Entity* u, Sector_Resource r);
 void Unit_inventoryTransfer(Unit_Entity* from, int invIndex, Unit_Entity* to);
 void Unit_removeItemByIndex(Unit_Entity*, int index);
 

@@ -85,10 +85,13 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
             return;
         }
         for (int j = 0; j < 4; j++) {
-            if (!Unit_consumeItem(Unit_getPointer(selectedShip), d->components[i].buildCosts[j])) {
+            if (!Fleet_hasEnoughItems(f, d->components[i].buildCosts[j])) {
                 Event_create("Could not build", "Not enough stuff to build ship.");
                 return;
             }
+        }
+        for (int j = 0; j < 4; j++) {
+            Fleet_consumeItems(f, d->components[i].buildCosts[j]);
         }
     }
     Unit_create(Unit_getDesignPointer(designToBuild));

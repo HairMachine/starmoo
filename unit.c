@@ -1459,6 +1459,19 @@ int Unit_consumeItem(Unit_Entity* u, Sector_Resource r) {
     return 1;
 }
 
+int Unit_getTotalStored(Unit_Entity* u, Sector_Resource r) {
+    if (u->storednum == 0) {
+        return 0;
+    }
+    for (int i = 0; i < u->storednum; i++) {
+        Unit_Inventory* existingInv = &u->stored[i];
+        if (existingInv->storedResourceId == r.type) {
+            return existingInv->quantity;
+        }
+    }
+    return 0;
+}
+
 void Unit_inventoryTransfer(Unit_Entity* from, int invIndex, Unit_Entity* to) {
     Unit_storeItem(to, from->stored[invIndex]);
     Unit_removeItemByIndex(from, invIndex);
