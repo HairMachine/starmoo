@@ -495,6 +495,823 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .techRequired = RT_CONSTRUCT_5
     },
+    // Weapons tech
+    (Unit_Component) {
+        .name="Multilaster",
+        .shotPower = 20,
+        .shotPenetration = 50,
+        .size = 50,
+        .buildCosts = {
+            {RES_BASE_METALS, 10},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_BEAM_2
+    },
+    (Unit_Component) {
+        .name="Ion Cannon",
+        .shotPower = 40,
+        .shotPenetration = 100,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 20},
+            {RES_CYTRONIUM, 5},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_BEAM_3
+    },
+    (Unit_Component) {
+        .name="Proton Blaster",
+        .shotPower = 80,
+        .shotPenetration = 200,
+        .size = 200,
+        .buildCosts = {
+            {RES_BASE_METALS, 40},
+            {RES_CYTRONIUM, 10},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_BEAM_4
+    },
+    (Unit_Component) {
+        .name="Plasma Cannon",
+        .shotPower = 160,
+        .shotPenetration = 400,
+        .size = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 80},
+            {RES_CYTRONIUM, 20},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_BEAM_5
+    },
+    (Unit_Component) {
+        .name="Turbolaser",
+        .shotPower = 320,
+        .shotPenetration = 800,
+        .size = 800,
+        .buildCosts = {
+            {RES_BASE_METALS, 160},
+            {RES_CYTRONIUM, 40},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_BEAM_6
+    },
+    (Unit_Component) {
+        .name="Tachyon Generator",
+        .shotPower = 640,
+        .shotPenetration = 1600,
+        .size = 1600,
+        .buildCosts = {
+            {RES_BASE_METALS, 320},
+            {RES_CYTRONIUM, 80},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_BEAM_7
+    },
+    (Unit_Component) {
+        .name="Hyperbeam Emitter",
+        .shotPower = 1280,
+        .shotPenetration = 3200,
+        .size = 3200,
+        .buildCosts = {
+            {RES_BASE_METALS, 640},
+            {RES_CYTRONIUM, 160},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_BEAM_8
+    },
+    (Unit_Component) {
+        .name="Mass Driver",
+        .shotPower = 50,
+        .shotPenetration = 20,
+        .size = 50,
+        .buildCosts = {
+            {RES_BASE_METALS, 10},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_GUN_2
+    },
+    (Unit_Component) {
+        .name="Gauss Cannon",
+        .shotPower = 100,
+        .shotPenetration = 40,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 20},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_GUN_3
+    },
+    (Unit_Component) {
+        .name="Macrodriver",
+        .shotPower = 300,
+        .shotPenetration = 120,
+        .size = 200,
+        .buildCosts = {
+            {RES_BASE_METALS, 60},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_GUN_4
+    },
+    (Unit_Component) {
+        .name="Assault Cannon",
+        .shotPower = 800,
+        .shotPenetration = 320,
+        .size = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 160},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_GUN_5
+    },
+    (Unit_Component) {
+        .name="Planetoid Launcher",
+        .shotPower = 1600,
+        .shotPenetration = 640,
+        .size = 800,
+        .buildCosts = {
+            {RES_BASE_METALS, 320},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_GUN_6
+    },
+    (Unit_Component) {
+        .name="Fusion Torpedo",
+        .shotPower = 60,
+        .shotPenetration = 60,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 10},
+            {RES_MAGNETRIUM, 5},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_TORPEDO_1
+    },
+    (Unit_Component) {
+        .name="Proton Torpedo",
+        .shotPower = 240,
+        .shotPenetration = 240,
+        .size = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 40},
+            {RES_MAGNETRIUM, 20},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_TORPEDO_2
+    },
+    (Unit_Component) {
+        .name="Antimatter Torpedo",
+        .shotPower = 720,
+        .shotPenetration = 720,
+        .size = 1200,
+        .buildCosts = {
+            {RES_BASE_METALS, 120},
+            {RES_MAGNETRIUM, 60},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_TORPEDO_3
+    },
+    (Unit_Component) {
+        .name="Singularity Torpedo",
+        .shotPower = 1440,
+        .shotPenetration = 1440,
+        .size = 2400,
+        .buildCosts = {
+            {RES_BASE_METALS, 240},
+            {RES_MAGNETRIUM, 120},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_TORPEDO_4
+    },
+    // Espionage techs
+    (Unit_Component) {
+        .name = "Antenna 1",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ANTENNA_1
+    },
+    (Unit_Component) {
+        .name = "Antenna 2",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ANTENNA_2
+    },
+    (Unit_Component) {
+        .name = "Antenna 3",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ANTENNA_3
+    },
+    (Unit_Component) {
+        .name = "Antenna 4",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ANTENNA_4
+    },
+    (Unit_Component) {
+        .name = "Antenna 5",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ANTENNA_5
+    },
+    (Unit_Component) {
+        .name = "Encryptor 1",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ENCRYPTOR_1
+    },
+    (Unit_Component) {
+        .name = "Encryptor 2",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ENCRYPTOR_2
+    },
+    (Unit_Component) {
+        .name = "Encryptor 3",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ENCRYPTOR_3
+    },
+    (Unit_Component) {
+        .name = "Encryptor 4",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ENCRYPTOR_4
+    },
+    (Unit_Component) {
+        .name = "Encryptor 5",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_ENCRYPTOR_5
+    },
+    (Unit_Component) {
+        .name = "Override 1",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_OVERRIDE_1
+    },
+    (Unit_Component) {
+        .name = "Override 2",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_OVERRIDE_2
+    },
+    (Unit_Component) {
+        .name = "Override 3",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_OVERRIDE_3
+    },
+    (Unit_Component) {
+        .name = "Override 4",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_OVERRIDE_4
+    },
+    (Unit_Component) {
+        .name = "Override 5",
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_OVERRIDE_5
+    },
+    // Luxuries
+    (Unit_Component) {
+        .name = "Luxury Goods 1",
+        .goodProduced = RES_LUXURY_1,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_GOODS_1
+    },
+    (Unit_Component) {
+        .name = "Luxury Goods 2",
+        .goodProduced = RES_LUXURY_2,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_GOODS_2
+    },
+    (Unit_Component) {
+        .name = "Luxury Goods 3",
+        .goodProduced = RES_LUXURY_3,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_GOODS_3
+    },
+    (Unit_Component) {
+        .name = "Luxury Goods 4",
+        .goodProduced = RES_LUXURY_4,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_GOODS_4
+    },
+    (Unit_Component) {
+        .name = "Luxury Goods 5",
+        .goodProduced = RES_LUXURY_5,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_GOODS_5
+    },
+    (Unit_Component) {
+        .name = "Barathian Wine 1",
+        .goodProduced = RES_WINE_1,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_WINE_1
+    },
+    (Unit_Component) {
+        .name = "Barathian Wine 2",
+        .goodProduced = RES_WINE_2,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_WINE_2
+    },
+    (Unit_Component) {
+        .name = "Barathian Wine 3",
+        .goodProduced = RES_WINE_3,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_WINE_3
+    },
+    (Unit_Component) {
+        .name = "Barathian Wine 4",
+        .goodProduced = RES_WINE_4,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_WINE_4
+    },
+    (Unit_Component) {
+        .name = "Barathian Wine 5",
+        .goodProduced = RES_WINE_5,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_WINE_5
+    },
+    (Unit_Component) {
+        .name = "Medical Supplies 1",
+        .goodProduced = RES_MEDICAL_1,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_MEDICAL_1
+    },
+    (Unit_Component) {
+        .name = "Medical Supplies 2",
+        .goodProduced = RES_MEDICAL_2,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_MEDICAL_2
+    },
+    (Unit_Component) {
+        .name = "Medical Supplies 3",
+        .goodProduced = RES_MEDICAL_3,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_MEDICAL_3
+    },
+    (Unit_Component) {
+        .name = "Medical Supplies 4",
+        .goodProduced = RES_MEDICAL_4,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_MEDICAL_4
+    },
+    (Unit_Component) {
+        .name = "Medical Supplies 5",
+        .goodProduced = RES_MEDICAL_5,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_MEDICAL_5
+    },
+    (Unit_Component) {
+        .name = "Stims 1",
+        .goodProduced = RES_STIM_1,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_STIMS_1
+    },
+    (Unit_Component) {
+        .name = "Stims 2",
+        .goodProduced = RES_STIM_2,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_STIMS_2
+    },
+    (Unit_Component) {
+        .name = "Stims 3",
+        .goodProduced = RES_STIM_3,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_STIMS_3
+    },
+    (Unit_Component) {
+        .name = "Stims 4",
+        .goodProduced = RES_STIM_4,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_STIMS_4
+    },
+    (Unit_Component) {
+        .name = "Stims 5",
+        .goodProduced = RES_STIM_5,
+        .buildCosts = {
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+        },
+        .techRequired = RT_STIMS_5
+    },
+    // Forcefield tech
+    (Unit_Component) {
+        .name="Shield II",
+        .shieldStrength = 20,
+        .sheildRechargeRate = 2,
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_MAGNETRIUM, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_SHIELD_2
+    },
+    (Unit_Component) {
+        .name="Shield III",
+        .shieldStrength = 40,
+        .sheildRechargeRate = 4,
+        .size = 200,
+        .buildCosts = {
+            {RES_BASE_METALS, 100},
+            {RES_MAGNETRIUM, 100},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_SHIELD_3
+    },
+    (Unit_Component) {
+        .name="Shield IV",
+        .shieldStrength = 80,
+        .sheildRechargeRate = 8,
+        .size = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 200},
+            {RES_MAGNETRIUM, 200},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_SHIELD_4
+    },
+    (Unit_Component) {
+        .name="Shield V",
+        .shieldStrength = 160,
+        .sheildRechargeRate = 16,
+        .size = 800,
+        .buildCosts = {
+            {RES_BASE_METALS, 400},
+            {RES_MAGNETRIUM, 400},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_SHIELD_5
+    },
+    (Unit_Component) {
+        .name="Shield VI",
+        .shieldStrength = 320,
+        .sheildRechargeRate = 32,
+        .size = 1600,
+        .buildCosts = {
+            {RES_BASE_METALS, 800},
+            {RES_MAGNETRIUM, 800},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_SHIELD_6
+    },
+    (Unit_Component) {
+        .name="Reflector Sheilds 1",
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 10},
+            {RES_MAGNETRIUM, 20},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_REFLECTOR_1
+    },
+    (Unit_Component) {
+        .name="Reflector Sheilds 2",
+        .size = 200,
+        .buildCosts = {
+            {RES_BASE_METALS, 20},
+            {RES_MAGNETRIUM, 40},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_REFLECTOR_2
+    },
+    (Unit_Component) {
+        .name="Reflector Sheilds 3",
+        .size = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 40},
+            {RES_MAGNETRIUM, 80},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_REFLECTOR_3
+    },
+    (Unit_Component) {
+        .name="Reflector Sheilds 4",
+        .size = 800,
+        .buildCosts = {
+            {RES_BASE_METALS, 80},
+            {RES_MAGNETRIUM, 160},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_REFLECTOR_4
+    },
+    (Unit_Component) {
+        .name="Reflector Sheilds 5",
+        .size = 1600,
+        .buildCosts = {
+            {RES_BASE_METALS, 160},
+            {RES_MAGNETRIUM, 320},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_REFLECTOR_5
+    },
+    (Unit_Component) {
+        .name="Shield Charger 1",
+        .size = 100,
+        .sheildRechargeRate = 10,
+        .buildCosts = {
+            {RES_BASE_METALS, 30},
+            {RES_DEUTERIUM, 5},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CHARGER_1
+    },
+    (Unit_Component) {
+        .name="Shield Charger 2",
+        .size = 200,
+        .sheildRechargeRate = 20,
+        .buildCosts = {
+            {RES_BASE_METALS, 60},
+            {RES_DEUTERIUM, 10},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CHARGER_2
+    },
+    (Unit_Component) {
+        .name="Shield Charger 3",
+        .size = 400,
+        .sheildRechargeRate = 40,
+        .buildCosts = {
+            {RES_BASE_METALS, 120},
+            {RES_DEUTERIUM, 20},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CHARGER_3
+    },
+    (Unit_Component) {
+        .name="Shield Charger 4",
+        .size = 800,
+        .sheildRechargeRate = 80,
+        .buildCosts = {
+            {RES_BASE_METALS, 240},
+            {RES_DEUTERIUM, 40},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CHARGER_4
+    },
+    (Unit_Component) {
+        .name="Shield Charger 5",
+        .size = 1600,
+        .sheildRechargeRate = 160,
+        .buildCosts = {
+            {RES_BASE_METALS, 480},
+            {RES_DEUTERIUM, 80},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CHARGER_5
+    },
+    (Unit_Component) {
+        .name="Energy Drainer 1",
+        .size = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 10},
+            {RES_MAGNETRIUM, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_DRAINER_1
+    },
+    (Unit_Component) {
+        .name="Energy Drainer 2",
+        .size = 200,
+        .buildCosts = {
+            {RES_BASE_METALS, 20},
+            {RES_MAGNETRIUM, 100},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_DRAINER_2
+    },
+    (Unit_Component) {
+        .name="Energy Drainer 3",
+        .size = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 40},
+            {RES_MAGNETRIUM, 200},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_DRAINER_3
+    },
+    (Unit_Component) {
+        .name="Energy Drainer 4",
+        .size = 800,
+        .buildCosts = {
+            {RES_BASE_METALS, 80},
+            {RES_MAGNETRIUM, 400},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_DRAINER_4
+    },
+    (Unit_Component) {
+        .name="Energy Drainer 5",
+        .size = 1600,
+        .buildCosts = {
+            {RES_BASE_METALS, 160},
+            {RES_MAGNETRIUM, 700},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_DRAINER_5
+    }
 };
 
 Unit_Component Unit_getComponent(int index) {
