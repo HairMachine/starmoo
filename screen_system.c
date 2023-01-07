@@ -214,9 +214,13 @@ void _drawSellPanel(UI_Element* el) {
             UI_drawSelectListItem(
                 el, sellableItemNo, 16,
                 TextFormat(
-                    "%s x 100 - %dC",
+                    "%s - %dC",
                     Sector_resourceStrings[u->stored[j].storedResourceId],
-                    Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId) * 100
+                    Sector_resourceBasePrice(
+                        currentPlanetInfo,
+                        u->stored[j].storedResourceId,
+                        ScreenManager_currentSector()->wealthLevel
+                    )
                 ),
                 sellPanel == sellableItemNo
             );
@@ -247,9 +251,13 @@ void _drawBuyPanel(UI_Element* el) {
     UI_drawPanel(el);
     for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
         UI_drawSelectListItem(el, i, 16, TextFormat(
-            "%s x 100 - %dC",
+            "%s - %dC",
             Sector_resourceStrings[currentPlanetInfo->resources[i].type],
-            Sector_resourceBasePrice(currentPlanetInfo, currentPlanetInfo->resources[i].type) * 100
+            Sector_resourceBasePrice(
+                currentPlanetInfo,
+                currentPlanetInfo->resources[i].type,
+                ScreenManager_currentSector()->wealthLevel
+            )
         ), buyPanel == i);
     }
 }
@@ -261,19 +269,24 @@ void _clickBuyPanel(UI_Element* el, Vector2 mpos) {
 void _clickBuyButton(UI_Element* el, Vector2 mpos) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     Sector_Resource r = currentPlanetInfo->resources[buyPanel];
-    int price = Sector_resourceBasePrice(currentPlanetInfo, r.type) * 100;
+    int price = Sector_resourceBasePrice(
+        currentPlanetInfo,
+        r.type,
+        ScreenManager_currentSector()->wealthLevel
+    );
     if (f->credits < price) {
         Event_create("No cash", "Not enough credits to buy this.");
         buyPanel = -1;
         return;
     }
     int bought = 0;
-    Unit_Inventory ui = {r.type, 100};
+    Unit_Inventory ui = {r.type, 1};
     for (int k = 0; k < f->unitmax; k++) {
         Unit_Entity* u = Unit_getPointer(f->units[k]);
         if (u->totalStored < u->storage) {
             Unit_storeItem(u, ui);
             f->credits -= price;
+            currentPlanetInfo->funds += price;
             bought = 1;
             break;
         }
@@ -292,18 +305,22 @@ void _clickSellButton(UI_Element* el, Vector2 mpos) {
     for (int i = 0; i < f->unitmax; i++) {
         u = Unit_getPointer(f->units[i]);
         for (int j = 0; j < u->storednum; j++) {
+            int price = Sector_resourceBasePrice(
+                currentPlanetInfo,
+                u->stored[j].storedResourceId,
+                ScreenManager_currentSector()->wealthLevel
+            );
+            if (price > currentPlanetInfo->funds) {
+                Event_create("No funds", "Sorry, we don't have enough to buy that.");
+                return;
+            }
             if (countup == sellPanel) {
-                int amount = 100;
-                u->stored[j].quantity -= 100;
-                if (u->stored[j].quantity < 0) {
-                    amount += u->stored[j].quantity;
-                    u->stored[j].quantity = 0;
-                }
-                u->totalStored -= amount;
+                u->stored[j].quantity--;
+                f->credits += price;
+                currentPlanetInfo->funds -= price;
                 if (u->stored[j].quantity == 0) {
                     Unit_removeItemByIndex(u, j);
                 }
-                f->credits += Sector_resourceBasePrice(currentPlanetInfo, u->stored[j].storedResourceId) * amount;
                 return;
             }
             countup++;
@@ -382,8 +399,8 @@ void _drawSystem(UI_Element* el) {
             DrawRectangleLines(starPosX + ring - psize, starPosY - psize, hpsize, hpsize, RAYWHITE);
             // Draw a panel of info
             DrawText(TextFormat(
-                "%s World\nPopulation: %dM\nTemperature: %s",
-                Sector_planetStrings[p->type], p->pop, Sector_tempStrings[p->temperature], p->temperature
+                "%s World\nPopulation: %dM\nTemperature: %s\nFunds: %d",
+                Sector_planetStrings[p->type], p->pop, Sector_tempStrings[p->temperature], p->funds
             ), 500, 0, 16, RAYWHITE);
             Unit_Entity* u = 0;
             for (int i = 0; i < p->resourcenum; i++) {
@@ -397,9 +414,9 @@ void _drawSystem(UI_Element* el) {
                         }
                     }
                     if (isBeingMined) {
-                        DrawText(TextFormat("%s: %d%% (being mined)", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 100 + i * 24, 16, RAYWHITE);
+                        DrawText(TextFormat("%s: %d%% (being mined)", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 150 + i * 24, 16, RAYWHITE);
                     } else {
-                        DrawText(TextFormat("%s: %d%%", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 100 + i * 24, 16, RAYWHITE);
+                        DrawText(TextFormat("%s: %d%%", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 150 + i * 24, 16, RAYWHITE);
                     }
                 }
             }

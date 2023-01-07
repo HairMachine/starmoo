@@ -25,8 +25,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .habitationSpace = 50,
         .size = 500,
         .buildCosts = {
-            {RES_BASE_METALS, 25},
-            {RES_FABRICS, 10},
+            {RES_BASE_METALS, 5},
+            {RES_FABRICS, 1},
             {RES_NONE, 0},
             {RES_NONE, 0}
         }
@@ -34,9 +34,9 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) { // 2
         .name = "Basic Storage",
         .storageCapacity = 1000,
-        .size = 100,
+        .size = 10,
         .buildCosts = {
-            {RES_BASE_METALS, 25},
+            {RES_BASE_METALS, 5},
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
@@ -47,7 +47,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .unitProductionVolume = 50,
         .size = 100,
         .buildCosts = {
-            {RES_BASE_METALS, 50},
+            {RES_BASE_METALS, 10},
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
@@ -55,10 +55,10 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name="Basic Miner",
-        .miningVolume = 25,
+        .miningVolume = 5,
         .size = 100,
         .buildCosts = {
-            {RES_BASE_METALS, 50},
+            {RES_BASE_METALS, 5},
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
@@ -69,8 +69,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .foodProduction = 25,
         .size = 100,
         .buildCosts = {
-            {RES_BASE_METALS, 10},
-            {RES_FERTILE_SOIL, 100},
+            {RES_BASE_METALS, 1},
+            {RES_FERTILE_SOIL, 10},
             {RES_NONE, 0},
             {RES_NONE, 0}
         }
@@ -82,7 +82,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .size = 100,
         .buildCosts = {
-            {RES_BASE_METALS, 100},
+            {RES_BASE_METALS, 10},
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
@@ -94,7 +94,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .shotPenetration = 25,
         .size = 25,
         .buildCosts = {
-            {RES_BASE_METALS, 25},
+            {RES_BASE_METALS, 5},
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
@@ -118,7 +118,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .shotPenetration = 10,
         .size = 25,
         .buildCosts = {
-            {RES_BASE_METALS, 25},
+            {RES_BASE_METALS, 5},
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
@@ -128,7 +128,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .name="Titanium Armour",
         .armourStrength = 100,
         .buildCosts = {
-            {RES_BASE_METALS, 50},
+            {RES_BASE_METALS, 5},
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
@@ -139,7 +139,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .maxAllowedShipSize = 500,
         .totalShipSize = 3000,
         .buildCosts = {
-            {RES_BASE_METALS, 50},
+            {RES_BASE_METALS, 5},
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}

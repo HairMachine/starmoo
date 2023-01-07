@@ -165,6 +165,7 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar, int wealth
             Sector_planetAddResource(&p, resourceTemplate[i].type, rq);
         }
     }
+    // Create goods production on wealthier planets with more deveoped industries
     if (p.pop > 0 && wealthLevel >= 10) {
         Sector_ResourceType baseGood = wealthLevel / 20 * GOOD_TYPES + RES_PRECIOUS_ORES + 1;
         Sector_ResourceType startGood = baseGood - GOOD_TYPES;
@@ -190,7 +191,7 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar, int wealth
             }
             i--;
         }
-    }    
+    }
     // TODO: Phenomena
     // TODO: Make adjustments up / down by star type
     return p;
@@ -243,6 +244,8 @@ Sector_Entity Sector_create(Sector_Template st) {
         if (s.planets[i].type == PLANET_NONE) {
             s.planets[i] = _generatePlanet(s.star, i, s.wealthLevel);
         }
+        // Generate some funds based on pop and wealth level
+        s.planets[i].funds = s.planets[i].pop * (s.wealthLevel+1);
     }
     // Add up population
     for (int i = 0; i < s.planetnum; i++) {
@@ -284,7 +287,7 @@ void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index) {
     p->unitnum--;
 }
 
-int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r) {
+int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r, int wealthLevel) {
     int bp = 0;
     if (r <= RES_FABRICS) {
         bp = 10;
@@ -295,19 +298,28 @@ int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r) {
     } else {
         bp = 200 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
     }
+    // Alter by quality compared to wealth level
+    if (wealthLevel > 0) {
+        int quality = Sector_resourceQuality(r) + 10;
+        bp = (bp * ((10*quality) / (wealthLevel+10))) / 10;
+    }
+    if (bp == 0) bp = 1;
     for (int i = 0; i < p->resourcenum; i++) {
         if (p->resources[i].type == r) {
-            return (p->resources[i].abundance * bp) / 100;
+            return ((100 - p->resources[i].abundance) * bp) / 100;
         }
     }
     return bp;
 }
 
 int Sector_resourceQuality(Sector_ResourceType r) {
-    if (r < RES_HYPERALLOYS) {
+    if (r <= RES_HYPERALLOYS) {
         return 0;
     }
-    return ceil((r - RES_HYPERALLOYS) / 4) * 10;
+    if (r <= RES_PRECIOUS_ORES) {
+        return 10;
+    }
+    return 10 + ceil((r - RES_PRECIOUS_ORES) / 4) * 10;
 }
 
 /**

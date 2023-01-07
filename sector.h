@@ -56,6 +56,7 @@ typedef struct {
     int units[8]; // Units deployed at this planet for mining, research etc.
     int unitnum;
     int hostile;
+    int funds;
 } Sector_Planet;
 
 typedef enum {
@@ -93,7 +94,7 @@ void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abund
 Sector_Planet Sector_getPlanet(Sector_Entity* s, int index);
 void Sector_deployUnitToPlanet(Sector_Planet* p, int uid);
 void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index);
-int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r);
+int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r, int wealthLevel);
 int Sector_resourceQuality(Sector_ResourceType r);
 
 #endif
