@@ -6,7 +6,6 @@
 #include "ui.h"
 #include "screen_manager.h"
 
-int chooseResourcesForMining = 0;
 int chooseShipForMining = 0;
 int chooseShipForRetrieval = 0;
 int buyPanel = -1;
@@ -14,12 +13,8 @@ int sellPanel = -1;
 int sellableItemNo = 0;
 Sector_Planet* currentPlanetInfo = 0;
 
-void _resourceSelectEnable(UI_Element* el) {
-    el->visible = chooseResourcesForMining && chooseShipForMining;
-}
-
 void _miningShipSelectEnable(UI_Element *el) {
-    el->visible = chooseShipForMining && !chooseResourcesForMining;
+    el->visible = chooseShipForMining;
 }
 
 void _drawMiningShipSelect(UI_Element *el) {
@@ -40,38 +35,13 @@ void _clickMiningShipSelection(UI_Element *el, Vector2 mpos) {
 }
 
 void _clickConfirmMiningShipSelect(UI_Element *el, Vector2 mpos) {
-    chooseResourcesForMining = 1;
-}
-
-void _clickConfirmResourceSelection(UI_Element* el, Vector2 mpos) {
-    if (chooseResourcesForMining < 2) {
-        chooseResourcesForMining = 0;
-        chooseShipForMining = 0;
-        return;
-    }
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     int chosenShip = f->units[chooseShipForMining - 2];
     Unit_Entity* u = Unit_getPointer(chosenShip);
     Sector_deployUnitToPlanet(currentPlanetInfo, chosenShip);
-    u->resourceMining = currentPlanetInfo->resources[chooseResourcesForMining - 2];
+    u->resourceMining = 1;
     Fleet_removeUnitAtIndex(f, chooseShipForMining - 2);
-    chooseResourcesForMining = 0;
     chooseShipForMining = 0;
-}
-
-void _drawResourceSelect(UI_Element* el) {
-    UI_drawPanel(el);
-    for (int i = 0; i < currentPlanetInfo->resourcenum; i++) {
-        UI_drawSelectListItem(
-            el, i, 16, 
-            Sector_resourceStrings[currentPlanetInfo->resources[i].type], 
-            chooseResourcesForMining >= 2 && chooseResourcesForMining - 2 == i
-        );
-    }
-}
-
-void _clickResourceSelect(UI_Element* el, Vector2 mpos) {
-    chooseResourcesForMining = UI_handleSelectList(el, mpos, currentPlanetInfo->resourcenum, 16) + 2;
 }
 
 void _deployMineEnable(UI_Element *el, Vector2 mpos) {
@@ -408,16 +378,24 @@ void _drawSystem(UI_Element* el) {
                 if (p->resources[i].type != RES_NONE) {
                     for (int j = 0; j < p->unitnum; j++) {
                         u = Unit_getPointer(p->units[j]);
-                        if (u->resourceMining.type == p->resources[i].type) {
+                        if (u->resourceMining) {
                             isBeingMined = 1;
                             break;
                         }
                     }
                     if (p->pop == 0) {
                         if (isBeingMined) {
-                            DrawText(TextFormat("%s: %d%% (being mined)", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 150 + i * 24, 16, RAYWHITE);
+                            DrawText(TextFormat(
+                                "%s: %d%% (being mined)",
+                                Sector_resourceStrings[p->resources[i].type],
+                                p->resources[i].abundance
+                            ), 500, 150 + i * 24, 16, RAYWHITE);
                         } else {
-                            DrawText(TextFormat("%s: %d%%", Sector_resourceStrings[p->resources[i].type], p->resources[i].abundance), 500, 150 + i * 24, 16, RAYWHITE);
+                            DrawText(TextFormat(
+                                "%s: %d%%",
+                                Sector_resourceStrings[p->resources[i].type],
+                                p->resources[i].abundance
+                            ), 500, 150 + i * 24, 16, RAYWHITE);
                         }
                     } else {
                         DrawText(TextFormat(
@@ -459,8 +437,6 @@ void _clickSystem(UI_Element* el, Vector2 mpos) {
 void ScreenSystem_init() {
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _miningShipSelectEnable, UI_drawButton, _clickConfirmMiningShipSelect, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Mining ship select", SCREEN_SYSTEM, _miningShipSelectEnable, _drawMiningShipSelect, _clickMiningShipSelection, NOFUNC);
-    UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _resourceSelectEnable, UI_drawButton, _clickConfirmResourceSelection, NOFUNC);
-    UI_createElement(100, 200, 400, 200, "Resource select", SCREEN_SYSTEM, _resourceSelectEnable, _drawResourceSelect, _clickResourceSelect, NOFUNC);
     UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
     
     UI_createElement(250, 350, 100, 32, "Done", SCREEN_SYSTEM, _enableBuyPanel, UI_drawButton, _clickDoneBuySell, NOFUNC);

@@ -71,7 +71,7 @@ typedef struct {
     int production;
     int storage;
     int mining;
-    Sector_Resource resourceMining;
+    int resourceMining;
     int farming;
     int allowsShipSize;
     int totalShipStorage;

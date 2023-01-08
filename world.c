@@ -145,18 +145,20 @@ void World_update() {
                 p = &s->planets[pi];
                 for (int ui = 0; ui < p->unitnum; ui++) {
                     u = Unit_getPointer(p->units[ui]);
-                    if (u->resourceMining.type != RES_NONE) {
-                        amount = 0;
-                        int chance = (u->mining * u->resourceMining.abundance) / 100;
-                        while (chance > 100) {
-                            amount++;
-                            chance -= 100;
+                    if (u->resourceMining) {
+                        for (int ri = 0; ri < p->resourcenum; ri++) {
+                            amount = 0;
+                            int chance = (u->mining * p->resources[ri].abundance) / 100;
+                            while (chance > 100) {
+                                amount++;
+                                chance -= 100;
+                            }
+                            if (rand() % 100 <= chance) {
+                                amount++;
+                            }
+                            Unit_Inventory inv = {p->resources[ri].type, amount};
+                            Unit_storeItem(u, inv);
                         }
-                        if (rand() % 100 <= chance) {
-                            amount++;
-                        }
-                        Unit_Inventory inv = {u->resourceMining.type, amount};
-                        Unit_storeItem(u, inv);
                     }
                 }
             }
