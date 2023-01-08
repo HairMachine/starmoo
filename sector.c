@@ -292,11 +292,11 @@ int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r, int wealth
     if (r <= RES_FABRICS) {
         bp = 100;
     } else if (r <= RES_HYPERALLOYS) {
-        bp = 200;
+        bp = 150;
     } else if (r <= RES_PRECIOUS_ORES) {
-        bp = 400;
+        bp = 200;
     } else {
-        bp = 800 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
+        bp = 400 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
     }
     // Alter by quality compared to wealth level
     if (wealthLevel > 0) {
