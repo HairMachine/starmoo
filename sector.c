@@ -174,6 +174,9 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar, int wealth
         if (possibleGoods > endGood - startGood) {
             possibleGoods = endGood - startGood;
         }
+        if (possibleGoods > 4) {
+            possibleGoods = 4;
+        }
         int goods = rand() % possibleGoods + 1;
         Sector_ResourceType goodsList[5] = {};
         int i = 0;
@@ -184,7 +187,7 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar, int wealth
         for (int j = 0; j < goods; j++) {
             int roll = rand() % i;
             Sector_ResourceType good = goodsList[roll];
-            int abundance = 101 + rand() % 75;
+            int abundance = 101 + rand() % 25;
             Sector_planetAddResource(&p, good, abundance);
             for (int k = roll; k < i; k++) {
                 goodsList[k] = goodsList[k + 1];
@@ -292,11 +295,11 @@ int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r, int wealth
     if (r <= RES_FABRICS) {
         bp = 100;
     } else if (r <= RES_HYPERALLOYS) {
-        bp = 150;
-    } else if (r <= RES_PRECIOUS_ORES) {
         bp = 200;
+    } else if (r <= RES_PRECIOUS_ORES) {
+        bp = 400;
     } else {
-        bp = 400 * (1 + (r - floor(RES_PRECIOUS_ORES / 5)));
+        bp = 1200 * (1 + (floor((r - RES_PRECIOUS_ORES - 1) / 4)));
     }
     // Alter by quality compared to wealth level
     if (wealthLevel > 0) {
