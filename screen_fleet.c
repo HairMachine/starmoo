@@ -198,11 +198,20 @@ void _clickDesignShip(UI_Element* el, Vector2 mpos) {
 
 void _clickDesignShipBuildButton(UI_Element* el, Vector2 mpos) {
     Unit_Design* ud = Unit_createDesign();
-    strcpy(ud->name, TextFormat("User Ship %d", Unit_designCount()));
     ud->componentnum = newDesignComponentNum;
     ud->playerCanBuild = 1;
     for (int i = 0; i < newDesignComponentNum; i++) {
         ud->components[i] = newDesignComponents[i];
+        if (strlen(ud->name) < 29) {
+            strcpy(ud->name, TextFormat(
+                "%s %c%c%c-%c",
+                ud->name,
+                ud->components[i].name[0],
+                ud->components[i].name[1],
+                ud->components[i].name[2],
+                ud->components[i].name[strlen(ud->components[i].name) - 1]
+            ));
+        }
     }
     newDesign = 0;
 }

@@ -21,7 +21,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         }
     },
     (Unit_Component) { // 1
-        .name = "Basic Habitation",
+        .name = "Habitation 1",
         .habitationSpace = 50,
         .size = 500,
         .buildCosts = {
@@ -32,7 +32,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         }
     },
     (Unit_Component) { // 2
-        .name = "Basic Storage",
+        .name = "Storage 1",
         .storageCapacity = 1000,
         .size = 10,
         .buildCosts = {
@@ -43,7 +43,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         }
     },
     (Unit_Component) { // 3
-        .name = "Basic Fabricator",
+        .name = "Fabricator 1",
         .unitProductionVolume = 100,
         .size = 100,
         .buildCosts = {
@@ -54,7 +54,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         }
     },
     (Unit_Component) { // 4
-        .name="Basic Miner",
+        .name="Miner 1",
         .miningVolume = 50,
         .size = 100,
         .buildCosts = {
@@ -65,7 +65,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         }
     },
     (Unit_Component) { // 5
-        .name="Basic Farm",
+        .name="Farm 1",
         .foodProduction = 25,
         .size = 100,
         .buildCosts = {
@@ -76,7 +76,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         }
     },
     (Unit_Component) { // 6
-        .name="Research Lab",
+        .name="Research Lab 1",
         .researchVolume = {
             5, 5, 5, 5, 5, 5
         },
@@ -101,7 +101,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         }
     },
     (Unit_Component) { // 8
-        .name="Shield I",
+        .name="Shield 1",
         .shieldStrength = 10,
         .sheildRechargeRate = 1,
         .size = 50,
@@ -135,7 +135,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         }
     },
     (Unit_Component) {
-        .name="Small Ship Bay",
+        .name="Carrier 1",
         .maxAllowedShipSize = 500,
         .totalShipSize = 3000,
         .buildCosts = {
@@ -147,7 +147,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     // Warp components
     (Unit_Component) {
-        .name = "Warp Device II",
+        .name = "Warp Device 2",
         .warpDriveLevel = 2,
         .size = 1000,
         .buildCosts = {
@@ -159,7 +159,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_2
     },
     (Unit_Component) {
-        .name = "Warp Device III",
+        .name = "Warp Device 3",
         .warpDriveLevel = 3,
         .size = 1000,
         .buildCosts = {
@@ -171,7 +171,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_3
     },
     (Unit_Component) {
-        .name = "Warp Device IV",
+        .name = "Warp Device 4",
         .warpDriveLevel = 4,
         .size = 1000,
         .buildCosts = {
@@ -183,7 +183,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_4
     },
     (Unit_Component) {
-        .name = "Warp Device V",
+        .name = "Warp Device 5",
         .warpDriveLevel = 5,
         .size = 1000,
         .buildCosts = {
@@ -195,7 +195,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_5
     },
     (Unit_Component) {
-        .name = "Warp Device VI",
+        .name = "Warp Device 6",
         .warpDriveLevel = 6,
         .size = 1000,
         .buildCosts = {
@@ -207,7 +207,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_6
     },
     (Unit_Component) {
-        .name = "Warp Device VII",
+        .name = "Warp Device 7",
         .warpDriveLevel = 7,
         .size = 1000,
         .buildCosts = {
@@ -219,7 +219,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_7
     },
     (Unit_Component) {
-        .name = "Warp Device VIII",
+        .name = "Warp Device 8",
         .warpDriveLevel = 8,
         .size = 1000,
         .buildCosts = {
@@ -231,7 +231,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_8
     },
     (Unit_Component) {
-        .name = "Warp Device IX",
+        .name = "Warp Device 9",
         .warpDriveLevel = 9,
         .size = 1000,
         .buildCosts = {
@@ -243,7 +243,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_WARP_9
     },
     (Unit_Component) {
-        .name = "Warp Device X",
+        .name = "Warp Device 10",
         .warpDriveLevel = 10,
         .size = 1000,
         .buildCosts = {
@@ -376,7 +376,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_MINING_6
     },
     (Unit_Component) {
-        .name="Moderate Ship Bay",
+        .name="Carrier 2",
         .maxAllowedShipSize = 1000,
         .totalShipSize = 6000,
         .buildCosts = {
@@ -388,7 +388,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CARRIER_1
     },
     (Unit_Component) {
-        .name="Medium Ship Bay",
+        .name="Carrier 3",
         .maxAllowedShipSize = 1000,
         .totalShipSize = 6000,
         .buildCosts = {
@@ -400,7 +400,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CARRIER_2
     },
     (Unit_Component) {
-        .name="Large Ship Bay",
+        .name="Carrier 4",
         .maxAllowedShipSize = 2000,
         .totalShipSize = 12000,
         .buildCosts = {
@@ -412,7 +412,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CARRIER_3
     },
     (Unit_Component) {
-        .name="Huge Ship Bay",
+        .name="Carrier 5",
         .maxAllowedShipSize = 4000,
         .totalShipSize = 24000,
         .buildCosts = {
@@ -424,7 +424,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CARRIER_4
     },
     (Unit_Component) {
-        .name="Massive Ship Bay",
+        .name="Carrier 6",
         .maxAllowedShipSize = 8000,
         .totalShipSize = 48000,
         .buildCosts = {
@@ -436,7 +436,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CARRIER_5
     },
     (Unit_Component) {
-        .name = "Improved Fabricator",
+        .name = "Fabricator 2",
         .unitProductionVolume = 100,
         .size = 100,
         .buildCosts = {
@@ -448,7 +448,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CONSTRUCT_1
     },
     (Unit_Component) {
-        .name = "Advanced Fabricator",
+        .name = "Fabricator 3",
         .unitProductionVolume = 200,
         .size = 100,
         .buildCosts = {
@@ -460,7 +460,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CONSTRUCT_2
     },
     (Unit_Component) {
-        .name = "Molecular Replicator",
+        .name = "Fabricator 4",
         .unitProductionVolume = 400,
         .size = 100,
         .buildCosts = {
@@ -472,7 +472,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CONSTRUCT_3
     },
     (Unit_Component) {
-        .name = "Advanced Replication",
+        .name = "Fabricator 5",
         .unitProductionVolume = 1600,
         .size = 100,
         .buildCosts = {
@@ -484,7 +484,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CONSTRUCT_4
     },
     (Unit_Component) {
-        .name = "Quantum Constructor",
+        .name = "Fabricator 6",
         .unitProductionVolume = 3200,
         .size = 100,
         .buildCosts = {
@@ -1078,7 +1078,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     // Forcefield tech
     (Unit_Component) {
-        .name="Shield II",
+        .name="Shield 2",
         .shieldStrength = 20,
         .sheildRechargeRate = 2,
         .size = 100,
@@ -1091,7 +1091,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_SHIELD_2
     },
     (Unit_Component) {
-        .name="Shield III",
+        .name="Shield 3",
         .shieldStrength = 40,
         .sheildRechargeRate = 4,
         .size = 200,
@@ -1104,7 +1104,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_SHIELD_3
     },
     (Unit_Component) {
-        .name="Shield IV",
+        .name="Shield 4",
         .shieldStrength = 80,
         .sheildRechargeRate = 8,
         .size = 400,
@@ -1117,7 +1117,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_SHIELD_4
     },
     (Unit_Component) {
-        .name="Shield V",
+        .name="Shield 5",
         .shieldStrength = 160,
         .sheildRechargeRate = 16,
         .size = 800,
@@ -1130,7 +1130,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_SHIELD_5
     },
     (Unit_Component) {
-        .name="Shield VI",
+        .name="Shield 6",
         .shieldStrength = 320,
         .sheildRechargeRate = 32,
         .size = 1600,
@@ -1198,7 +1198,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_REFLECTOR_5
     },
     (Unit_Component) {
-        .name="Shield Charger 1",
+        .name="Charger 1",
         .size = 100,
         .sheildRechargeRate = 10,
         .buildCosts = {
@@ -1210,7 +1210,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CHARGER_1
     },
     (Unit_Component) {
-        .name="Shield Charger 2",
+        .name="Charger 2",
         .size = 200,
         .sheildRechargeRate = 20,
         .buildCosts = {
@@ -1222,7 +1222,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CHARGER_2
     },
     (Unit_Component) {
-        .name="Shield Charger 3",
+        .name="Charger 3",
         .size = 400,
         .sheildRechargeRate = 40,
         .buildCosts = {
@@ -1234,7 +1234,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CHARGER_3
     },
     (Unit_Component) {
-        .name="Shield Charger 4",
+        .name="Charger 4",
         .size = 800,
         .sheildRechargeRate = 80,
         .buildCosts = {
@@ -1246,7 +1246,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CHARGER_4
     },
     (Unit_Component) {
-        .name="Shield Charger 5",
+        .name="Charger 5",
         .size = 1600,
         .sheildRechargeRate = 160,
         .buildCosts = {
@@ -1258,7 +1258,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_CHARGER_5
     },
     (Unit_Component) {
-        .name="Energy Drainer 1",
+        .name="Drainer 1",
         .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 10},
@@ -1269,7 +1269,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_DRAINER_1
     },
     (Unit_Component) {
-        .name="Energy Drainer 2",
+        .name="Drainer 2",
         .size = 200,
         .buildCosts = {
             {RES_BASE_METALS, 20},
@@ -1280,7 +1280,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_DRAINER_2
     },
     (Unit_Component) {
-        .name="Energy Drainer 3",
+        .name="Drainer 3",
         .size = 400,
         .buildCosts = {
             {RES_BASE_METALS, 40},
@@ -1291,7 +1291,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_DRAINER_3
     },
     (Unit_Component) {
-        .name="Energy Drainer 4",
+        .name="Drainer 4",
         .size = 800,
         .buildCosts = {
             {RES_BASE_METALS, 80},
@@ -1302,7 +1302,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .techRequired = RT_DRAINER_4
     },
     (Unit_Component) {
-        .name="Energy Drainer 5",
+        .name="Drainer 5",
         .size = 1600,
         .buildCosts = {
             {RES_BASE_METALS, 160},
