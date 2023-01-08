@@ -177,4 +177,3 @@ void Research_advance(Research_Field field, int amount) {
 int Research_techIsDeveloped(Research_TechType rt) {
     return techs[rt].developed;
 }
-

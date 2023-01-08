@@ -18,7 +18,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
-        }
+        },
+        .obsoletedBy = RT_WARP_2
     },
     (Unit_Component) { // 1
         .name = "Habitation 1",
@@ -51,7 +52,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
-        }
+        },
+        .obsoletedBy = RT_CONSTRUCT_1
     },
     (Unit_Component) { // 4
         .name="Miner 1",
@@ -62,7 +64,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
-        }
+        },
+        .obsoletedBy = RT_MINING_2
     },
     (Unit_Component) { // 5
         .name="Farm 1",
@@ -98,7 +101,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
-        }
+        },
+        .obsoletedBy = RT_BEAM_2
     },
     (Unit_Component) { // 8
         .name="Shield 1",
@@ -110,7 +114,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_MAGNETRIUM, 25},
             {RES_NONE, 0},
             {RES_NONE, 0}
-        }
+        },
+        .obsoletedBy = RT_SHIELD_2
     },
     (Unit_Component) { // 9
         .name="Gun Battery",
@@ -122,7 +127,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
-        }
+        },
+        .obsoletedBy = RT_GUN_2
     },
     (Unit_Component) {
         .name="Titanium Armour",
@@ -132,7 +138,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
-        }
+        },
+        .obsoletedBy = RT_ARMOUR_2
     },
     (Unit_Component) {
         .name="Carrier 1",
@@ -143,7 +150,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
-        }
+        },
+        .obsoletedBy = RT_CARRIER_1
     },
     // Warp components
     (Unit_Component) {
@@ -156,7 +164,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_WARP_2
+        .techRequired = RT_WARP_2,
+        .obsoletedBy = RT_WARP_3
     },
     (Unit_Component) {
         .name = "Warp Device 3",
@@ -168,7 +177,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_WARP_3
+        .techRequired = RT_WARP_3,
+        .obsoletedBy = RT_WARP_4
     },
     (Unit_Component) {
         .name = "Warp Device 4",
@@ -180,7 +190,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_WARP_4
+        .techRequired = RT_WARP_4,
+        .obsoletedBy = RT_WARP_5
     },
     (Unit_Component) {
         .name = "Warp Device 5",
@@ -192,7 +203,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_WARP_5
+        .techRequired = RT_WARP_5,
+        .obsoletedBy = RT_WARP_6
     },
     (Unit_Component) {
         .name = "Warp Device 6",
@@ -204,7 +216,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_WARP_6
+        .techRequired = RT_WARP_6,
+        .obsoletedBy = RT_WARP_7
     },
     (Unit_Component) {
         .name = "Warp Device 7",
@@ -216,7 +229,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_WARP_7
+        .techRequired = RT_WARP_7,
+        .obsoletedBy = RT_WARP_8
     },
     (Unit_Component) {
         .name = "Warp Device 8",
@@ -228,7 +242,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_WARP_8
+        .techRequired = RT_WARP_8,
+        .obsoletedBy = RT_WARP_9
     },
     (Unit_Component) {
         .name = "Warp Device 9",
@@ -240,7 +255,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_WARP_9
+        .techRequired = RT_WARP_9,
+        .obsoletedBy = RT_WARP_10
     },
     (Unit_Component) {
         .name = "Warp Device 10",
@@ -265,7 +281,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_ARMOUR_2
+        .techRequired = RT_ARMOUR_2,
+        .obsoletedBy = RT_ARMOUR_3
     },
     (Unit_Component) {
         .name="Armour 3",
@@ -277,7 +294,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_ARMOUR_3
+        .techRequired = RT_ARMOUR_3,
+        .obsoletedBy = RT_ARMOUR_4
     },
     (Unit_Component) {
         .name="Armour 4",
@@ -289,7 +307,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_ARMOUR_4
+        .techRequired = RT_ARMOUR_4,
+        .obsoletedBy = RT_ARMOUR_5
     },
     (Unit_Component) {
         .name="Armour 5",
@@ -301,7 +320,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_ARMOUR_5
+        .techRequired = RT_ARMOUR_5,
+        .obsoletedBy = RT_ARMOUR_6
     },
     (Unit_Component) {
         .name="Armour 6",
@@ -325,7 +345,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_MINING_2
+        .techRequired = RT_MINING_2,
+        .obsoletedBy = RT_MINING_3
     },
     (Unit_Component) {
         .name="Miner 3",
@@ -337,7 +358,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_MINING_3
+        .techRequired = RT_MINING_3,
+        .obsoletedBy = RT_MINING_4
     },
     (Unit_Component) {
         .name="Miner 4",
@@ -349,7 +371,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_MINING_4
+        .techRequired = RT_MINING_4,
+        .obsoletedBy = RT_MINING_5
     },
     (Unit_Component) {
         .name="Miner 5",
@@ -361,7 +384,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_MINING_5
+        .techRequired = RT_MINING_5,
+        .obsoletedBy = RT_MINING_6
     },
     (Unit_Component) {
         .name="Miner 6",
@@ -385,7 +409,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CARRIER_1
+        .techRequired = RT_CARRIER_1,
+        .obsoletedBy = RT_CARRIER_2
     },
     (Unit_Component) {
         .name="Carrier 3",
@@ -397,7 +422,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CARRIER_2
+        .techRequired = RT_CARRIER_2,
+        .obsoletedBy = RT_CARRIER_3
     },
     (Unit_Component) {
         .name="Carrier 4",
@@ -409,7 +435,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CARRIER_3
+        .techRequired = RT_CARRIER_3,
+        .obsoletedBy = RT_CARRIER_4
     },
     (Unit_Component) {
         .name="Carrier 5",
@@ -421,7 +448,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CARRIER_4
+        .techRequired = RT_CARRIER_4,
+        .obsoletedBy = RT_CARRIER_5
     },
     (Unit_Component) {
         .name="Carrier 6",
@@ -445,7 +473,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CONSTRUCT_1
+        .techRequired = RT_CONSTRUCT_1,
+        .obsoletedBy = RT_CONSTRUCT_2
     },
     (Unit_Component) {
         .name = "Fabricator 3",
@@ -457,7 +486,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CONSTRUCT_2
+        .techRequired = RT_CONSTRUCT_2,
+        .obsoletedBy = RT_CONSTRUCT_3
     },
     (Unit_Component) {
         .name = "Fabricator 4",
@@ -469,7 +499,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CONSTRUCT_3
+        .techRequired = RT_CONSTRUCT_3,
+        .obsoletedBy = RT_CONSTRUCT_4
     },
     (Unit_Component) {
         .name = "Fabricator 5",
@@ -481,7 +512,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CONSTRUCT_4
+        .techRequired = RT_CONSTRUCT_4,
+        .obsoletedBy = RT_CONSTRUCT_5
     },
     (Unit_Component) {
         .name = "Fabricator 6",
@@ -507,7 +539,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_BEAM_2
+        .techRequired = RT_BEAM_2,
+        .obsoletedBy = RT_BEAM_3
     },
     (Unit_Component) {
         .name="Ion Cannon",
@@ -520,7 +553,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_BEAM_3
+        .techRequired = RT_BEAM_3,
+        .obsoletedBy = RT_BEAM_4
     },
     (Unit_Component) {
         .name="Proton Blaster",
@@ -533,7 +567,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_BEAM_4
+        .techRequired = RT_BEAM_4,
+        .obsoletedBy = RT_BEAM_5
     },
     (Unit_Component) {
         .name="Plasma Cannon",
@@ -546,7 +581,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_BEAM_5
+        .techRequired = RT_BEAM_5,
+        .obsoletedBy = RT_BEAM_6
     },
     (Unit_Component) {
         .name="Turbolaser",
@@ -559,7 +595,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_BEAM_6
+        .techRequired = RT_BEAM_6,
+        .obsoletedBy = RT_BEAM_7
     },
     (Unit_Component) {
         .name="Tachyon Generator",
@@ -572,7 +609,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_BEAM_7
+        .techRequired = RT_BEAM_7,
+        .obsoletedBy = RT_BEAM_8
     },
     (Unit_Component) {
         .name="Hyperbeam Emitter",
@@ -598,7 +636,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_GUN_2
+        .techRequired = RT_GUN_2,
+        .obsoletedBy = RT_GUN_3
     },
     (Unit_Component) {
         .name="Gauss Cannon",
@@ -611,7 +650,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_GUN_3
+        .techRequired = RT_GUN_3,
+        .obsoletedBy = RT_GUN_4
     },
     (Unit_Component) {
         .name="Macrodriver",
@@ -624,7 +664,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_GUN_4
+        .techRequired = RT_GUN_4,
+        .obsoletedBy = RT_GUN_5
     },
     (Unit_Component) {
         .name="Assault Cannon",
@@ -637,7 +678,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_GUN_5
+        .techRequired = RT_GUN_5,
+        .obsoletedBy = RT_GUN_6
     },
     (Unit_Component) {
         .name="Planetoid Launcher",
@@ -663,7 +705,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_TORPEDO_1
+        .techRequired = RT_TORPEDO_1,
+        .obsoletedBy = RT_TORPEDO_2
     },
     (Unit_Component) {
         .name="Proton Torpedo",
@@ -676,7 +719,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_TORPEDO_2
+        .techRequired = RT_TORPEDO_2,
+        .obsoletedBy = RT_TORPEDO_3
     },
     (Unit_Component) {
         .name="Antimatter Torpedo",
@@ -689,7 +733,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_TORPEDO_3
+        .techRequired = RT_TORPEDO_3,
+        .obsoletedBy = RT_TORPEDO_4
     },
     (Unit_Component) {
         .name="Singularity Torpedo",
@@ -713,7 +758,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_ANTENNA_1
+        .techRequired = RT_ANTENNA_1,
+        .obsoletedBy = RT_ANTENNA_2
     },
     (Unit_Component) {
         .name = "Antenna 2",
@@ -723,7 +769,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_ANTENNA_2
+        .techRequired = RT_ANTENNA_2,
+        .obsoletedBy = RT_ANTENNA_3
     },
     (Unit_Component) {
         .name = "Antenna 3",
@@ -733,7 +780,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_ANTENNA_3
+        .techRequired = RT_ANTENNA_3,
+        .obsoletedBy = RT_ANTENNA_4
     },
     (Unit_Component) {
         .name = "Antenna 4",
@@ -743,7 +791,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_ANTENNA_4
+        .techRequired = RT_ANTENNA_4,
+        .obsoletedBy = RT_ANTENNA_5
     },
     (Unit_Component) {
         .name = "Antenna 5",
@@ -763,7 +812,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_ENCRYPTOR_1
+        .techRequired = RT_ENCRYPTOR_1,
+        .obsoletedBy = RT_ENCRYPTOR_2
     },
     (Unit_Component) {
         .name = "Encryptor 2",
@@ -773,7 +823,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_ENCRYPTOR_2
+        .techRequired = RT_ENCRYPTOR_2,
+        .obsoletedBy = RT_ENCRYPTOR_3
     },
     (Unit_Component) {
         .name = "Encryptor 3",
@@ -783,7 +834,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_ENCRYPTOR_3
+        .techRequired = RT_ENCRYPTOR_3,
+        .obsoletedBy = RT_ENCRYPTOR_4
     },
     (Unit_Component) {
         .name = "Encryptor 4",
@@ -793,7 +845,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_ENCRYPTOR_4
+        .techRequired = RT_ENCRYPTOR_4,
+        .obsoletedBy = RT_ENCRYPTOR_5
     },
     (Unit_Component) {
         .name = "Encryptor 5",
@@ -813,7 +866,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_OVERRIDE_1
+        .techRequired = RT_OVERRIDE_1,
+        .obsoletedBy = RT_OVERRIDE_2
     },
     (Unit_Component) {
         .name = "Override 2",
@@ -823,7 +877,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_OVERRIDE_2
+        .techRequired = RT_OVERRIDE_2,
+        .obsoletedBy = RT_OVERRIDE_3
     },
     (Unit_Component) {
         .name = "Override 3",
@@ -833,7 +888,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_OVERRIDE_3
+        .techRequired = RT_OVERRIDE_3,
+        .obsoletedBy = RT_OVERRIDE_4
     },
     (Unit_Component) {
         .name = "Override 4",
@@ -843,7 +899,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_OVERRIDE_4
+        .techRequired = RT_OVERRIDE_4,
+        .obsoletedBy = RT_OVERRIDE_5
     },
     (Unit_Component) {
         .name = "Override 5",
@@ -865,7 +922,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_GOODS_1
+        .techRequired = RT_GOODS_1,
+        .obsoletedBy = RT_GOODS_2
     },
     (Unit_Component) {
         .name = "Luxury Goods 2",
@@ -876,7 +934,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_GOODS_2
+        .techRequired = RT_GOODS_2,
+        .obsoletedBy = RT_GOODS_3
     },
     (Unit_Component) {
         .name = "Luxury Goods 3",
@@ -887,7 +946,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_GOODS_3
+        .techRequired = RT_GOODS_3,
+        .obsoletedBy = RT_GOODS_4
     },
     (Unit_Component) {
         .name = "Luxury Goods 4",
@@ -898,7 +958,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_GOODS_4
+        .techRequired = RT_GOODS_4,
+        .obsoletedBy = RT_GOODS_5
     },
     (Unit_Component) {
         .name = "Luxury Goods 5",
@@ -920,7 +981,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_WINE_1
+        .techRequired = RT_WINE_1,
+        .obsoletedBy = RT_WINE_2
     },
     (Unit_Component) {
         .name = "Barathian Wine 2",
@@ -931,7 +993,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_WINE_2
+        .techRequired = RT_WINE_2,
+        .obsoletedBy = RT_WINE_3
     },
     (Unit_Component) {
         .name = "Barathian Wine 3",
@@ -942,7 +1005,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_WINE_3
+        .techRequired = RT_WINE_3,
+        .obsoletedBy = RT_WINE_4
     },
     (Unit_Component) {
         .name = "Barathian Wine 4",
@@ -953,7 +1017,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_WINE_4
+        .techRequired = RT_WINE_4,
+        .obsoletedBy = RT_WINE_5
     },
     (Unit_Component) {
         .name = "Barathian Wine 5",
@@ -975,7 +1040,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_MEDICAL_1
+        .techRequired = RT_MEDICAL_1,
+        .obsoletedBy = RT_MEDICAL_2
     },
     (Unit_Component) {
         .name = "Medical Supplies 2",
@@ -986,7 +1052,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_MEDICAL_2
+        .techRequired = RT_MEDICAL_2,
+        .obsoletedBy = RT_MEDICAL_3
     },
     (Unit_Component) {
         .name = "Medical Supplies 3",
@@ -997,7 +1064,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_MEDICAL_3
+        .techRequired = RT_MEDICAL_3,
+        .obsoletedBy = RT_MEDICAL_4
     },
     (Unit_Component) {
         .name = "Medical Supplies 4",
@@ -1008,7 +1076,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_MEDICAL_4
+        .techRequired = RT_MEDICAL_4,
+        .obsoletedBy = RT_MEDICAL_5
     },
     (Unit_Component) {
         .name = "Medical Supplies 5",
@@ -1030,7 +1099,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_STIMS_1
+        .techRequired = RT_STIMS_1,
+        .obsoletedBy = RT_STIMS_2
     },
     (Unit_Component) {
         .name = "Stims 2",
@@ -1041,7 +1111,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_STIMS_2
+        .techRequired = RT_STIMS_2,
+        .obsoletedBy = RT_STIMS_3
     },
     (Unit_Component) {
         .name = "Stims 3",
@@ -1052,7 +1123,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_STIMS_3
+        .techRequired = RT_STIMS_3,
+        .obsoletedBy = RT_STIMS_4
     },
     (Unit_Component) {
         .name = "Stims 4",
@@ -1063,7 +1135,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0},
         },
-        .techRequired = RT_STIMS_4
+        .techRequired = RT_STIMS_4,
+        .obsoletedBy = RT_STIMS_5
     },
     (Unit_Component) {
         .name = "Stims 5",
@@ -1088,7 +1161,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_SHIELD_2
+        .techRequired = RT_SHIELD_2,
+        .obsoletedBy = RT_SHIELD_3
     },
     (Unit_Component) {
         .name="Shield 3",
@@ -1101,7 +1175,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_SHIELD_3
+        .techRequired = RT_SHIELD_3,
+        .obsoletedBy = RT_SHIELD_4
     },
     (Unit_Component) {
         .name="Shield 4",
@@ -1114,7 +1189,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_SHIELD_4
+        .techRequired = RT_SHIELD_4,
+        .obsoletedBy = RT_SHIELD_5
     },
     (Unit_Component) {
         .name="Shield 5",
@@ -1127,7 +1203,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_SHIELD_5
+        .techRequired = RT_SHIELD_5,
+        .obsoletedBy = RT_SHIELD_6
     },
     (Unit_Component) {
         .name="Shield 6",
@@ -1151,7 +1228,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_REFLECTOR_1
+        .techRequired = RT_REFLECTOR_1,
+        .obsoletedBy = RT_REFLECTOR_2
     },
     (Unit_Component) {
         .name="Reflector Sheilds 2",
@@ -1162,7 +1240,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_REFLECTOR_2
+        .techRequired = RT_REFLECTOR_2,
+        .obsoletedBy = RT_REFLECTOR_3
     },
     (Unit_Component) {
         .name="Reflector Sheilds 3",
@@ -1173,7 +1252,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_REFLECTOR_3
+        .techRequired = RT_REFLECTOR_3,
+        .obsoletedBy = RT_REFLECTOR_4
     },
     (Unit_Component) {
         .name="Reflector Sheilds 4",
@@ -1184,7 +1264,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_REFLECTOR_4
+        .techRequired = RT_REFLECTOR_4,
+        .obsoletedBy = RT_REFLECTOR_5
     },
     (Unit_Component) {
         .name="Reflector Sheilds 5",
@@ -1207,7 +1288,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CHARGER_1
+        .techRequired = RT_CHARGER_1,
+        .obsoletedBy = RT_CHARGER_2
     },
     (Unit_Component) {
         .name="Charger 2",
@@ -1219,7 +1301,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CHARGER_2
+        .techRequired = RT_CHARGER_2,
+        .obsoletedBy = RT_CHARGER_3
     },
     (Unit_Component) {
         .name="Charger 3",
@@ -1231,7 +1314,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CHARGER_3
+        .techRequired = RT_CHARGER_3,
+        .obsoletedBy = RT_CHARGER_4
     },
     (Unit_Component) {
         .name="Charger 4",
@@ -1243,7 +1327,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_CHARGER_4
+        .techRequired = RT_CHARGER_4,
+        .obsoletedBy = RT_CHARGER_5
     },
     (Unit_Component) {
         .name="Charger 5",
@@ -1266,7 +1351,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_DRAINER_1
+        .techRequired = RT_DRAINER_1,
+        .obsoletedBy = RT_DRAINER_2
     },
     (Unit_Component) {
         .name="Drainer 2",
@@ -1277,7 +1363,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_DRAINER_2
+        .techRequired = RT_DRAINER_2,
+        .obsoletedBy = RT_DRAINER_3
     },
     (Unit_Component) {
         .name="Drainer 3",
@@ -1288,7 +1375,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_DRAINER_3
+        .techRequired = RT_DRAINER_3,
+        .obsoletedBy = RT_DRAINER_4
     },
     (Unit_Component) {
         .name="Drainer 4",
@@ -1299,7 +1387,8 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
-        .techRequired = RT_DRAINER_4
+        .techRequired = RT_DRAINER_4,
+        .obsoletedBy = RT_DRAINER_5
     },
     (Unit_Component) {
         .name="Drainer 5",

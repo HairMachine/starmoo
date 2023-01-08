@@ -33,6 +33,7 @@ typedef struct {
     int maxAllowedShipSize;
     int totalShipSize;
     Research_TechType techRequired;
+    Research_TechType obsoletedBy;
 } Unit_Component;
 
 typedef struct {

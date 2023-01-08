@@ -139,7 +139,7 @@ void _drawDesignShip(UI_Element* el) {
     int line = 0;
     for (int i = 0; i < COMPONENTS_ALL; i++) {
         Unit_Component uc = Unit_getComponent(i);
-        if (Research_techIsDeveloped(uc.techRequired)) {
+        if (Research_techIsDeveloped(uc.techRequired) && (!uc.obsoletedBy || !Research_techIsDeveloped(uc.obsoletedBy))) {
             DrawText(uc.name, el->x, 32 + el->y + line*16, 16, RAYWHITE);
             line++;
         }
@@ -172,7 +172,7 @@ void _clickDesignShip(UI_Element* el, Vector2 mpos) {
     int build = 0;
     for (int i = 0; i < COMPONENTS_ALL; i++) {
         Unit_Component uc = Unit_getComponent(i);
-        if (Research_techIsDeveloped(uc.techRequired)) {
+        if (Research_techIsDeveloped(uc.techRequired) && (!uc.obsoletedBy || !Research_techIsDeveloped(uc.obsoletedBy))) {
             clicked--;
             if (clicked == -1) {
                 build = i;
