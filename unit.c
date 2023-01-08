@@ -35,7 +35,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) { // 2
         .name = "Storage 1",
         .storageCapacity = 1000,
-        .size = 10,
+        .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 5},
             {RES_NONE, 0},
@@ -46,7 +46,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) { // 3
         .name = "Fabricator 1",
         .unitProductionVolume = 100,
-        .size = 100,
+        .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 10},
             {RES_NONE, 0},
@@ -58,7 +58,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) { // 4
         .name="Miner 1",
         .miningVolume = 50,
-        .size = 100,
+        .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 5},
             {RES_NONE, 0},
@@ -70,7 +70,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) { // 5
         .name="Farm 1",
         .foodProduction = 25,
-        .size = 100,
+        .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 1},
             {RES_FERTILE_SOIL, 10},
@@ -83,7 +83,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .researchVolume = {
             5, 5, 5, 5, 5, 5
         },
-        .size = 100,
+        .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 10},
             {RES_NONE, 0},
@@ -95,7 +95,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .name="Laser Cannon",
         .shotPower = 10,
         .shotPenetration = 25,
-        .size = 25,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 5},
             {RES_NONE, 0},
@@ -108,7 +108,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .name="Shield 1",
         .shieldStrength = 10,
         .sheildRechargeRate = 1,
-        .size = 50,
+        .size = 250,
         .buildCosts = {
             {RES_BASE_METALS, 25},
             {RES_MAGNETRIUM, 25},
@@ -121,7 +121,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .name="Gun Battery",
         .shotPower = 25,
         .shotPenetration = 10,
-        .size = 25,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 5},
             {RES_NONE, 0},
@@ -133,6 +133,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Titanium Armour",
         .armourStrength = 100,
+        .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 5},
             {RES_NONE, 0},
@@ -338,7 +339,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 2",
         .miningVolume = 50,
-        .size = 100,
+        .size = 750,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -351,7 +352,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 3",
         .miningVolume = 100,
-        .size = 100,
+        .size = 1000,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -364,7 +365,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 4",
         .miningVolume = 200,
-        .size = 100,
+        .size = 1500,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -377,7 +378,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 5",
         .miningVolume = 400,
-        .size = 100,
+        .size = 2000,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -390,7 +391,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Miner 6",
         .miningVolume = 800,
-        .size = 100,
+        .size = 3000,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
