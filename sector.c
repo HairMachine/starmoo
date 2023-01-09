@@ -25,67 +25,6 @@ char Sector_planetStrings[PLANET_ALL][16] = {
     "None", "Gaia", "Terran", "Ocean", "Desert", "Tundra", "Barren", "Volcanic", "Gas Giant"
 };
 
-void _getPossibleResourcesByPlanet(Sector_Planet p, Sector_Resource rt[]) {
-    // Reset the template
-    for (int i = 0; i < RESOURCE_MAX; i++) {
-        rt[i] = (Sector_Resource) {RES_NONE, 0};
-    }
-    switch (p.type) {
-        case PLANET_GAIA:
-            rt[0] = (Sector_Resource) {RES_FERTILE_SOIL, 100};
-            rt[1] = (Sector_Resource) {RES_BASE_METALS, 15};
-            rt[2] = (Sector_Resource) {RES_FABRICS, 50};
-            rt[3] = (Sector_Resource) {RES_REGENATRONS, 10};
-            rt[4] = (Sector_Resource) {RES_STIM_CELLS, 25};
-            rt[5] = (Sector_Resource) {RES_FINE_FRUIT, 15};
-            rt[6] = (Sector_Resource) {RES_PRECIOUS_ORES, 5};
-            rt[7] = (Sector_Resource) {RES_SILICON, 10};
-            break;
-        case PLANET_TERRAN:
-            rt[0] = (Sector_Resource) {RES_FERTILE_SOIL, 80};
-            rt[1] = (Sector_Resource) {RES_BASE_METALS, 15};
-            rt[2] = (Sector_Resource) {RES_FABRICS, 40};
-            rt[3] = (Sector_Resource) {RES_REGENATRONS, 5};
-            rt[4] = (Sector_Resource) {RES_STIM_CELLS, 15};
-            rt[5] = (Sector_Resource) {RES_FINE_FRUIT, 10};
-            rt[6] = (Sector_Resource) {RES_PRECIOUS_ORES, 5};
-            rt[7] = (Sector_Resource) {RES_SILICON, 10};
-            break;
-        case PLANET_DESERT:
-        case PLANET_OCEAN:
-            rt[0] = (Sector_Resource) {RES_FERTILE_SOIL, 15};
-            rt[1] = (Sector_Resource) {RES_BASE_METALS, 30};
-            rt[2] = (Sector_Resource) {RES_FABRICS, 20};
-            rt[3] = (Sector_Resource) {RES_REGENATRONS, 5};
-            rt[4] = (Sector_Resource) {RES_STIM_CELLS, 5};
-            rt[5] = (Sector_Resource) {RES_FINE_FRUIT, 5};
-            break;
-        case PLANET_TUNDRA:
-        case PLANET_VOLCANIC:
-            rt[0] = (Sector_Resource) {RES_BASE_METALS, 30};
-            rt[1] = (Sector_Resource) {RES_SILICON, 15};
-            rt[2] = (Sector_Resource) {RES_MAGNETRIUM, 25};
-            rt[3] = (Sector_Resource) {RES_CYTRONIUM, 15};
-            rt[4] = (Sector_Resource) {RES_HYPERALLOYS, 20};
-            rt[5] = (Sector_Resource) {RES_PRECIOUS_ORES, 15};
-            break;
-        case PLANET_BARREN:
-            rt[0] = (Sector_Resource) {RES_BASE_METALS, 80};
-            rt[1] = (Sector_Resource) {RES_SILICON, 50};
-            rt[2] = (Sector_Resource) {RES_MAGNETRIUM, 25};
-            rt[3] = (Sector_Resource) {RES_CYTRONIUM, 15};
-            rt[4] = (Sector_Resource) {RES_HYPERALLOYS, 10};
-            rt[5] = (Sector_Resource) {RES_PRECIOUS_ORES, 35};
-            break;
-        case PLANET_GAS_GIANT:
-            rt[0] = (Sector_Resource) {RES_DEUTERIUM, 50};
-            rt[1] = (Sector_Resource) {RES_SUBFILAMENTS, 10};
-            break;
-        default:
-            break;
-    }
-}
-
 Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar, int wealthLevel) {
     Sector_Planet p = (Sector_Planet) {};
     p.temperature = distFromStar <= TEMP_X_COLD ? distFromStar : TEMP_X_COLD;
@@ -155,46 +94,6 @@ Sector_Planet _generatePlanet(Sector_StarType star, int distFromStar, int wealth
     } else {
         p.pop = 0;
     }
-    // Create some resources
-    p.resourcenum = 0;
-    Sector_Resource resourceTemplate[RESOURCE_MAX] = {};
-    _getPossibleResourcesByPlanet(p, resourceTemplate);
-    for (int i = 0; i < RESOURCE_MAX; i++) {
-        if (resourceTemplate[i].type != RES_NONE && (p.pop == 0 || wealthLevel <= Sector_resourceQuality(resourceTemplate[i].type))) {
-            int rq = resourceTemplate[i].abundance + (rand() % 25 + 1) - (rand() % 50 + 1);
-            Sector_planetAddResource(&p, resourceTemplate[i].type, rq);
-        }
-    }
-    // Create goods production on wealthier planets with more deveoped industries
-    if (p.pop > 0 && wealthLevel >= 10) {
-        Sector_ResourceType baseGood = wealthLevel / 20 * GOOD_TYPES + RES_PRECIOUS_ORES + 1;
-        Sector_ResourceType startGood = baseGood - GOOD_TYPES;
-        Sector_ResourceType endGood = baseGood + GOOD_TYPES;
-        int possibleGoods = RESOURCE_MAX - p.resourcenum;
-        if (possibleGoods > endGood - startGood) {
-            possibleGoods = endGood - startGood;
-        }
-        if (possibleGoods > 4) {
-            possibleGoods = 4;
-        }
-        int goods = rand() % possibleGoods + 1;
-        Sector_ResourceType goodsList[5] = {};
-        int i = 0;
-        for (Sector_ResourceType good = startGood; good < endGood; good++) {
-            goodsList[i] = good;
-            i++;
-        }
-        for (int j = 0; j < goods; j++) {
-            int roll = rand() % i;
-            Sector_ResourceType good = goodsList[roll];
-            int abundance = 101 + rand() % 25;
-            Sector_planetAddResource(&p, good, abundance);
-            for (int k = roll; k < i; k++) {
-                goodsList[k] = goodsList[k + 1];
-            }
-            i--;
-        }
-    }
     // TODO: Phenomena
     // TODO: Make adjustments up / down by star type
     return p;
@@ -239,6 +138,7 @@ Sector_Entity Sector_create(Sector_Template st) {
     if (s.star == STAR_NONE) {
         return s;
     }
+
     // Create some random planets
     if (!s.planetnum) {
         s.planetnum = rand() % PLANET_MAX;

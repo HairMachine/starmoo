@@ -46,6 +46,12 @@ void Combat_setupRandomEncounter(Sector_Entity* s) {
     // TODO: A much more sophisticated design that creates enemies that fit into the given
     // fleet size; larger fleet size means more dangerous enemies can be spawned
     int fart = ceil(fleetSize / 50);
+    if (!fleetSize) {
+        fleetSize = 1;
+    }
+    if (!fart) {
+        fart = 1;
+    }
     int numShips = ceil(fleetSize / 25) + rand() % fart;
     if (numShips > 128) {
         numShips = 128;

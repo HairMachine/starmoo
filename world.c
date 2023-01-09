@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "raylib.h"
 
 #include "sector.h"
@@ -12,6 +13,74 @@
 
 Sector_Entity World_sectors[World_sizeY * World_sizeX];
 int legitimacy = 1000;
+
+int _planetAllowedResource(Sector_Planet* p, Sector_ResourceType rt) {
+    switch (rt) {
+        case RES_DEUTERIUM:
+        case RES_SUBFILAMENTS:
+        case RES_REGENATRONS:
+            return p->type == PLANET_GAS_GIANT;
+        case RES_BASE_METALS:
+        case RES_CYTRONIUM:
+        case RES_MAGNETRIUM:    
+        case RES_HYPERALLOYS:
+        case RES_PRECIOUS_ORES:
+            return p->type != PLANET_GAS_GIANT && p->funds < 5000;
+        case RES_FINE_FRUIT:
+        case RES_STIM_CELLS:
+            return (p->type == PLANET_TERRAN || p->type == PLANET_GAIA || p->type == PLANET_OCEAN || p->type == PLANET_DESERT) && p->funds < 25000 && p->funds > 1000;
+        default:
+            return p->pop > 0 && p->funds > 5000;
+    }
+}
+
+void _assignResources() {
+    int totalSectors = World_sizeX * World_sizeY;
+    // DEFINITIONS
+    int sectorTotals[RES_ALL] = {};
+    for (int i = 0; i < RES_ALL; i++) {
+        sectorTotals[i] = 0;
+    }
+    sectorTotals[RES_BASE_METALS] = ceil(totalSectors / 10);
+    sectorTotals[RES_CYTRONIUM] = ceil(totalSectors / 30);
+    sectorTotals[RES_MAGNETRIUM] = ceil(totalSectors / 30);
+    sectorTotals[RES_HYPERALLOYS] = ceil(totalSectors / 20);
+    sectorTotals[RES_DEUTERIUM] = ceil(totalSectors / 20);
+    sectorTotals[RES_SUBFILAMENTS] = ceil(totalSectors / 30);
+    sectorTotals[RES_FINE_FRUIT] = ceil(totalSectors / 40);
+    sectorTotals[RES_REGENATRONS] = ceil(totalSectors / 40);
+    sectorTotals[RES_STIM_CELLS] = ceil(totalSectors / 40);
+    sectorTotals[RES_PRECIOUS_ORES] = ceil(totalSectors / 40);
+    // Loop through luxuries
+    for (int i = RES_PRECIOUS_ORES + 1; i < RES_ALL; i++) {
+        sectorTotals[i] = ceil(totalSectors / (60 + 10 * floor((i - RES_PRECIOUS_ORES - 1) / 4)));
+    }
+    for (int i = 0; i < RES_ALL; i++) {
+        while (sectorTotals[i]) {
+            int ok = 0;
+            int maxTries = 0;
+            while (!ok && maxTries < 5000) {
+                start:
+                Sector_Entity* s = &World_sectors[rand() % World_sizeY * World_sizeX + rand() % World_sizeX];
+                if (s->planetnum) {
+                    Sector_Planet* p = &s->planets[rand() % s->planetnum];
+                    // Todo: bag randomness or some other mitigated randomness
+                    if (p->resourcenum < RESOURCE_MAX - 1 && _planetAllowedResource(p, i)) {
+                        for (int j = 0; j < p->resourcenum; j++) {
+                            if (p->resources[j].type == i) {
+                                maxTries++;
+                                goto start;
+                            }
+                        }
+                        Sector_planetAddResource(p, i, 100 + rand() % 25 + 50);
+                        ok = 1;
+                    }
+                }
+            }
+            sectorTotals[i]--;
+        }
+    }
+}
 
 /**
  * Algorithm that creates a universe. 
@@ -67,6 +136,7 @@ void World_create() {
             }
         }
     }
+    _assignResources();
 }
 
 /**
