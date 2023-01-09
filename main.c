@@ -28,12 +28,12 @@ int main()
     ud->componentnum = 6;
     ud->components[0] = Unit_getComponent(0);
     ud->components[1] = Unit_getComponent(1);
-    ud->components[2] = Unit_getComponent(3);
-    ud->components[3] = Unit_getComponent(5);
-    ud->components[4] = Unit_getComponent(2);
-    ud->components[5] = Unit_getComponent(11);
+    ud->components[2] = Unit_getComponent(2);
+    ud->components[5] = Unit_getComponent(9);
     // Build one to start them off with
-    Unit_create(ud);
+    Unit_Entity* domeShip = Unit_create(ud);
+    // Domeship is special and doesn't consume population like fleet ships - it's where everyone is living!
+    domeShip->pop = 0;
     
     Fleet_addUnit(Fleet_getPointer(0), Unit_lastAddedIndex());
     Fleet_getPointer(0)->lowpop = 25;

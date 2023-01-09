@@ -15,11 +15,14 @@ Sector_Entity World_sectors[World_sizeY * World_sizeX];
 int legitimacy = 1000;
 
 int _planetAllowedResource(Sector_Planet* p, Sector_ResourceType rt) {
+    if (p->type == PLANET_NONE) {
+        return 0;
+    }
     switch (rt) {
         case RES_DEUTERIUM:
         case RES_SUBFILAMENTS:
         case RES_REGENATRONS:
-            return p->type == PLANET_GAS_GIANT;
+            return p->type == PLANET_GAS_GIANT || p->funds > 0;
         case RES_BASE_METALS:
         case RES_CYTRONIUM:
         case RES_MAGNETRIUM:    
@@ -41,19 +44,19 @@ void _assignResources() {
     for (int i = 0; i < RES_ALL; i++) {
         sectorTotals[i] = 0;
     }
-    sectorTotals[RES_BASE_METALS] = ceil(totalSectors / 10);
-    sectorTotals[RES_CYTRONIUM] = ceil(totalSectors / 30);
-    sectorTotals[RES_MAGNETRIUM] = ceil(totalSectors / 30);
-    sectorTotals[RES_HYPERALLOYS] = ceil(totalSectors / 20);
+    sectorTotals[RES_BASE_METALS] = ceil(totalSectors / 15);
+    sectorTotals[RES_CYTRONIUM] = ceil(totalSectors / 40);
+    sectorTotals[RES_MAGNETRIUM] = ceil(totalSectors / 40);
+    sectorTotals[RES_HYPERALLOYS] = ceil(totalSectors / 30);
     sectorTotals[RES_DEUTERIUM] = ceil(totalSectors / 20);
-    sectorTotals[RES_SUBFILAMENTS] = ceil(totalSectors / 30);
-    sectorTotals[RES_FINE_FRUIT] = ceil(totalSectors / 40);
-    sectorTotals[RES_REGENATRONS] = ceil(totalSectors / 40);
-    sectorTotals[RES_STIM_CELLS] = ceil(totalSectors / 40);
-    sectorTotals[RES_PRECIOUS_ORES] = ceil(totalSectors / 40);
+    sectorTotals[RES_SUBFILAMENTS] = ceil(totalSectors / 40);
+    sectorTotals[RES_FINE_FRUIT] = ceil(totalSectors / 50);
+    sectorTotals[RES_REGENATRONS] = ceil(totalSectors / 50);
+    sectorTotals[RES_STIM_CELLS] = ceil(totalSectors / 50);
+    sectorTotals[RES_PRECIOUS_ORES] = ceil(totalSectors / 50);
     // Loop through luxuries
     for (int i = RES_PRECIOUS_ORES + 1; i < RES_ALL; i++) {
-        sectorTotals[i] = ceil(totalSectors / (60 + 10 * floor((i - RES_PRECIOUS_ORES - 1) / 4)));
+        sectorTotals[i] = ceil(totalSectors / (70 + 10 * floor((i - RES_PRECIOUS_ORES - 1) / 4)));
     }
     for (int i = 0; i < RES_ALL; i++) {
         while (sectorTotals[i]) {

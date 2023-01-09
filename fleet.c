@@ -117,16 +117,8 @@ int _newPop(Fleet_Entity* f, float birthChance) {
 }
 
 void _changePop(Fleet_Entity* f, int excessDeaths) {
-    int popMax = 0;
-    Unit_Entity u;
-    for (int i = 0; i < f->unitmax; i++) {
-        u = Unit_getCopy(f->units[i]);
-        popMax += u.popMax;
-    }
-    // Your population is limited by the amount of food resource available to you
-    if (popMax > f->food) {
-        popMax = f->food;
-    }
+    // TODO: development level
+    int popMax = f->development * 50 + 50;
     int popCurrent = FLEET_BASIC_NEEDS;
     int births = 0;
     if (popCurrent < popMax) {

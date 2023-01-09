@@ -22,28 +22,17 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .obsoletedBy = RT_WARP_2
     },
     (Unit_Component) { // 1
-        .name = "Habitation 1",
-        .habitationSpace = 50,
+        .name = "Storage 1",
+        .storageCapacity = 100,
         .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 5},
-            {RES_FABRICS, 1},
+            {RES_NONE, 0},
             {RES_NONE, 0},
             {RES_NONE, 0}
         }
     },
     (Unit_Component) { // 2
-        .name = "Storage 1",
-        .storageCapacity = 1000,
-        .size = 500,
-        .buildCosts = {
-            {RES_BASE_METALS, 5},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        }
-    },
-    (Unit_Component) { // 3
         .name = "Fabricator 1",
         .unitProductionVolume = 100,
         .size = 500,
@@ -55,30 +44,19 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_CONSTRUCT_1
     },
-    (Unit_Component) { // 4
+    (Unit_Component) { // 3
         .name="Miner 1",
         .miningVolume = 50,
         .size = 500,
         .buildCosts = {
-            {RES_BASE_METALS, 5},
-            {RES_NONE, 0},
+            {RES_BASE_METALS, 10},
+            {RES_DEUTERIUM, 5},
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
         .obsoletedBy = RT_MINING_2
     },
-    (Unit_Component) { // 5
-        .name="Farm 1",
-        .foodProduction = 25,
-        .size = 500,
-        .buildCosts = {
-            {RES_BASE_METALS, 1},
-            {RES_FERTILE_SOIL, 10},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        }
-    },
-    (Unit_Component) { // 6
+    (Unit_Component) { // 4
         .name="Research Lab 1",
         .researchVolume = {
             5, 5, 5, 5, 5, 5
@@ -86,51 +64,51 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 10},
-            {RES_NONE, 0},
+            {RES_DEUTERIUM, 10},
             {RES_NONE, 0},
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) { // 7
+    (Unit_Component) { // 5
         .name="Laser Cannon",
         .shotPower = 10,
         .shotPenetration = 25,
         .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 5},
-            {RES_NONE, 0},
+            {RES_DEUTERIUM, 1},
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
         .obsoletedBy = RT_BEAM_2
     },
-    (Unit_Component) { // 8
+    (Unit_Component) { // 6
         .name="Shield 1",
         .shieldStrength = 10,
         .sheildRechargeRate = 1,
         .size = 250,
         .buildCosts = {
-            {RES_BASE_METALS, 25},
-            {RES_MAGNETRIUM, 25},
+            {RES_BASE_METALS, 10},
+            {RES_MAGNETRIUM, 5},
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
         .obsoletedBy = RT_SHIELD_2
     },
-    (Unit_Component) { // 9
+    (Unit_Component) { // 7
         .name="Gun Battery",
         .shotPower = 25,
         .shotPenetration = 10,
         .size = 100,
         .buildCosts = {
             {RES_BASE_METALS, 5},
-            {RES_NONE, 0},
+            {RES_DEUTERIUM, 1},
             {RES_NONE, 0},
             {RES_NONE, 0}
         },
         .obsoletedBy = RT_GUN_2
     },
-    (Unit_Component) {
+    (Unit_Component) { // 8
         .name="Titanium Armour",
         .armourStrength = 100,
         .size = 100,
@@ -141,18 +119,6 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         },
         .obsoletedBy = RT_ARMOUR_2
-    },
-    (Unit_Component) {
-        .name="Carrier 1",
-        .maxAllowedShipSize = 500,
-        .totalShipSize = 3000,
-        .buildCosts = {
-            {RES_BASE_METALS, 5},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .obsoletedBy = RT_CARRIER_1
     },
     // Warp components
     (Unit_Component) {
@@ -403,7 +369,6 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) {
         .name="Carrier 2",
         .maxAllowedShipSize = 1000,
-        .totalShipSize = 6000,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -415,8 +380,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name="Carrier 3",
-        .maxAllowedShipSize = 1000,
-        .totalShipSize = 6000,
+        .maxAllowedShipSize = 2000,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -428,8 +392,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name="Carrier 4",
-        .maxAllowedShipSize = 2000,
-        .totalShipSize = 12000,
+        .maxAllowedShipSize = 4000,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -441,8 +404,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name="Carrier 5",
-        .maxAllowedShipSize = 4000,
-        .totalShipSize = 24000,
+        .maxAllowedShipSize = 8000,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -454,8 +416,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) {
         .name="Carrier 6",
-        .maxAllowedShipSize = 8000,
-        .totalShipSize = 48000,
+        .maxAllowedShipSize = 16000,
         .buildCosts = {
             {RES_BASE_METALS, 50},
             {RES_NONE, 0},
@@ -1451,7 +1412,7 @@ Unit_Entity Unit_generate(Unit_Design* design) {
     Unit_Component* c = 0;
     int numweapons = 0;
     for (int i = 0; i < design->componentnum; i++) {
-        u.pop++;
+        u.pop += 5;
         c = &design->components[i];
         u.hpMax += c->armourStrength;
         u.shieldMax += c->shieldStrength;
