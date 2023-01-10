@@ -58,9 +58,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     },
     (Unit_Component) { // 4
         .name="Research Lab 1",
-        .researchVolume = {
-            5, 5, 5, 5, 5, 5
-        },
+        .researchVolume = 10,
         .size = 500,
         .buildCosts = {
             {RES_BASE_METALS, 10},
@@ -1424,9 +1422,7 @@ Unit_Entity Unit_generate(Unit_Design* design) {
         u.mining += c->miningVolume;
         u.farming += c->foodProduction;
         u.production += c->unitProductionVolume;
-        for (int j = 0; j < FIELD_ALL; j++) {
-            u.research[j] += c->researchVolume[j];
-        }
+        u.research = c->researchVolume;
         // if it's a weapon put the component into the weapons slot
         if (c->shotPower || c->shotPenetration) {
             u.weapons[numweapons] = *c;

@@ -171,17 +171,6 @@ void _changePop(Fleet_Entity* f, int excessDeaths) {
     }
 }
 
-void _research(Fleet_Entity* f) {
-    for (int i = 0; i < f->unitmax; i++) {
-        Unit_Entity* u = Unit_getPointer(f->units[i]);
-        for (int j = 0; j < FIELD_ALL; j++) {
-            if (u->research[j] > 0) {
-                Research_advance(j, u->research[j]);
-            }
-        }
-    }
-}
-
 void Fleet_simulate(Fleet_Entity* f) {
     _unrestChange(f);
     int excessDeaths = _excessDeaths(f);
@@ -190,15 +179,24 @@ void Fleet_simulate(Fleet_Entity* f) {
     f->development = 0;
     _changePop(f, excessDeaths);
     _generateResources(f);
-    _research(f);
     // Reset all unit turn state
     f->hasBuiltThisTurn = 0;
 }
 
 int Fleet_canMine(Fleet_Entity* f) {
     for (int i = 0; i < f->unitmax; i++) {
-        Unit_Entity u = Unit_getCopy(f->units[i]);
-        if (u.mining > 0) {
+        Unit_Entity* u = Unit_getPointer(f->units[i]);
+        if (u->mining > 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int Fleet_canResearch(Fleet_Entity* f) {
+    for (int i = 0; i < f->unitmax; i++) {
+        Unit_Entity* u = Unit_getPointer(f->units[i]);
+        if (u->research > 0) {
             return 1;
         }
     }

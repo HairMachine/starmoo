@@ -29,7 +29,7 @@ typedef struct {
     int size;
     int productionCost;
     Sector_Resource buildCosts[4];
-    int researchVolume[FIELD_ALL];
+    int researchVolume;
     int maxAllowedShipSize;
     int totalShipSize;
     Research_TechType techRequired;
@@ -68,7 +68,7 @@ typedef struct {
     int popMax;
     int warpDriveLevel; // Able to carry other ships in the fleet through a space warp if > 0
     int design;
-    int research[FIELD_ALL];
+    int research;
     int production;
     int storage;
     int mining;

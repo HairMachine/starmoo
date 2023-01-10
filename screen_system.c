@@ -9,6 +9,7 @@
 
 int chooseShipForMining = 0;
 int chooseShipForRetrieval = 0;
+int chooseShipForResearch = 0;
 int buyPanel = -1;
 int sellPanel = -1;
 int sellableItemNo = 0;
@@ -64,6 +65,54 @@ void _deployMineEnable(UI_Element *el, Vector2 mpos) {
 
 void _clickMineEnable(UI_Element *el, Vector2 mpos) {
     chooseShipForMining = 1;
+}
+
+void _enableDeployResearchShipButton(UI_Element* el) {
+    if (!currentPlanetInfo || currentPlanetInfo->pop > 0) {
+        el->visible = 0;
+        return;
+    } else {
+        el->visible = 1;
+        if (Fleet_canResearch(Fleet_getPointer(ScreenManager_currentSector()->fleet))) {
+            el->enabled = 1;
+        } else {
+            el->enabled = 0;
+        }
+    }
+}
+
+void _clickDeployResearchShipButton(UI_Element* el, Vector2 mpos) {
+    chooseShipForResearch = 1;
+}
+
+void _enableResearchShipSelect(UI_Element* el) {
+    el->visible = chooseShipForResearch;
+}
+
+void _drawResearchShipSelect(UI_Element* el) {
+    UI_drawPanel(el);
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    Unit_Entity* u = 0;
+    for (int i = 0; i < f->unitmax; i++) {
+        u = Unit_getPointer(f->units[i]);
+        if (u->research > 0) {
+            UI_drawSelectListItem(el, i, 16, u->name, chooseShipForResearch - 2 >= 0 && chooseShipForResearch - 2 == i);    
+        }
+    }
+}
+
+void _clickResearchShipSelect(UI_Element* el, Vector2 mpos) {
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    chooseShipForResearch = UI_handleSelectList(el, mpos, f->unitmax, 16) + 2;
+}
+
+void _clickResearchShipConfirm(UI_Element* el, Vector2 mpos) {
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    int chosenShip = f->units[chooseShipForResearch - 2];
+    Unit_Entity* u = Unit_getPointer(chosenShip);
+    Sector_deployUnitToPlanet(currentPlanetInfo, chosenShip);
+    Fleet_removeUnitAtIndex(f, chooseShipForResearch - 2);
+    chooseShipForResearch = 0;
 }
 
 void _collectResourceEnable(UI_Element *el) {
@@ -443,6 +492,10 @@ void ScreenSystem_init() {
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _miningShipSelectEnable, UI_drawButton, _clickConfirmMiningShipSelect, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Mining ship select", SCREEN_SYSTEM, _miningShipSelectEnable, _drawMiningShipSelect, _clickMiningShipSelection, NOFUNC);
     UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
+
+    UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _enableResearchShipSelect, UI_drawButton, _clickResearchShipConfirm, NOFUNC);
+    UI_createElement(100, 200, 400, 200, "Research ship select", SCREEN_SYSTEM, _enableResearchShipSelect, _drawResearchShipSelect, _clickResearchShipSelect, NOFUNC);
+    UI_createElement(500, 432, 200, 32, "Deploy research ship", SCREEN_SYSTEM, _enableDeployResearchShipButton, UI_drawButton, _clickDeployResearchShipButton, NOFUNC);
     
     UI_createElement(250, 350, 100, 32, "Done", SCREEN_SYSTEM, _enableBuyPanel, UI_drawButton, _clickDoneBuySell, NOFUNC);
     UI_createElement(350, 350, 100, 32, "Buy", SCREEN_SYSTEM, _enableBuyPanel, UI_drawButton, _clickBuyButton, NOFUNC);

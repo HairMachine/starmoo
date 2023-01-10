@@ -273,6 +273,14 @@ void World_update() {
                             Unit_storeItem(u, inv);
                         }
                     }
+                    if (u->research) {
+                        for (int j = 0; j < FIELD_ALL; j++) {
+                            Research_advance(j, u->research);
+                        }
+                        for (int ri = 0; ri < p->researchBonusNum; ri++) {
+                            Research_advance(p->researchBonuses[ri].field, rand() % p->researchBonuses[ri].amount + 1);
+                        }
+                    }
                 }
             }
             if (s->fleet > -1) {
