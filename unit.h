@@ -83,7 +83,6 @@ typedef struct {
     int totalStored;
     int canFight;
     int costToBuild;
-    int hasBuiltThisTurn;
 } Unit_Entity;
 
 Unit_Entity Unit_generate(Unit_Design* design);

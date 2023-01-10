@@ -44,7 +44,7 @@ void _drawBuildShipMenu(UI_Element* el) {
     Unit_Entity* u = 0;
     for (int i = 0; i < Order_count(); i++) {
         o = Order_getPointer(i);
-        if (o->type == ORDER_BUILD_SHIP && o->param2 == selectedShip) {
+        if (o->type == ORDER_BUILD_SHIP && o->fleet == ScreenManager_currentSector()->fleet) {
             u = Unit_getPointer(o->param1);
             DrawText(TextFormat("%s (%d)", u->name, u->costToBuild), el->x + 400, el->y + 32 + 16*line, 16, RAYWHITE);
             line++;
@@ -98,23 +98,18 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     o->type = ORDER_BUILD_SHIP;
     o->fleet = ScreenManager_currentSector()->fleet;
     o->param1 = Unit_lastAddedIndex();
-    o->param2 = selectedShip;
 }
 
-void _enableBuildShipButton(UI_Element *el) {
-    if (selectedShip == -1) {
-        el->visible = 0;
-    } else {
-        el->visible = 1;
-        Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
-        Unit_Entity* u = Unit_getPointer(f->units[selectedShip]);
-        if (u->production > 0) {
-            el->enabled = 1;
-        } else {
-            el->enabled = 0;
-        }
-    }
-}
+// void _enableBuildShipButton(UI_Element *el) {
+//     el->visible = 1;
+//     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+//     Unit_Entity* u = Unit_getPointer(f->units[selectedShip]);
+//     if (u->production > 0) {
+//         el->enabled = 1;
+//     } else {
+//         el->enabled = 0;
+//     }  
+// }
 
 void _clickBuildShipButton(UI_Element *el, Vector2 mpos) {
     buildShip = 1;
@@ -252,6 +247,6 @@ void ScreenFleet_init() {
     UI_createElement(364, 464, 100, 32, "Done", SCREEN_FLEET, _enableBuildShipMenu, UI_drawButton, _clickBuildShipDoneButton, NOFUNC);
     UI_createElement(100, 100, 600, 400, "Build ship display", SCREEN_FLEET, _enableBuildShipMenu, _drawBuildShipMenu, _clickBuildShipMenu, NOFUNC);
 
-    UI_createElement(500, 100, 132, 32, "Build ship", SCREEN_FLEET, _enableBuildShipButton, UI_drawButton, _clickBuildShipButton, NOFUNC);
+    UI_createElement(500, 100, 132, 32, "Build ship", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickBuildShipButton, NOFUNC);
     UI_createElement(0, 64, 400, SCREENY, "Fleet screen", SCREEN_FLEET, NOFUNC, _drawFleetScreen, _clickFleetScreen, NOFUNC);
 }

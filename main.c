@@ -34,6 +34,7 @@ int main()
     Unit_Entity* domeShip = Unit_create(ud);
     // Domeship is special and doesn't consume population like fleet ships - it's where everyone is living!
     domeShip->pop = 0;
+    domeShip->allowsShipSize = 500;
     
     Fleet_addUnit(Fleet_getPointer(0), Unit_lastAddedIndex());
     Fleet_getPointer(0)->lowpop = 25;

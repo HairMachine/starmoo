@@ -186,12 +186,14 @@ void World_update() {
                 }
             } break;
             case ORDER_BUILD_SHIP: {
-                Unit_Entity* builder = Unit_getPointer(o->param2);
+                Fleet_Entity* builder = Fleet_getPointer(o->fleet);
                 if (builder->hasBuiltThisTurn) {
                     break;
                 }
                 Unit_Entity* building = Unit_getPointer(o->param1);
-                building->costToBuild -= builder->production;
+                for (int i = 0; i < builder->unitmax; i++) {
+                    building->costToBuild -= Unit_getPointer(builder->units[i])->production;
+                }
                 if (building->costToBuild <= 0) {
                     Event_create("Build finished", "Finished building ship");
                     o->completed = 1;

@@ -29,6 +29,7 @@ typedef struct {
     int size;
     int maxSize;
     int largestAllowedShip;
+    int hasBuiltThisTurn;
 } Fleet_Entity;
 
 Fleet_Entity* Fleet_create();

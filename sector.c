@@ -109,10 +109,10 @@ Sector_Entity Sector_create(Sector_Template st) {
     if (st.specialLocation == 1) {
         s.explored = 1;
         Sector_Planet homeworld = {PLANET_TERRAN, 300, TEMP_GOLDILOCKS, 0, 0, 1000, 2000, {} ,0};
-        Sector_planetAddResource(&homeworld, RES_BASE_METALS, 50);
-        Sector_planetAddResource(&homeworld, RES_SILICON, 25);
-        Sector_planetAddResource(&homeworld, RES_FABRICS, 75);
-        Sector_planetAddResource(&homeworld, RES_FERTILE_SOIL, 80);
+        Sector_planetAddResource(&homeworld, RES_BASE_METALS, 150);
+        Sector_planetAddResource(&homeworld, RES_FERTILE_SOIL, 180);
+        Sector_planetAddResource(&homeworld, RES_SILICON, 125);
+        Sector_planetAddResource(&homeworld, RES_DEUTERIUM, 115);
         homeworld.pop = 1000;
         s.planets[3] = homeworld;
         s.planetnum = 6;
