@@ -62,8 +62,8 @@ void _assignResources() {
         while (sectorTotals[i]) {
             int ok = 0;
             int maxTries = 0;
+            start:
             while (!ok && maxTries < 5000) {
-                start:
                 Sector_Entity* s = &World_sectors[rand() % World_sizeY * World_sizeX + rand() % World_sizeX];
                 if (s->planetnum) {
                     Sector_Planet* p = &s->planets[rand() % s->planetnum];
@@ -77,6 +77,43 @@ void _assignResources() {
                         }
                         Sector_planetAddResource(p, i, 100 + rand() % 25 + 50);
                         ok = 1;
+                    } else {
+                        maxTries++;
+                    }
+                }
+            }
+            sectorTotals[i]--;
+        }
+    }
+}
+
+void _createResearchBonuses() {
+    int totalSectors = World_sizeX * World_sizeY;
+    // DEFINITIONS
+    int sectorTotals[FIELD_ALL] = {};
+    for (int i = 0; i < FIELD_ALL; i++) {
+        sectorTotals[i] = ceil(totalSectors / 30);
+    }
+    for (int i = 0; i < FIELD_ALL; i++) {
+        while (sectorTotals[i]) {
+            int ok = 0;
+            int maxTries = 0;
+            start:
+            while (!ok && maxTries < 5000) {
+                Sector_Entity* s = &World_sectors[rand() % World_sizeY * World_sizeX + rand() % World_sizeX];
+                if (s->planetnum) {
+                    Sector_Planet* p = &s->planets[rand() % s->planetnum];
+                    if (p->researchBonusNum < RESEARCH_MAX - 1 && p->pop == 0) {
+                        for (int j = 0; j < p->researchBonusNum; j++) {
+                            if (p->researchBonuses[j].field == i) {
+                                maxTries++;
+                                goto start;
+                            }
+                        }
+                        Sector_planetAddResearchBonus(p, i, 10 + rand() % 25);
+                        ok = 1;
+                    } else {
+                        maxTries++;
                     }
                 }
             }
@@ -140,6 +177,7 @@ void World_create() {
         }
     }
     _assignResources();
+    _createResearchBonuses();
 }
 
 /**

@@ -1,6 +1,8 @@
 #ifndef SECTOR_H
 #define SECTOR_H
 
+#include "research.h"
+
 typedef enum {
     STAR_NONE, STAR_RED, STAR_YELLOW, STAR_BLUE, STAR_WHITE, STAR_END
 } Sector_StarType;
@@ -43,7 +45,13 @@ typedef struct {
     int abundance;
 } Sector_Resource;
 
+typedef struct {
+    Research_Field field;
+    int amount;
+} Sector_ResearchBonus;
+
 #define RESOURCE_MAX 8
+#define RESEARCH_MAX 4
 
 typedef struct {
     Sector_PlanetType type;
@@ -57,6 +65,8 @@ typedef struct {
     int unitnum;
     int hostile;
     int funds;
+    Sector_ResearchBonus researchBonuses[RESEARCH_MAX];
+    int researchBonusNum;
 } Sector_Planet;
 
 typedef enum {
@@ -91,6 +101,7 @@ typedef struct {
 Sector_Entity Sector_create(Sector_Template st);
 void Sector_simulate(Sector_Entity* s);
 void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abundance);
+void Sector_planetAddResearchBonus(Sector_Planet* p, Research_Field rf, int amount);
 Sector_Planet Sector_getPlanet(Sector_Entity* s, int index);
 void Sector_deployUnitToPlanet(Sector_Planet* p, int uid);
 void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index);

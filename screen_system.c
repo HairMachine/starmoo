@@ -2,6 +2,7 @@
 
 #include "event.h"
 #include "fleet.h"
+#include "research.h"
 #include "unit.h"
 #include "ui.h"
 #include "screen_manager.h"
@@ -407,6 +408,13 @@ void _drawSystem(UI_Element* el) {
                     }
                     
                 }
+            }
+            for (int i = 0; i < p->researchBonusNum; i++) {
+                DrawText(TextFormat(
+                    "%s: %d",
+                    Research_fieldStrings[p->researchBonuses[i].field],
+                    p->researchBonuses[i].amount
+                ), 650, 150 + i * 24, 16, RAYWHITE);
             }
         }
         ring += _calcRingChange(p);

@@ -174,6 +174,12 @@ void Sector_planetAddResource(Sector_Planet* p, Sector_ResourceType t, int abund
     p->resourcenum++;
 }
 
+void Sector_planetAddResearchBonus(Sector_Planet* p, Research_Field rf, int amount) {
+    Sector_ResearchBonus newBonus = {rf, amount};
+    p->researchBonuses[p->researchBonusNum] = newBonus;
+    p->researchBonusNum++;
+}
+
 Sector_Planet Sector_getPlanet(Sector_Entity* s, int index) {
     return s->planets[index];
 }

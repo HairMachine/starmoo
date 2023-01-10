@@ -5,7 +5,7 @@
 #include "research.h"
 #include "event.h"
 
-char Research_strings[FIELD_ALL][32] = {
+char Research_fieldStrings[FIELD_ALL][32] = {
     "Propulsion", "Construction", "Weapons", "Espionage", "Luxuries", "Forcefields"
 };
 
