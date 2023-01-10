@@ -1503,6 +1503,10 @@ int Unit_consumeItem(Unit_Entity* u, Sector_Resource r) {
         if (existingInv->storedResourceId == r.type) {
             if (existingInv->quantity >= r.abundance) {
                 existingInv->quantity -= r.abundance;
+                u->totalStored -= r.abundance;
+                if (existingInv->quantity <= 0) {
+                    Unit_removeItemByIndex(u, i);
+                }
             } else {
                 return 0;
             }

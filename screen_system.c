@@ -285,12 +285,9 @@ void _clickSellButton(UI_Element* el, Vector2 mpos) {
                 return;
             }
             if (countup == sellPanel) {
-                u->stored[j].quantity--;
+                Fleet_consumeItems(f, (Sector_Resource) {u->stored[j].storedResourceId, 1});
                 f->credits += price;
                 currentPlanetInfo->funds -= price;
-                if (u->stored[j].quantity == 0) {
-                    Unit_removeItemByIndex(u, j);
-                }
                 return;
             }
             countup++;
