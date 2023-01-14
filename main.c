@@ -25,20 +25,20 @@ int main()
 
     Unit_Design* ud = Unit_createDesign();
     strcpy(ud->name, "Mothership");
-    ud->componentnum = 5;
+    ud->componentnum = 3;
     ud->components[0] = Unit_getComponent(0);
     ud->components[1] = Unit_getComponent(1);
-    ud->components[2] = Unit_getComponent(2);
-    ud->components[5] = Unit_getComponent(9);
+    ud->components[2] = Unit_getComponent(8);
     // Build one to start them off with
     Unit_Entity* domeShip = Unit_create(ud);
     // Domeship is special and doesn't consume population like fleet ships - it's where everyone is living!
     domeShip->pop = 0;
-    domeShip->allowsShipSize = 500;
     
     Fleet_addUnit(Fleet_getPointer(0), Unit_lastAddedIndex());
     Fleet_getPointer(0)->lowpop = 25;
     Fleet_getPointer(0)->credits = 1000;
+    Fleet_getPointer(0)->maxSize = 5000;
+    Fleet_getPointer(0)->warpFactor = 1;
 
     Combat_createEnemyDesigns();
 

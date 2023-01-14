@@ -17,7 +17,6 @@ typedef struct {
     int armourStrength;
     int shieldStrength;
     int sheildRechargeRate;
-    int warpDriveLevel;
     int thrusterSpeed;
     int storageCapacity;
     int habitationSpace;
@@ -30,7 +29,6 @@ typedef struct {
     int productionCost;
     Sector_Resource buildCosts[4];
     int researchVolume;
-    int maxAllowedShipSize;
     int totalShipSize;
     Research_TechType techRequired;
     Research_TechType obsoletedBy;
@@ -66,7 +64,6 @@ typedef struct {
     int shieldMax;
     int shieldRechargeRate;
     int popMax;
-    int warpDriveLevel; // Able to carry other ships in the fleet through a space warp if > 0
     int design;
     int research;
     int production;
@@ -74,7 +71,6 @@ typedef struct {
     int mining;
     int resourceMining;
     int farming;
-    int allowsShipSize;
     int totalShipStorage;
     int size;
     int pop;

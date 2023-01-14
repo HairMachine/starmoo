@@ -69,8 +69,8 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
             Event_create("No workers", "Not enough people to work this ship.\nBuild farms!");
             return;
         }
-        if (designSize > f->largestAllowedShip) {
-            Event_create("Ship too big", "This ship is too large to fit into your available\nship bays.");
+        if (f->size + designSize > f->maxSize) {
+            Event_create("Ship too big", "You do not have enough bay space to\nbuild this ship. Upgrade your mothership\nto get more space.");
             return;
         }
         for (int j = 0; j < 4; j++) {
@@ -210,18 +210,18 @@ void _drawUpgradeMenu(UI_Element* el) {
     for (int i = 0; i < MAXUPGRADES; i++) {
         Fleet_Upgrade upgrade = Fleet_getUpgrade(i);
         if (Research_techIsDeveloped(upgrade.techRequired) && !Research_techIsDeveloped(upgrade.obsoletedBy) && !upgrade.complete) {
-            DrawText(TextFormat("%s %d", upgrade.name, upgrade.complete), el->x, el->y + line * 32, 16, RAYWHITE);
+            DrawText(upgrade.name, el->x, el->y + line * 32, 16, RAYWHITE);
             // Show cost of upgrade
             int col = 0;
             for (int j = 0; j <  4; j++) {
                 if (upgrade.buildCosts[j].type) {
                     DrawText(
                         TextFormat("%s: %d", Sector_resourceStrings[upgrade.buildCosts[j].type], upgrade.buildCosts[j].abundance),
-                        el->x + col, el->y + line * 32  + 16, 16, RAYWHITE 
+                        el->x + col, el->y + line * 32 + 16, 8, RAYWHITE 
                     );
                     int slen = strlen(Sector_resourceStrings[i]);
                     int log = (int) log10(newDesignBuildCosts[i]);
-                    line += (slen + log + 4) * 8;
+                    col += (slen + log + 4) * 8;
                 }
             }
             line++;

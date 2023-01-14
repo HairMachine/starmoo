@@ -11,7 +11,7 @@ int fleetnum;
 
 Fleet_Upgrade upgrades[MAXUPGRADES] = {
     (Fleet_Upgrade) {
-        .name = "Habitation 2",
+        .name = "Development Level 1",
         .buildCosts = {
             {RES_BASE_METALS, 500},
             {RES_NONE, 0},
@@ -19,6 +19,50 @@ Fleet_Upgrade upgrades[MAXUPGRADES] = {
             {RES_NONE, 0}
         },
         .development = 1,
+        .obsoletedBy = RT_ALL
+    },
+    (Fleet_Upgrade) {
+        .name = "Development Level 2",
+        .buildCosts = {
+            {RES_BASE_METALS, 1000},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .development = 2,
+        .obsoletedBy = RT_ALL
+    },
+    (Fleet_Upgrade) {
+        .name = "Development Level 3",
+        .buildCosts = {
+            {RES_BASE_METALS, 2000},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .development = 3,
+        .obsoletedBy = RT_ALL
+    },
+    (Fleet_Upgrade) {
+        .name = "Development Level 4",
+        .buildCosts = {
+            {RES_BASE_METALS, 4000},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .development = 4,
+        .obsoletedBy = RT_ALL
+    },
+    (Fleet_Upgrade) {
+        .name = "Development Level 5",
+        .buildCosts = {
+            {RES_BASE_METALS, 8000},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .development = 5,
         .obsoletedBy = RT_ALL
     },
     (Fleet_Upgrade) {
@@ -32,7 +76,163 @@ Fleet_Upgrade upgrades[MAXUPGRADES] = {
         .warpFactor = 2,
         .techRequired = RT_WARP_2,
         .obsoletedBy = RT_WARP_3
-    }
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 3",
+        .buildCosts = {
+            {RES_BASE_METALS, 200},
+            {RES_DEUTERIUM, 200},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 3,
+        .techRequired = RT_WARP_3,
+        .obsoletedBy = RT_WARP_4
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 4",
+        .buildCosts = {
+            {RES_BASE_METALS, 400},
+            {RES_DEUTERIUM, 400},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 4,
+        .techRequired = RT_WARP_4,
+        .obsoletedBy = RT_WARP_5
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 5",
+        .buildCosts = {
+            {RES_BASE_METALS, 800},
+            {RES_DEUTERIUM, 800},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 5,
+        .techRequired = RT_WARP_5,
+        .obsoletedBy = RT_WARP_6
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 6",
+        .buildCosts = {
+            {RES_BASE_METALS, 1600},
+            {RES_DEUTERIUM, 1600},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 6,
+        .techRequired = RT_WARP_6,
+        .obsoletedBy = RT_WARP_7
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 7",
+        .buildCosts = {
+            {RES_BASE_METALS, 3200},
+            {RES_DEUTERIUM, 3200},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 7,
+        .techRequired = RT_WARP_7,
+        .obsoletedBy = RT_WARP_8
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 8",
+        .buildCosts = {
+            {RES_BASE_METALS, 6400},
+            {RES_DEUTERIUM, 6400},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 8,
+        .techRequired = RT_WARP_8,
+        .obsoletedBy = RT_WARP_9
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 9",
+        .buildCosts = {
+            {RES_BASE_METALS, 12800},
+            {RES_DEUTERIUM, 12800},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 9,
+        .techRequired = RT_WARP_9,
+        .obsoletedBy = RT_WARP_10
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 10",
+        .buildCosts = {
+            {RES_BASE_METALS, 25600},
+            {RES_DEUTERIUM, 25600},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 10,
+        .techRequired = RT_WARP_10,
+        .obsoletedBy = RT_ALL
+    },
+    (Fleet_Upgrade) {
+        .name = "Ship Bays 1",
+        .buildCosts = {
+            {RES_BASE_METALS, 100},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .sizeIncrease = 10000,
+        .techRequired = RT_CARRIER_1,
+        .obsoletedBy = RT_CARRIER_2
+    },
+    (Fleet_Upgrade) {
+        .name = "Ship Bays 2",
+        .buildCosts = {
+            {RES_BASE_METALS, 200},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .sizeIncrease = 20000,
+        .techRequired = RT_CARRIER_2,
+        .obsoletedBy = RT_CARRIER_3
+    },
+    (Fleet_Upgrade) {
+        .name = "Ship Bays 3",
+        .buildCosts = {
+            {RES_BASE_METALS, 400},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .sizeIncrease = 40000,
+        .techRequired = RT_CARRIER_3,
+        .obsoletedBy = RT_CARRIER_4
+    },
+    (Fleet_Upgrade) {
+        .name = "Ship Bays 4",
+        .buildCosts = {
+            {RES_BASE_METALS, 800},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .sizeIncrease = 80000,
+        .techRequired = RT_CARRIER_4,
+        .obsoletedBy = RT_CARRIER_5
+    },
+    (Fleet_Upgrade) {
+        .name = "Ship Bays 5",
+        .buildCosts = {
+            {RES_BASE_METALS, 1600},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .sizeIncrease = 160000,
+        .techRequired = RT_CARRIER_5,
+        .obsoletedBy = RT_ALL
+    },
 };
 
 Fleet_Entity* Fleet_create() {
@@ -47,16 +247,9 @@ void Fleet_addUnit(Fleet_Entity* f, int uid) {
     f->unitmax++;
     // Recalculate supplies
     Unit_Entity newUnit = Unit_getCopy(uid);
-    // Set warp factor
-    if (newUnit.warpDriveLevel > 0 && newUnit.warpDriveLevel > f->warpFactor) {
-        f->warpFactor = newUnit.warpDriveLevel;
-    }
     f->food += newUnit.farming;
     f->size += newUnit.size;
     f->maxSize += newUnit.totalShipStorage;
-    if (f->largestAllowedShip < newUnit.allowsShipSize) {
-        f->largestAllowedShip = newUnit.allowsShipSize;
-    }
 }
 
 void Fleet_removeUnitAtIndex(Fleet_Entity* f, int index) {
@@ -280,6 +473,7 @@ void Fleet_applyUpgrade(Fleet_Entity* f, int upgrade) {
     Fleet_Upgrade* u = &upgrades[upgrade];
     f->development = u->development;
     f->warpFactor = u->warpFactor;
+    f->maxSize = u->sizeIncrease;
     u->complete = 1; 
 }
 

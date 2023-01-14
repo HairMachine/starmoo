@@ -29,11 +29,10 @@ typedef struct {
     int credits;
     int size;
     int maxSize;
-    int largestAllowedShip;
     int hasBuiltThisTurn;
 } Fleet_Entity;
 
-#define MAXUPGRADES 2
+#define MAXUPGRADES 20
 
 typedef struct {
     char name[32];
@@ -42,6 +41,7 @@ typedef struct {
     Research_TechType obsoletedBy;
     int development;
     int warpFactor;
+    int sizeIncrease;
     int complete;
 } Fleet_Upgrade;
 

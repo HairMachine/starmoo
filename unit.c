@@ -10,18 +10,6 @@ int designnum = 0;
 
 Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) { // 0
-        .name = "Warp Device I",
-        .warpDriveLevel = 1,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .obsoletedBy = RT_WARP_2
-    },
-    (Unit_Component) { // 1
         .name = "Storage 1",
         .storageCapacity = 100,
         .size = 500,
@@ -32,7 +20,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) { // 2
+    (Unit_Component) { // 1
         .name = "Fabricator 1",
         .unitProductionVolume = 100,
         .size = 500,
@@ -44,7 +32,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_CONSTRUCT_1
     },
-    (Unit_Component) { // 3
+    (Unit_Component) { // 2
         .name="Miner 1",
         .miningVolume = 50,
         .size = 500,
@@ -56,7 +44,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_MINING_2
     },
-    (Unit_Component) { // 4
+    (Unit_Component) { // 3
         .name="Research Lab 1",
         .researchVolume = 10,
         .size = 500,
@@ -67,7 +55,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) { // 5
+    (Unit_Component) { // 4
         .name="Laser Cannon",
         .shotPower = 10,
         .shotPenetration = 25,
@@ -80,7 +68,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_BEAM_2
     },
-    (Unit_Component) { // 6
+    (Unit_Component) { // 5
         .name="Shield 1",
         .shieldStrength = 10,
         .sheildRechargeRate = 1,
@@ -93,7 +81,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_SHIELD_2
     },
-    (Unit_Component) { // 7
+    (Unit_Component) { // 6
         .name="Gun Battery",
         .shotPower = 25,
         .shotPenetration = 10,
@@ -106,7 +94,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_GUN_2
     },
-    (Unit_Component) { // 8
+    (Unit_Component) { // 7
         .name="Titanium Armour",
         .armourStrength = 100,
         .size = 100,
@@ -119,122 +107,9 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         .obsoletedBy = RT_ARMOUR_2
     },
     // Warp components
-    (Unit_Component) {
-        .name = "Warp Device 2",
-        .warpDriveLevel = 2,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_2,
-        .obsoletedBy = RT_WARP_3
-    },
-    (Unit_Component) {
-        .name = "Warp Device 3",
-        .warpDriveLevel = 3,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_3,
-        .obsoletedBy = RT_WARP_4
-    },
-    (Unit_Component) {
-        .name = "Warp Device 4",
-        .warpDriveLevel = 4,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_4,
-        .obsoletedBy = RT_WARP_5
-    },
-    (Unit_Component) {
-        .name = "Warp Device 5",
-        .warpDriveLevel = 5,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_5,
-        .obsoletedBy = RT_WARP_6
-    },
-    (Unit_Component) {
-        .name = "Warp Device 6",
-        .warpDriveLevel = 6,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_6,
-        .obsoletedBy = RT_WARP_7
-    },
-    (Unit_Component) {
-        .name = "Warp Device 7",
-        .warpDriveLevel = 7,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_7,
-        .obsoletedBy = RT_WARP_8
-    },
-    (Unit_Component) {
-        .name = "Warp Device 8",
-        .warpDriveLevel = 8,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_8,
-        .obsoletedBy = RT_WARP_9
-    },
-    (Unit_Component) {
-        .name = "Warp Device 9",
-        .warpDriveLevel = 9,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_9,
-        .obsoletedBy = RT_WARP_10
-    },
-    (Unit_Component) {
-        .name = "Warp Device 10",
-        .warpDriveLevel = 10,
-        .size = 1000,
-        .buildCosts = {
-            {RES_WARP_SEEDS, 1},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_WARP_10
-    },
+    //
+    // -- none, all upgrades
+    //
     // Construction components
     (Unit_Component) {
         .name="Armour 2",
@@ -363,65 +238,6 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         },
         .techRequired = RT_MINING_6
-    },
-    (Unit_Component) {
-        .name="Carrier 2",
-        .maxAllowedShipSize = 1000,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CARRIER_1,
-        .obsoletedBy = RT_CARRIER_2
-    },
-    (Unit_Component) {
-        .name="Carrier 3",
-        .maxAllowedShipSize = 2000,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CARRIER_2,
-        .obsoletedBy = RT_CARRIER_3
-    },
-    (Unit_Component) {
-        .name="Carrier 4",
-        .maxAllowedShipSize = 4000,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CARRIER_3,
-        .obsoletedBy = RT_CARRIER_4
-    },
-    (Unit_Component) {
-        .name="Carrier 5",
-        .maxAllowedShipSize = 8000,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CARRIER_4,
-        .obsoletedBy = RT_CARRIER_5
-    },
-    (Unit_Component) {
-        .name="Carrier 6",
-        .maxAllowedShipSize = 16000,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CARRIER_5
     },
     (Unit_Component) {
         .name = "Fabricator 2",
@@ -1414,9 +1230,6 @@ Unit_Entity Unit_generate(Unit_Design* design) {
         c = &design->components[i];
         u.hpMax += c->armourStrength;
         u.shieldMax += c->shieldStrength;
-        if (c->warpDriveLevel > u.warpDriveLevel) {
-            u.warpDriveLevel = c->warpDriveLevel;
-        }
         u.storage += c->storageCapacity;
         u.popMax += c->habitationSpace;
         u.mining += c->miningVolume;
@@ -1435,9 +1248,6 @@ Unit_Entity Unit_generate(Unit_Design* design) {
         }
         u.size += c->size;
         u.totalShipStorage += c->totalShipSize;
-        if (c->maxAllowedShipSize > u.allowsShipSize) {
-            u.allowsShipSize = c->maxAllowedShipSize;
-        }
     }
     u.hp = u.hpMax;
     u.shields = u.shieldMax;
