@@ -278,7 +278,7 @@ void _drawFleetScreen(UI_Element *el) {
         UI_drawSelectListItem(el, i, 16, TextFormat("%s %d%%", u->name, storage), selectedShip == i);
     }
     // Show orders queue
-    int line = 0;
+    int line = f->unitmax;
     Order_Entity* o = 0;
     Fleet_Upgrade upgrade = (Fleet_Upgrade) {};
     for (int i = 0; i < Order_count(); i++) {
@@ -286,10 +286,10 @@ void _drawFleetScreen(UI_Element *el) {
         if ((o->type == ORDER_BUILD_SHIP || o->type == ORDER_UPGRADE) && o->fleet == ScreenManager_currentSector()->fleet) {
             if (o->type == ORDER_BUILD_SHIP) {
                 u = Unit_getPointer(o->param1);
-                DrawText(TextFormat("%s (%d)", u->name, u->costToBuild), el->x + 300, el->y + 32 + 16*line, 16, RAYWHITE);
+                DrawText(TextFormat("%s (%d)", u->name, u->costToBuild), el->x, el->y + 16*line, 16, RED);
             } else {
                 upgrade = Fleet_getUpgrade(o->param1);
-                DrawText(TextFormat("%s (%d)", upgrade.name, o->param2), el->x + 300, el->y + 32 + 16*line, 16, RAYWHITE);
+                DrawText(TextFormat("%s (%d)", upgrade.name, o->param2), el->x, el->y + 16*line, 16, RED);
             }
             line++;
         }
