@@ -10,19 +10,31 @@
 Combat_Unit c_units[128];
 int c_unitnum = 0;
 int active = 0;
-int startDesign = 0;
-int endDesign = 0;
+int startShipDesign = 0;
+int endShipDesign = 0;
+int startMonsterDesign = 0;
+int endMonsterDesign = 0;
 Fleet_Entity* playerFleet = 0;
 
 void Combat_createEnemyDesigns() {
-    startDesign = Unit_designCount();
-    // Laser fighter
-    Unit_Design* ud = Unit_createDesign();
+    Unit_Design* ud = 0;
+    // Imperial ships
+    startShipDesign = Unit_designCount();
+    ud = Unit_createDesign();
     strcpy(ud->name, "Laser Fighter");
-    ud->componentnum = 1;
+    ud->componentnum = 2;
+    ud->components[0] = Unit_getComponent(5);
+    ud->components[1] = Unit_getComponent(8);
+    endShipDesign = Unit_designCount();
+    // Monsters
+    startMonsterDesign = Unit_designCount();
+    ud = Unit_createDesign();
+    strcpy(ud->name, "Space Worm");
+    ud->componentnum = 3;
     ud->components[0] = Unit_getComponent(7);
     ud->components[1] = Unit_getComponent(8);
-    endDesign = Unit_designCount();
+    ud->components[2] = Unit_getComponent(8);
+    endMonsterDesign = Unit_designCount();
 }
 
 void Combat_addShipToCombat(Unit_Entity u, int side, int originalIndex, int fleetIndex) {
@@ -57,7 +69,13 @@ void Combat_setupRandomEncounter(Sector_Entity* s) {
         numShips = 128;
     }
     for (int i = 0; i < numShips; i++) {
-        Unit_Design* d = Unit_getDesignPointer(startDesign);
+        int designToUse;
+        if (s->pop > 0) {
+            designToUse = startShipDesign;
+        } else {
+            designToUse = startMonsterDesign;
+        }
+        Unit_Design* d = Unit_getDesignPointer(designToUse);
         Unit_Entity u = Unit_generate(d);
         Combat_addShipToCombat(u, ENEMY_SIDE, -1, -1);
     }

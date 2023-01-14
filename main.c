@@ -25,7 +25,7 @@ int main()
 
     Unit_Design* ud = Unit_createDesign();
     strcpy(ud->name, "Mothership");
-    ud->componentnum = 6;
+    ud->componentnum = 5;
     ud->components[0] = Unit_getComponent(0);
     ud->components[1] = Unit_getComponent(1);
     ud->components[2] = Unit_getComponent(2);
