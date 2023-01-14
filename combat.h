@@ -22,3 +22,6 @@ int Combat_unitCount();
 Combat_Unit Combat_getUnitCopy(int index);
 int Combat_active();
 int Combat_shipsAlive(int side);
+void Combat_setFinalFight();
+int Combat_isFinalFight();
+

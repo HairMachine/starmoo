@@ -125,6 +125,7 @@ Sector_Entity Sector_create(Sector_Template st) {
         s.planetnum = 6;
         s.wealthLevel = 100;
         s.fleet = -1;
+        s.finalBoss = 1;
     } else {
         s.fleet = -1;
         if (rand() % 100 < 80 - st.distFromCentre*2) {

@@ -64,7 +64,7 @@ int main()
             framecounter = 0;
         }
         // End game conditions
-        if (World_getLegitimacy() <= 0) {
+        if (World_getLegitimacy() <= 0 || World_getLegitimacy() > 9000) {
             return 0;
         }
     }

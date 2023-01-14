@@ -212,6 +212,9 @@ void World_update() {
                         o->completed = 1;
                         // Check if this system is hostile and generate combat if it is
                         if (se->hostile) {
+                            if (se->finalBoss) {
+                                Combat_setFinalFight();
+                            }
                             Combat_setupRandomEncounter(se);
                             // TODO: Do not tie this to only having a single fleet!
                             Fleet_Entity* f = Fleet_getPointer(0);
@@ -320,7 +323,4 @@ int World_getLegitimacy() {
 
 void World_changeLegitimacy(int amnt) {
     legitimacy += amnt;
-    if (legitimacy > 1000) {
-        legitimacy = 1000;
-    }
 }

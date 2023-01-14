@@ -13,7 +13,11 @@ void _enableOkBtn(UI_Element* el) {
 
 void _clickOkBtn(UI_Element* el, Vector2 mpos) {
     if (Combat_shipsAlive(PLAYER_SIDE)) {
-        World_changeLegitimacy(50);
+        if (Combat_isFinalFight()) {
+            World_changeLegitimacy(10000);
+        } else {
+            World_changeLegitimacy(50);
+        }
     } else {
         World_changeLegitimacy(-50);
     }

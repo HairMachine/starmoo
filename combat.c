@@ -15,6 +15,7 @@ int endShipDesign = 0;
 int startMonsterDesign = 0;
 int endMonsterDesign = 0;
 Fleet_Entity* playerFleet = 0;
+int finalFight = 0;
 
 void Combat_createEnemyDesigns() {
     Unit_Design* ud = 0;
@@ -160,4 +161,12 @@ Combat_Unit Combat_getUnitCopy(int index) {
 
 int Combat_active() {
     return active;
+}
+
+void Combat_setFinalFight() {
+    finalFight = 1;
+}
+
+int Combat_isFinalFight() {
+    return finalFight;
 }

@@ -90,6 +90,7 @@ typedef struct {
     int phenomenanum;
     int hostile;
     int wealthLevel;
+    int finalBoss;
 } Sector_Entity;
 
 typedef struct {
