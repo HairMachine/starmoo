@@ -40,6 +40,10 @@ int main()
     Fleet_getPointer(0)->maxSize = 5000;
     Fleet_getPointer(0)->warpFactor = 1;
 
+    // Debug add resources
+    Unit_storeItem(domeShip, (Unit_Inventory) {RES_BASE_METALS, 100});
+    Unit_storeItem(domeShip, (Unit_Inventory) {RES_DEUTERIUM, 100});
+
     Combat_createEnemyDesigns();
 
     // Main game loop

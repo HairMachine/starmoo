@@ -9,7 +9,8 @@ char Research_fieldStrings[FIELD_ALL][32] = {
     "Propulsion", "Construction", "Weapons", "Espionage", "Luxuries", "Forcefields"
 };
 
-Research_Tech* researching[FIELD_ALL] = {0, 0, 0};
+Research_Tech* researching[FIELD_ALL] = {0, 0, 0, 0, 0};
+Research_Tech* developing[FIELD_ALL] = {0, 0, 0, 0, 0};
 
 int techLevel = 0;
 
@@ -149,19 +150,25 @@ void Research_advance(Research_Field field, int amount) {
     if (!rt) {
         rt = _getRandomTech(field);
         researching[field] = rt;
-        if (!rt) {
-            return;
+    }
+    if (rt) {
+        rt->points += amount - ceil(rand() % amount/4) + ceil(rand() % amount/4);
+        if (!rt->discovered && rt->points >= rt->pointsRequired/5) {
+            rt->discovered = 1;
+            Event_create(
+                "Tech discovered!",
+                TextFormat("Scientists have discovered %s.\nYou may now select this tech for development.", rt->name)
+            );
+            researching[field] = 0;
         }
     }
-    // Increase points
+    // Develop any tech selected for development
+    rt = developing[field];
+    if (!rt) {
+        return;
+    }
     rt->points += amount - ceil(rand() % amount/4) + ceil(rand() % amount/4);
-    if (!rt->discovered && rt->points >= rt->pointsRequired/5) {
-        rt->discovered = 1;
-        Event_create(
-            "Tech discovered!",
-            TextFormat("Scientists have discovered %s\nand have begun working to develop it.", rt->name)
-        );
-    } else if (rt->points >= rt->pointsRequired) {
+    if (rt->points >= rt->pointsRequired) {
         Event_create(
             "Tech developed!",
             TextFormat("Scientists have developed %s,\nunlocking new construction options.", rt->name)
@@ -170,10 +177,25 @@ void Research_advance(Research_Field field, int amount) {
         if (rt->level == techLevel) {
             techLevel++;
         }
-        researching[field] = 0;
+        developing[field] = 0;
     }
 }
 
 int Research_techIsDeveloped(Research_TechType rt) {
     return techs[rt].developed;
+}
+
+Research_Tech* Research_getTechPointer(int r) {
+    return &techs[r];
+}
+
+Research_Tech* Research_getDeveloping(int field) {
+    return developing[field];
+}
+
+void Research_startDeveloping(int r) {
+    Research_Tech* tech = &techs[r];
+    if (!developing[tech->field]) {
+        developing[tech->field] = tech;
+    }
 }

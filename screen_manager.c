@@ -56,6 +56,10 @@ void _clickCargoTab(UI_Element *el, Vector2 mpos) {
     UI_enableScreen(SCREEN_CARGO);
 }
 
+void _clickResearchTab(UI_Element* el, Vector2 mpos) {
+    UI_enableScreen(SCREEN_RESEARCH);
+}
+
 void _drawLegitimacy(UI_Element* el) {
     int lpcnt = (100*World_getLegitimacy()) / 1000;
     Color lcol = GREEN;
@@ -115,7 +119,8 @@ void ScreenManager_init() {
     UI_createElement(100, 0, 100, 32, "System", SCREEN_ALL, _systemSelectedEnable, UI_drawButton, _clickSystemTab, NOFUNC);
     UI_createElement(200, 0, 100, 32, "Ships", SCREEN_ALL, _fleetSelectedEnable, UI_drawButton, _clickFleetTab, NOFUNC);
     UI_createElement(300, 0, 100, 32, "Cargo", SCREEN_ALL, _cargoSelectedEnable, UI_drawButton, _clickCargoTab, NOFUNC);
-    UI_createElement(400, 0, 100, 32, "Legitimacy", SCREEN_ALL, NOFUNC, _drawLegitimacy, NOFUNC, NOFUNC);
+    UI_createElement(400, 0, 100, 32, "Research", SCREEN_ALL, NOFUNC, UI_drawButton, _clickResearchTab, NOFUNC);
+    UI_createElement(500, 0, 100, 32, "Legitimacy", SCREEN_ALL, NOFUNC, _drawLegitimacy, NOFUNC, NOFUNC);
 
     UI_createElement(350, 350, 100, 32, "Next", SCREEN_ALL, _eventEnable, UI_drawButton, _clickNextEvent, NOFUNC);
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, _eventEnable, UI_drawButton, _clickNextEvent, NOFUNC);
@@ -128,6 +133,7 @@ void ScreenManager_init() {
     ScreenFleet_init();
     ScreenCargo_init();
     ScreenCombat_init();
+    ScreenResearch_init();
     
     UI_enableScreen(SCREEN_MAP);
     UI_updateEnabled();

@@ -52,6 +52,9 @@ typedef struct {
 
 void Research_advance(Research_Field field, int points);
 int Research_techIsDeveloped(Research_TechType rt);
+Research_Tech* Research_getTechPointer(int r);
+Research_Tech* Research_getDeveloping(int field);
+void Research_startDeveloping(int r);
 
 #endif
 
