@@ -1,6 +1,7 @@
 #include "ui.h"
 #include "combat.h"
 #include "world.h"
+#include "screen_manager.h"
 
 int pline = 0;
 int eline = 0;

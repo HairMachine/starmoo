@@ -1,1 +1,0 @@
-void ScreenCombat_init();

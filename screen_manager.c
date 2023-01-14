@@ -2,15 +2,11 @@
 
 #include "event.h"
 #include "ui.h"
-#include "screen_map.h"
-#include "screen_system.h"
-#include "screen_fleet.h"
-#include "screen_cargo.h"
-#include "screen_combat.h"
 #include "world.h"
 #include "sector.h"
 #include "combat.h"
 #include "fleet.h"
+#include "screen_manager.h"
 
 Sector_Entity* currentSectorInfo = 0;
 
