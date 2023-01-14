@@ -51,15 +51,11 @@ void _deployMineEnable(UI_Element *el, Vector2 mpos) {
         el->visible = 0;
         return;
     }
-    if (currentPlanetInfo->resourcenum <= 0) {
-        el->visible = 0;
+    el->visible = 1;
+    if (Fleet_canMine(Fleet_getPointer(ScreenManager_currentSector()->fleet))) {
+        el->enabled = 1;
     } else {
-        el->visible = 1;
-        if (Fleet_canMine(Fleet_getPointer(ScreenManager_currentSector()->fleet))) {
-            el->enabled = 1;
-        } else {
-            el->enabled = 0;
-        }
+        el->enabled = 0;
     }
 }
 
@@ -138,24 +134,27 @@ void _clickCollectResource(UI_Element* el) {
     Unit_Entity* ul = 0;
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     int collected = 0;
+    int totalToCollect = 0;
     for (int i = 0; i < currentPlanetInfo->unitnum; i++) {
         uc = Unit_getPointer(currentPlanetInfo->units[i]);
         for (int j = 0; j < uc->storednum; j++) {
-            // Find the closes ship in the fleet with space
             for (int k = 0; k < f->unitmax; k++) {
                 ul = Unit_getPointer(f->units[k]);
                 if (ul->storage - ul->totalStored > uc->totalStored) {
-                    Unit_inventoryTransfer(uc, i, ul);
-                    Event_create("Got stuff!", "You have collected resources.");
-                    collected = 1;
+                    Unit_inventoryTransfer(uc, j, ul);
+                    collected++;
                     break;
                 }
             }
+            totalToCollect += uc->storednum;
         }
-        if (!collected) {
-            Event_create("Didn't got stuff!", "No room to collect resources.");
-        }
-        collected = 0;
+    }
+    if (collected == totalToCollect) {
+        Event_create("Resources collected", "You have collected resources.");
+    } else if (collected > 0) {
+        Event_create("Some resources collected", "Collected some resources, but not enough room for everything.");
+    } else {
+        Event_create("No resources collected", "No room to collect any resources.");
     }
 }
 
@@ -491,11 +490,11 @@ void _clickSystem(UI_Element* el, Vector2 mpos) {
 void ScreenSystem_init() {
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _miningShipSelectEnable, UI_drawButton, _clickConfirmMiningShipSelect, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Mining ship select", SCREEN_SYSTEM, _miningShipSelectEnable, _drawMiningShipSelect, _clickMiningShipSelection, NOFUNC);
-    UI_createElement(500, 400, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
+    UI_createElement(500, 368, 200, 32, "Deploy mining ship", SCREEN_SYSTEM, _deployMineEnable, UI_drawButton, _clickMineEnable, NOFUNC);
 
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_SYSTEM, _enableResearchShipSelect, UI_drawButton, _clickResearchShipConfirm, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Research ship select", SCREEN_SYSTEM, _enableResearchShipSelect, _drawResearchShipSelect, _clickResearchShipSelect, NOFUNC);
-    UI_createElement(500, 432, 200, 32, "Deploy research ship", SCREEN_SYSTEM, _enableDeployResearchShipButton, UI_drawButton, _clickDeployResearchShipButton, NOFUNC);
+    UI_createElement(500, 400, 200, 32, "Deploy research ship", SCREEN_SYSTEM, _enableDeployResearchShipButton, UI_drawButton, _clickDeployResearchShipButton, NOFUNC);
     
     UI_createElement(250, 350, 100, 32, "Done", SCREEN_SYSTEM, _enableBuyPanel, UI_drawButton, _clickDoneBuySell, NOFUNC);
     UI_createElement(350, 350, 100, 32, "Buy", SCREEN_SYSTEM, _enableBuyPanel, UI_drawButton, _clickBuyButton, NOFUNC);
