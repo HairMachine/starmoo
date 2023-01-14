@@ -91,7 +91,7 @@ void UI_drawPanel(UI_Element* el) {
     DrawRectangleLines(el->x, el->y, el->width, el->height, RAYWHITE);
 }
 
-void UI_drawSelectListItem(UI_Element* el, int offset, int listsize, char text[32], int isSelected) {
+void UI_drawSelectListItem(UI_Element* el, int offset, int listsize, const char text[32], int isSelected) {
     DrawText(text, el->x, el->y + offset*listsize, listsize, RAYWHITE);
     if (isSelected) {
         DrawRectangleLines(el->x, el->y + offset*16, el->width, 16, GREEN);

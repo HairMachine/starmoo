@@ -9,6 +9,32 @@
 Fleet_Entity fleets[8];
 int fleetnum;
 
+Fleet_Upgrade upgrades[MAXUPGRADES] = {
+    (Fleet_Upgrade) {
+        .name = "Habitation 2",
+        .buildCosts = {
+            {RES_BASE_METALS, 500},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .development = 1,
+        .obsoletedBy = RT_ALL
+    },
+    (Fleet_Upgrade) {
+        .name = "Warp Factor 2",
+        .buildCosts = {
+            {RES_BASE_METALS, 100},
+            {RES_DEUTERIUM, 100},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .warpFactor = 2,
+        .techRequired = RT_WARP_2,
+        .obsoletedBy = RT_WARP_3
+    }
+};
+
 Fleet_Entity* Fleet_create() {
     Fleet_Entity* f = &fleets[fleetnum];
     f->orders = -1;
@@ -175,8 +201,6 @@ void Fleet_simulate(Fleet_Entity* f) {
     _unrestChange(f);
     int excessDeaths = _excessDeaths(f);
     _consumeResources(f);
-    //TODO: Update development level
-    f->development = 0;
     _changePop(f, excessDeaths);
     _generateResources(f);
     // Reset all unit turn state
@@ -250,5 +274,16 @@ int Fleet_getAssignedPop(Fleet_Entity* f) {
         pop += Unit_getPointer(f->units[i])->pop;
     }
     return pop;
+}
+
+void Fleet_applyUpgrade(Fleet_Entity* f, int upgrade) {
+    Fleet_Upgrade* u = &upgrades[upgrade];
+    f->development = u->development;
+    f->warpFactor = u->warpFactor;
+    u->complete = 1; 
+}
+
+Fleet_Upgrade Fleet_getUpgrade(int upgrade) {
+    return upgrades[upgrade];
 }
 

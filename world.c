@@ -235,10 +235,24 @@ void World_update() {
                 if (building->costToBuild <= 0) {
                     Event_create("Build finished", "Finished building ship");
                     o->completed = 1;
-                    Fleet_Entity* f = Fleet_getPointer(o->fleet);
-                    Fleet_addUnit(f, o->param1);
+                    Fleet_addUnit(builder, o->param1);
                 }
                 builder->hasBuiltThisTurn = 1;
+            } break;
+            case ORDER_UPGRADE: {
+                Fleet_Entity* upgrader = Fleet_getPointer(o->fleet);
+                if (upgrader->hasBuiltThisTurn) {
+                    break;
+                }
+                for (int i = 0; i < upgrader->unitmax; i++) {
+                    o->param2 -= Unit_getPointer(upgrader->units[i])->production;
+                }
+                if (o->param2 <= 0) {
+                    Event_create("Upgrade finished", "Finished upgrading mothership");
+                    o->completed = 1;
+                    Fleet_applyUpgrade(upgrader, o->param1);
+                }
+                upgrader->hasBuiltThisTurn = 1;
             } break;
             default:
                 break;

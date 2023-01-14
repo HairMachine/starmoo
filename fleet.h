@@ -3,6 +3,7 @@
 #define FLEET_H
 
 #include "sector.h"
+#include "research.h"
 
 #define FLEET_BASIC_NEEDS f->lowpop + f->medpop + f->highpop + f->ultrapop
 #define FLEET_STANDARD_NEEDS f->medpop + f->highpop + f->ultrapop
@@ -32,6 +33,18 @@ typedef struct {
     int hasBuiltThisTurn;
 } Fleet_Entity;
 
+#define MAXUPGRADES 2
+
+typedef struct {
+    char name[32];
+    Sector_Resource buildCosts[4];
+    Research_TechType techRequired;
+    Research_TechType obsoletedBy;
+    int development;
+    int warpFactor;
+    int complete;
+} Fleet_Upgrade;
+
 Fleet_Entity* Fleet_create();
 void Fleet_addUnit(Fleet_Entity* f, int uid);
 void Fleet_removeUnitAtIndex(Fleet_Entity* f, int index);
@@ -47,6 +60,8 @@ int Fleet_getMaxStorage(Fleet_Entity *f);
 int Fleet_hasEnoughItems(Fleet_Entity* f, Sector_Resource r);
 void Fleet_consumeItems(Fleet_Entity* f, Sector_Resource r);
 int Fleet_getAssignedPop(Fleet_Entity* f);
+Fleet_Upgrade Fleet_getUpgrade(int upgrade);
+void Fleet_applyUpgrade(Fleet_Entity* f, int upgrade);
 
 #endif
 

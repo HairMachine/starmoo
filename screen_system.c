@@ -105,7 +105,6 @@ void _clickResearchShipSelect(UI_Element* el, Vector2 mpos) {
 void _clickResearchShipConfirm(UI_Element* el, Vector2 mpos) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     int chosenShip = f->units[chooseShipForResearch - 2];
-    Unit_Entity* u = Unit_getPointer(chosenShip);
     Sector_deployUnitToPlanet(currentPlanetInfo, chosenShip);
     Fleet_removeUnitAtIndex(f, chooseShipForResearch - 2);
     chooseShipForResearch = 0;

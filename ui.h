@@ -43,4 +43,4 @@ void UI_enableScreen(UI_Screen s);
 void UI_updateEnabled();
 void UI_drawPanel(UI_Element* el);
 int UI_handleSelectList(UI_Element* el, Vector2 mpos, int numelements, int listsize);
-void UI_drawSelectListItem(UI_Element* el, int offset, int listsize, char text[32], int isSelected);
+void UI_drawSelectListItem(UI_Element* el, int offset, int listsize, const char text[32], int isSelected);

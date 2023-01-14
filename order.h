@@ -3,7 +3,7 @@
 #define ORDER_MAX 32
 
 typedef enum {
-    ORDER_NONE, ORDER_MOVE_FLEET, ORDER_BUILD_SHIP
+    ORDER_NONE, ORDER_MOVE_FLEET, ORDER_BUILD_SHIP, ORDER_UPGRADE
 } Order_Type;
 
 typedef struct {

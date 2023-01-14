@@ -4,6 +4,7 @@
 #include "event.h"
 #include "order.h"
 #include "unit.h"
+#include "research.h"
 #include "fleet.h"
 #include "ui.h"
 #include "screen_manager.h"
@@ -14,6 +15,7 @@ int newDesign = 0;
 Unit_Component newDesignComponents[UNIT_COMPONENT_MAX] = {};
 int newDesignComponentNum = 0;
 int newDesignBuildCosts[RES_ALL];
+int upgradeShip = 0;
 
 void _enableBuildShipMenu(UI_Element *el) {
     el->visible = buildShip;
@@ -36,18 +38,6 @@ void _drawBuildShipMenu(UI_Element* el) {
         } else {
             DrawText("+ New design", el->x, el->y + line*32, 16, RAYWHITE);
             break;
-        }
-    }
-    // Show orders queue
-    line = 0;
-    Order_Entity* o = 0;
-    Unit_Entity* u = 0;
-    for (int i = 0; i < Order_count(); i++) {
-        o = Order_getPointer(i);
-        if (o->type == ORDER_BUILD_SHIP && o->fleet == ScreenManager_currentSector()->fleet) {
-            u = Unit_getPointer(o->param1);
-            DrawText(TextFormat("%s (%d)", u->name, u->costToBuild), el->x + 400, el->y + 32 + 16*line, 16, RAYWHITE);
-            line++;
         }
     }
 }
@@ -85,7 +75,7 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
         }
         for (int j = 0; j < 4; j++) {
             if (!Fleet_hasEnoughItems(f, d->components[i].buildCosts[j])) {
-                Event_create("Could not build", "Not enough stuff to build ship.");
+                Event_create("Could not upgrade", "Not enough stuff to build ship.");
                 return;
             }
         }
@@ -99,17 +89,6 @@ void _clickBuildShipMenu(UI_Element* el, Vector2 mpos) {
     o->fleet = ScreenManager_currentSector()->fleet;
     o->param1 = Unit_lastAddedIndex();
 }
-
-// void _enableBuildShipButton(UI_Element *el) {
-//     el->visible = 1;
-//     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
-//     Unit_Entity* u = Unit_getPointer(f->units[selectedShip]);
-//     if (u->production > 0) {
-//         el->enabled = 1;
-//     } else {
-//         el->enabled = 0;
-//     }  
-// }
 
 void _clickBuildShipButton(UI_Element *el, Vector2 mpos) {
     buildShip = 1;
@@ -217,6 +196,76 @@ void _clickDesignShipCancelButton(UI_Element* el, Vector2 mpos) {
     newDesign = 0;
 }
 
+void _clickUpgradeButton(UI_Element* el, Vector2 mpos) {
+    upgradeShip = 1;
+}
+
+void _enableUpgradeMenu(UI_Element* el) {
+    el->visible = upgradeShip;
+}
+
+void _drawUpgradeMenu(UI_Element* el) {
+    UI_drawPanel(el);
+    int line = 0;
+    for (int i = 0; i < MAXUPGRADES; i++) {
+        Fleet_Upgrade upgrade = Fleet_getUpgrade(i);
+        if (Research_techIsDeveloped(upgrade.techRequired) && !Research_techIsDeveloped(upgrade.obsoletedBy) && !upgrade.complete) {
+            DrawText(TextFormat("%s %d", upgrade.name, upgrade.complete), el->x, el->y + line * 32, 16, RAYWHITE);
+            // Show cost of upgrade
+            int col = 0;
+            for (int j = 0; j <  4; j++) {
+                if (upgrade.buildCosts[j].type) {
+                    DrawText(
+                        TextFormat("%s: %d", Sector_resourceStrings[upgrade.buildCosts[j].type], upgrade.buildCosts[j].abundance),
+                        el->x + col, el->y + line * 32  + 16, 16, RAYWHITE 
+                    );
+                    int slen = strlen(Sector_resourceStrings[i]);
+                    int log = (int) log10(newDesignBuildCosts[i]);
+                    line += (slen + log + 4) * 8;
+                }
+            }
+            line++;
+        }
+    }
+    if (line == 0) {
+        DrawText("No upgrades available", el->x, el->y, 16, RAYWHITE);
+    }
+}
+
+void _clickUpgradeMenu(UI_Element* el, Vector2 mpos) {
+    int clicked = floor((mpos.y - el->y) / 32);
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    for (int i = 0; i < MAXUPGRADES; i++) {
+        Fleet_Upgrade upgrade = Fleet_getUpgrade(i);
+        if (Research_techIsDeveloped(upgrade.techRequired) && !Research_techIsDeveloped(upgrade.obsoletedBy) && !upgrade.complete) {
+            clicked--;
+            if (clicked == -1) {
+                for (int j = 0; j < 4; j++) {
+                    if (!Fleet_hasEnoughItems(f, upgrade.buildCosts[j])) {
+                        Event_create("Could not build", "Not enough stuff to upgrade ship.");
+                        return;
+                    }
+                }
+                Order_Entity* o = Order_create();
+                o->type = ORDER_UPGRADE;
+                o->fleet = ScreenManager_currentSector()->fleet;
+                o->param1 = i;
+                for (int j = 0; j < 4; j++) {
+                    Fleet_consumeItems(f, upgrade.buildCosts[j]);
+                    o->param2 += upgrade.buildCosts[j].abundance * 100;
+                }
+                upgradeShip = 0;
+                return;
+            }
+        }
+    }
+}
+
+void _clickUpgradeDoneButton(UI_Element* el, Vector2 mpos) {
+    upgradeShip = 0;
+}
+
+
 void _drawFleetScreen(UI_Element *el) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     Unit_Entity* u = 0;
@@ -227,6 +276,23 @@ void _drawFleetScreen(UI_Element *el) {
             storage = (u->totalStored * 100) / u->storage;
         }
         UI_drawSelectListItem(el, i, 16, TextFormat("%s %d%%", u->name, storage), selectedShip == i);
+    }
+    // Show orders queue
+    int line = 0;
+    Order_Entity* o = 0;
+    Fleet_Upgrade upgrade = (Fleet_Upgrade) {};
+    for (int i = 0; i < Order_count(); i++) {
+        o = Order_getPointer(i);
+        if ((o->type == ORDER_BUILD_SHIP || o->type == ORDER_UPGRADE) && o->fleet == ScreenManager_currentSector()->fleet) {
+            if (o->type == ORDER_BUILD_SHIP) {
+                u = Unit_getPointer(o->param1);
+                DrawText(TextFormat("%s (%d)", u->name, u->costToBuild), el->x + 300, el->y + 32 + 16*line, 16, RAYWHITE);
+            } else {
+                upgrade = Fleet_getUpgrade(o->param1);
+                DrawText(TextFormat("%s (%d)", upgrade.name, o->param2), el->x + 300, el->y + 32 + 16*line, 16, RAYWHITE);
+            }
+            line++;
+        }
     }
 }
 
@@ -247,6 +313,11 @@ void ScreenFleet_init() {
     UI_createElement(364, 464, 100, 32, "Done", SCREEN_FLEET, _enableBuildShipMenu, UI_drawButton, _clickBuildShipDoneButton, NOFUNC);
     UI_createElement(100, 100, 600, 400, "Build ship display", SCREEN_FLEET, _enableBuildShipMenu, _drawBuildShipMenu, _clickBuildShipMenu, NOFUNC);
 
-    UI_createElement(500, 100, 132, 32, "Build ship", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickBuildShipButton, NOFUNC);
+    UI_createElement(364, 464, 100, 32, "Done", SCREEN_FLEET, _enableUpgradeMenu, UI_drawButton, _clickUpgradeDoneButton, NOFUNC);
+    UI_createElement(100, 100, 600, 400, "Upgrade display", SCREEN_FLEET, _enableUpgradeMenu, _drawUpgradeMenu, _clickUpgradeMenu, NOFUNC);
+
+    UI_createElement(500, 100, 132, 32, "Upgrade mothership", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickUpgradeButton, NOFUNC);
+    UI_createElement(500, 132, 132, 32, "Build ship", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickBuildShipButton, NOFUNC);
+    
     UI_createElement(0, 64, 400, SCREENY, "Fleet screen", SCREEN_FLEET, NOFUNC, _drawFleetScreen, _clickFleetScreen, NOFUNC);
 }
