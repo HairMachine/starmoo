@@ -265,6 +265,15 @@ void _clickUpgradeDoneButton(UI_Element* el, Vector2 mpos) {
     upgradeShip = 0;
 }
 
+void _enableScrapShip(UI_Element* el) {
+    el->visible = selectedShip > 0;
+}
+
+void _clickScrapShip(UI_Element* el, Vector2 mpos) {
+    Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
+    Unit_getPointer(f->units[selectedShip])->hp = 0;
+    Fleet_removeUnitAtIndex(f, selectedShip);
+}
 
 void _drawFleetScreen(UI_Element *el) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
@@ -314,6 +323,7 @@ void ScreenFleet_init() {
 
     UI_createElement(500, 100, 132, 32, "Upgrade mothership", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickUpgradeButton, NOFUNC);
     UI_createElement(500, 132, 132, 32, "Build ship", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickBuildShipButton, NOFUNC);
+    UI_createElement(500, 164, 132, 32, "Scrap ship", SCREEN_FLEET, _enableScrapShip, UI_drawButton, _clickScrapShip, NOFUNC);
     
     UI_createElement(0, 64, 400, SCREENY, "Fleet screen", SCREEN_FLEET, NOFUNC, _drawFleetScreen, _clickFleetScreen, NOFUNC);
 }
