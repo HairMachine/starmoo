@@ -270,12 +270,8 @@ void _drawFleetScreen(UI_Element *el) {
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     Unit_Entity* u = 0;
     for (int i = 0; i < f->unitmax; i++) {
-        int storage = 100;
         u = Unit_getPointer(f->units[i]);
-        if (u->storage > 0) {
-            storage = (u->totalStored * 100) / u->storage;
-        }
-        UI_drawSelectListItem(el, i, 16, TextFormat("%s %d%%", u->name, storage), selectedShip == i);
+        UI_drawSelectListItem(el, i, 16, u->name, selectedShip == i);
     }
     // Show orders queue
     int line = f->unitmax;

@@ -139,11 +139,9 @@ void _clickCollectResource(UI_Element* el) {
         for (int j = 0; j < uc->storednum; j++) {
             for (int k = 0; k < f->unitmax; k++) {
                 ul = Unit_getPointer(f->units[k]);
-                if (ul->storage - ul->totalStored > uc->totalStored) {
-                    Unit_inventoryTransfer(uc, j, ul);
-                    collected++;
-                    break;
-                }
+                Unit_inventoryTransfer(uc, j, ul);
+                collected++;
+                break;
             }
             totalToCollect += uc->storednum;
         }
@@ -301,13 +299,11 @@ void _clickBuyButton(UI_Element* el, Vector2 mpos) {
     Unit_Inventory ui = {r.type, 1};
     for (int k = 0; k < f->unitmax; k++) {
         Unit_Entity* u = Unit_getPointer(f->units[k]);
-        if (u->totalStored < u->storage) {
-            Unit_storeItem(u, ui);
-            f->credits -= price;
-            currentPlanetInfo->funds += price;
-            bought = 1;
-            break;
-        }
+        Unit_storeItem(u, ui);
+        f->credits -= price;
+        currentPlanetInfo->funds += price;
+        bought = 1;
+        break;
     }
     if (!bought) {
         Event_create("No space", "No space to store bought stuff.");

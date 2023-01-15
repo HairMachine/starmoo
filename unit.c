@@ -10,17 +10,6 @@ int designnum = 0;
 
 Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) { // 0
-        .name = "Storage 1",
-        .storageCapacity = 100,
-        .size = 500,
-        .buildCosts = {
-            {RES_BASE_METALS, 5},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        }
-    },
-    (Unit_Component) { // 1
         .name = "Fabricator 1",
         .unitProductionVolume = 100,
         .size = 500,
@@ -32,7 +21,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_CONSTRUCT_1
     },
-    (Unit_Component) { // 2
+    (Unit_Component) { // 1
         .name="Miner 1",
         .miningVolume = 50,
         .size = 500,
@@ -44,7 +33,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_MINING_2
     },
-    (Unit_Component) { // 3
+    (Unit_Component) { // 2
         .name="Research Lab 1",
         .researchVolume = 10,
         .size = 500,
@@ -55,7 +44,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) { // 4
+    (Unit_Component) { // 3
         .name="Laser Cannon",
         .shotPower = 10,
         .shotPenetration = 25,
@@ -68,7 +57,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_BEAM_2
     },
-    (Unit_Component) { // 5
+    (Unit_Component) { // 4
         .name="Shield 1",
         .shieldStrength = 10,
         .sheildRechargeRate = 1,
@@ -81,7 +70,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_SHIELD_2
     },
-    (Unit_Component) { // 6
+    (Unit_Component) { // 5
         .name="Gun Battery",
         .shotPower = 25,
         .shotPenetration = 10,
@@ -94,7 +83,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_GUN_2
     },
-    (Unit_Component) { // 7
+    (Unit_Component) { // 6
         .name="Titanium Armour",
         .armourStrength = 100,
         .size = 100,
@@ -1230,7 +1219,6 @@ Unit_Entity Unit_generate(Unit_Design* design) {
         c = &design->components[i];
         u.hpMax += c->armourStrength;
         u.shieldMax += c->shieldStrength;
-        u.storage += c->storageCapacity;
         u.popMax += c->habitationSpace;
         u.mining += c->miningVolume;
         u.farming += c->foodProduction;
@@ -1247,7 +1235,6 @@ Unit_Entity Unit_generate(Unit_Design* design) {
             u.costToBuild += c->buildCosts[j].abundance * 100;
         }
         u.size += c->size;
-        u.totalShipStorage += c->totalShipSize;
     }
     u.hp = u.hpMax;
     u.shields = u.shieldMax;
@@ -1288,7 +1275,6 @@ int Unit_lastAddedIndex() {
 }
 
 void Unit_storeItem(Unit_Entity* u, Unit_Inventory inv) {
-    u->totalStored += inv.quantity;
     for (int i = 0; i < u->storednum; i++) {
         Unit_Inventory* existingInv = &u->stored[i];
         if (existingInv->storedResourceId == inv.storedResourceId) {
@@ -1309,7 +1295,6 @@ int Unit_consumeItem(Unit_Entity* u, Sector_Resource r) {
         if (existingInv->storedResourceId == r.type) {
             if (existingInv->quantity >= r.abundance) {
                 existingInv->quantity -= r.abundance;
-                u->totalStored -= r.abundance;
                 if (existingInv->quantity <= 0) {
                     Unit_removeItemByIndex(u, i);
                 }
@@ -1340,7 +1325,6 @@ void Unit_inventoryTransfer(Unit_Entity* from, int invIndex, Unit_Entity* to) {
 }
 
 void Unit_removeItemByIndex(Unit_Entity* u, int index) {
-    u->totalStored -= u->stored[index].quantity;
     for (int i = index; i < u->storednum; i++) {
         u->stored[i] = u->stored[i + 1];
     }

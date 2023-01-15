@@ -25,10 +25,9 @@ int main()
 
     Unit_Design* ud = Unit_createDesign();
     strcpy(ud->name, "Mothership");
-    ud->componentnum = 3;
+    ud->componentnum = 2;
     ud->components[0] = Unit_getComponent(0);
-    ud->components[1] = Unit_getComponent(1);
-    ud->components[2] = Unit_getComponent(8);
+    ud->components[1] = Unit_getComponent(7);
     // Build one to start them off with
     Unit_Entity* domeShip = Unit_create(ud);
     // Domeship is special and doesn't consume population like fleet ships - it's where everyone is living!

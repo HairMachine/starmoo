@@ -18,7 +18,6 @@ typedef struct {
     int shieldStrength;
     int sheildRechargeRate;
     int thrusterSpeed;
-    int storageCapacity;
     int habitationSpace;
     int goodProductionVolume;
     int goodProduced;
@@ -29,7 +28,6 @@ typedef struct {
     int productionCost;
     Sector_Resource buildCosts[4];
     int researchVolume;
-    int totalShipSize;
     Research_TechType techRequired;
     Research_TechType obsoletedBy;
 } Unit_Component;
@@ -67,16 +65,13 @@ typedef struct {
     int design;
     int research;
     int production;
-    int storage;
     int mining;
     int resourceMining;
     int farming;
-    int totalShipStorage;
     int size;
     int pop;
-    Unit_Inventory stored[32];
+    Unit_Inventory stored[RES_ALL];
     int storednum;
-    int totalStored;
     int canFight;
     int costToBuild;
 } Unit_Entity;

@@ -249,10 +249,10 @@ void Fleet_addUnit(Fleet_Entity* f, int uid) {
     Unit_Entity newUnit = Unit_getCopy(uid);
     f->food += newUnit.farming;
     f->size += newUnit.size;
-    f->maxSize += newUnit.totalShipStorage;
 }
 
 void Fleet_removeUnitAtIndex(Fleet_Entity* f, int index) {
+    f->size -= Unit_getPointer(f->units[index])->size;
     for (int i = index; i < f->unitmax; i++) {
         f->units[i] = f->units[i + 1];
     }
@@ -418,24 +418,6 @@ int Fleet_canResearch(Fleet_Entity* f) {
         }
     }
     return 0;
-}
-
-int Fleet_getUsedStorage(Fleet_Entity* f) {
-    int total = 0;
-    for (int i = 0; i < f->unitmax; i++) {
-        Unit_Entity* u = Unit_getPointer(f->units[i]);
-        total += u->totalStored;
-    }
-    return total;
-}
-
-int Fleet_getMaxStorage(Fleet_Entity* f) {
-    int total = 0;
-    for (int i = 0; i < f->unitmax; i++) {
-        Unit_Entity* u = Unit_getPointer(f->units[i]);
-        total += u->storage;
-    }
-    return total;
 }
 
 int Fleet_hasEnoughItems(Fleet_Entity* f, Sector_Resource r) {

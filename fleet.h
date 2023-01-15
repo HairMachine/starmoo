@@ -55,8 +55,6 @@ int Fleet_getUnitCountByDesign(Fleet_Entity* f, int designId);
 void Fleet_simulate(Fleet_Entity* f);
 int Fleet_canMine(Fleet_Entity *f);
 int Fleet_canResearch(Fleet_Entity* f);
-int Fleet_getUsedStorage(Fleet_Entity *f);
-int Fleet_getMaxStorage(Fleet_Entity *f);
 int Fleet_hasEnoughItems(Fleet_Entity* f, Sector_Resource r);
 void Fleet_consumeItems(Fleet_Entity* f, Sector_Resource r);
 int Fleet_getAssignedPop(Fleet_Entity* f);
