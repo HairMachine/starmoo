@@ -56,7 +56,7 @@ void _assignResources() {
     sectorTotals[RES_PRECIOUS_ORES] = ceil(totalSectors / 50);
     // Loop through luxuries
     for (int i = RES_PRECIOUS_ORES + 1; i < RES_ALL; i++) {
-        sectorTotals[i] = ceil(totalSectors / (80 + 10 * floor((i - RES_PRECIOUS_ORES - 1) / 4)));
+        sectorTotals[i] = ceil(totalSectors / (100 + 10 * floor((i - RES_PRECIOUS_ORES - 1) / 4)));
     }
     for (int i = 0; i < RES_ALL; i++) {
         while (sectorTotals[i]) {

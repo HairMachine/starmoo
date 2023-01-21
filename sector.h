@@ -50,7 +50,7 @@ typedef struct {
     int amount;
 } Sector_ResearchBonus;
 
-#define RESOURCE_MAX 8
+#define RESOURCE_MAX 4
 #define RESEARCH_MAX 4
 
 typedef struct {
