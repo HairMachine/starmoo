@@ -24,17 +24,17 @@ void Combat_createEnemyDesigns() {
     ud = Unit_createDesign();
     strcpy(ud->name, "Laser Fighter");
     ud->componentnum = 2;
-    ud->components[0] = Unit_getComponent(4);
-    ud->components[1] = Unit_getComponent(7);
+    ud->components[0] = Unit_getComponent(3);
+    ud->components[1] = Unit_getComponent(6);
     endShipDesign = Unit_designCount();
     // Monsters
     startMonsterDesign = Unit_designCount();
     ud = Unit_createDesign();
     strcpy(ud->name, "Space Worm");
     ud->componentnum = 3;
-    ud->components[0] = Unit_getComponent(6);
-    ud->components[1] = Unit_getComponent(7);
-    ud->components[2] = Unit_getComponent(7);
+    ud->components[0] = Unit_getComponent(5);
+    ud->components[1] = Unit_getComponent(6);
+    ud->components[2] = Unit_getComponent(6);
     endMonsterDesign = Unit_designCount();
 }
 

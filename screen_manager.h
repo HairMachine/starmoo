@@ -9,3 +9,5 @@ void ScreenSystem_init();
 void ScreenResearch_init();
 Sector_Entity* ScreenManager_currentSector();
 void ScreenManager_setCurrentSector(Sector_Entity* s);
+void ScreenManager_togglePause();
+int ScreenManager_isPaused();

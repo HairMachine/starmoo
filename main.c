@@ -57,9 +57,18 @@ int main()
             if (IsMouseButtonPressed(0)) {
                 UI_handleMouse();
             }
+            if (IsKeyReleased(KEY_SPACE)) {
+                ScreenManager_togglePause();
+                UI_updateEnabled();
+            }
         EndDrawing();
         framecounter++;
         if (framecounter == 60) {
+            if (!ScreenManager_isPaused()) {
+                World_update();
+                UI_checkSpecialEvents();
+                UI_updateEnabled();
+            }
             framecounter = 0;
         }
         // End game conditions

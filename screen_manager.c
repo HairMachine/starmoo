@@ -9,6 +9,7 @@
 #include "screen_manager.h"
 
 Sector_Entity* currentSectorInfo = 0;
+int paused = 1;
 
 void _galaxySelectedEnable(UI_Element* el) {
     el->enabled = !Combat_active();
@@ -94,6 +95,22 @@ void _drawEventPanel(UI_Element* el) {
     DrawText(e->body, el->x + 32, el->y + 64, 16, RAYWHITE);
 }
 
+void _pauseEnable(UI_Element *el) {
+    el->visible = !paused;
+}
+
+void _clickPause(UI_Element *el, Vector2 mpos) {
+    paused = 1;
+}
+
+void _unPauseEnable(UI_Element *el) {
+    el->visible = paused;
+}
+
+void _clickUnPause(UI_Element *el, Vector2 mpos) {
+    paused = 0;
+}
+
 Sector_Entity* ScreenManager_currentSector() {
     return currentSectorInfo;
 }
@@ -102,16 +119,12 @@ void ScreenManager_setCurrentSector(Sector_Entity* s) {
     currentSectorInfo = s;
 }
 
-void _endTurnEnable(UI_Element *el, Vector2 mpos) {
-    if (Event_count() == 0) {
-        el->enabled = 1;
-    } else {
-        el->enabled = 0;
-    }
+void ScreenManager_togglePause() {
+    paused = !paused;
 }
 
-void _clickEndTurn(UI_Element *el, Vector2 mpos) {
-    World_update();
+int ScreenManager_isPaused() {
+    return paused;
 }
 
 void ScreenManager_init() {
@@ -126,7 +139,8 @@ void ScreenManager_init() {
     UI_createElement(350, 350, 100, 32, "Done", SCREEN_ALL, _eventEnable, UI_drawButton, _clickNextEvent, NOFUNC);
     UI_createElement(100, 200, 400, 200, "Event Panel", SCREEN_ALL, _eventEnable, _drawEventPanel, NOFUNC, NOFUNC);
 
-    UI_createElement(600, 500, 100, 32, "End Turn", SCREEN_ALL, _endTurnEnable, UI_drawButton, _clickEndTurn, NOFUNC);
+    UI_createElement(600, 500, 100, 32, "Pause", SCREEN_ALL, _pauseEnable, UI_drawButton, _clickPause, NOFUNC);
+    UI_createElement(600, 500, 100, 32, "Unpause", SCREEN_ALL, _unPauseEnable, UI_drawButton, _clickUnPause, NOFUNC);
 
     ScreenMap_init();
     ScreenSystem_init();
