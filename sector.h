@@ -38,7 +38,7 @@ typedef enum {
 
 #define GOOD_TYPES 4
 
-extern char Sector_resourceStrings[RES_ALL][18];
+extern char Sector_resourceStrings[RES_ALL][32];
 
 typedef struct {
     Sector_ResourceType type;
@@ -73,7 +73,7 @@ typedef enum {
     PH_NONE, PH_GAS_CLOUD, PH_ASTEROID_FIELD, PH_ABANDONED_STATION, PH_PRECURSOR_REMNANTS
 } Sector_Phenomena;
 
-#define PLANET_MAX 12
+#define PLANET_MAX 8
 #define PHENOMENA_MAX 8
 
 typedef struct {

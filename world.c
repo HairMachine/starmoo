@@ -31,7 +31,7 @@ int _planetAllowedResource(Sector_Planet* p, Sector_ResourceType rt) {
             return p->type != PLANET_GAS_GIANT && p->funds < 5000;
         case RES_FINE_FRUIT:
         case RES_STIM_CELLS:
-            return (p->type == PLANET_TERRAN || p->type == PLANET_GAIA || p->type == PLANET_OCEAN || p->type == PLANET_DESERT) && p->funds < 25000 && p->funds > 1000;
+            return (p->type == PLANET_TERRAN || p->type == PLANET_GAIA || p->type == PLANET_OCEAN || p->type == PLANET_DESERT);
         default:
             return p->pop > 0 && p->funds > 5000;
     }
@@ -56,7 +56,7 @@ void _assignResources() {
     sectorTotals[RES_PRECIOUS_ORES] = ceil(totalSectors / 50);
     // Loop through luxuries
     for (int i = RES_PRECIOUS_ORES + 1; i < RES_ALL; i++) {
-        sectorTotals[i] = ceil(totalSectors / (70 + 10 * floor((i - RES_PRECIOUS_ORES - 1) / 4)));
+        sectorTotals[i] = ceil(totalSectors / (80 + 10 * floor((i - RES_PRECIOUS_ORES - 1) / 4)));
     }
     for (int i = 0; i < RES_ALL; i++) {
         while (sectorTotals[i]) {
@@ -75,7 +75,7 @@ void _assignResources() {
                                 goto start;
                             }
                         }
-                        Sector_planetAddResource(p, i, 100 + rand() % 25 + 50);
+                        Sector_planetAddResource(p, i, 100 + 20 + rand() % 4 * 20);
                         ok = 1;
                     } else {
                         maxTries++;
@@ -110,7 +110,7 @@ void _createResearchBonuses() {
                                 goto start;
                             }
                         }
-                        Sector_planetAddResearchBonus(p, i, 10 + rand() % 25);
+                        Sector_planetAddResearchBonus(p, i, 10 + rand() % 5 * 5);
                         ok = 1;
                     } else {
                         maxTries++;

@@ -3,18 +3,18 @@
 
 #include "sector.h"
 
-char Sector_resourceStrings[RES_ALL][18] = {
+char Sector_resourceStrings[RES_ALL][32] = {
     // Base resources
     "None", "Base Metals", "Fertile Soil", "Fabrics", "Deuterium", "Silicon",
     "Warp Seeds", "Cytronium", "Magnetrium", "Subfilaments", "Hyperalloys",
     "Stim Cells", "Fine Fruit", "Regenatrons", "Precious Ores",
     // Goods
-    "Barathian Wine 1", "Stims 1", "Medicine 1", "Luxury Goods 1",
-    "Barathian Wine 2", "Stims 2", "Medicine 2", "Luxury Goods 2",
-    "Barathian Wine 3", "Stims 3", "Medicine 3", "Luxury Goods 3",
-    "Barathian Wine 4", "Stims 4", "Medicine 4", "Luxury Goods 4",
-    "Barathian Wine 5", "Stims 5", "Medicine 5", "Luxury Goods 5",
-    "Barathian Wine 6", "Stims 6", "Medicine 6", "Luxury Goods 6",
+    "Basic Wine", "Basic Stims", "Basic Medicine", "Basic Goods",
+    "Standard Wine", "Standard Stims", "Standard Medicine", "Standard Goods",
+    "Decent Wine", "Decent Stims", "Decent Medicine", "Decent Goods",
+    "Fine Wine", "Fine Stims", "Fine Medicine", "Fine Goods",
+    "Excellent Wine", "Excellent Stims", "Excellent Medicine", "Excellent Goods",
+    "Masterpiece Wine", "Masterpiece Stims", "Masterpiece Medicine", "Masterpiece Goods",
 };
 
 char Sector_tempStrings[TEMP_X_COLD+1][16] = {
@@ -200,23 +200,19 @@ void Sector_removeUnitFromPlanetByIndex(Sector_Planet* p, int index) {
 int Sector_resourceBasePrice(Sector_Planet* p, Sector_ResourceType r, int wealthLevel) {
     int bp = 0;
     if (r <= RES_FABRICS) {
-        bp = 100;
+        bp = 10;
     } else if (r <= RES_HYPERALLOYS) {
-        bp = 200;
+        bp = 20;
     } else if (r <= RES_PRECIOUS_ORES) {
-        bp = 400;
+        bp = 40;
     } else {
-        bp = 1200 * (1 + (floor((r - RES_PRECIOUS_ORES - 1) / 4)));
-    }
-    // Alter by quality compared to wealth level
-    if (wealthLevel > 0) {
-        int quality = Sector_resourceQuality(r) + 10;
-        bp = (bp * ((10*quality) / (wealthLevel+10))) / 10;
+        bp = 100 * (1 + (floor((r - RES_PRECIOUS_ORES - 1) / 4)));
     }
     if (bp == 0) bp = 1;
+    int maxReduction = bp / 5;
     for (int i = 0; i < p->resourcenum; i++) {
         if (p->resources[i].type == r) {
-            return ((100 - p->resources[i].abundance) * bp) / 100;
+            return (bp - ((100 - p->resources[i].abundance) * maxReduction) / 100) * 10;
         }
     }
     return bp;
