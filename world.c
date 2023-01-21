@@ -180,6 +180,16 @@ void World_create() {
     _createResearchBonuses();
 }
 
+void World_explore(int startX, int startY, int range) {
+    for (int x = startX - 3; x <= startX + 3; x++) {
+        for (int y = startY - 3; y <= startY + 3; y++) {
+            if (y > 0 && y < World_sizeY && x > 0 && x < World_sizeX) {
+                World_sectors[y * World_sizeX + x].explored = 1;
+            }
+        }
+    }
+}
+
 /**
  * Called each turn; updates the universe. 
  */
@@ -202,6 +212,7 @@ void World_update() {
                     se->fleet = -1;
                     se = &World_sectors[o->originY * World_sizeX + o->originX];
                     se->fleet = o->fleet;
+                    World_explore(o->originX, o->originY, 3);
                     // When reaching the end, complete the order
                     if (o->originX == o->targetX && o->originY == o->targetY) {
                         if (!se->explored) {

@@ -43,6 +43,15 @@ int main()
     Unit_storeItem(domeShip, (Unit_Inventory) {RES_BASE_METALS, 100});
     Unit_storeItem(domeShip, (Unit_Inventory) {RES_DEUTERIUM, 100});
 
+    // Initial exploration around any fleet which exists at the start of the game
+    for (int x = 0; x < World_sizeX; x++) {
+        for (int y = 0; y < World_sizeY; y++) {
+            if (World_getSectorPointer(x, y)->fleet > -1) {
+                World_explore(x, y, 3);
+            }
+        }
+    }
+
     Combat_createEnemyDesigns();
 
     // Main game loop

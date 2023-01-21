@@ -29,9 +29,6 @@ void _handleTargeter(Sector_Entity* clickedSector) {
 }
 
 void _targeterSetDestination(UI_Element* el, Sector_Entity* clickedSector) {
-    if (clickedSector->star == STAR_NONE) {
-        return;
-    }
     Fleet_Entity* f = Fleet_getPointer(ScreenManager_currentSector()->fleet);
     if (f->warpFactor == 0) {
         return;
@@ -59,6 +56,9 @@ void _drawMap(UI_Element* el) {
     for (int x = 0; x < World_sizeX; x++) {
         for (int y = 0; y < World_sizeY; y++) {
             Sector_Entity* s = World_getSectorPointer(x, y);
+            if (!s->explored) {
+                continue;
+            }
             switch (s->star) {
                 case STAR_RED:
                     DrawCircle(el->x + x*UI_tileSize + circleRad, el->y + y*UI_tileSize + circleRad, circleRad - 4, MAROON);
@@ -87,9 +87,6 @@ void _drawMap(UI_Element* el) {
             if (s->pop > 0 && s->explored == 1) {
                 DrawText("C", el->x + x * UI_tileSize + 1, el->y + y * UI_tileSize + 1, 4, BLACK);
                 DrawText("C", el->x + x * UI_tileSize, el->y + y * UI_tileSize, 4, WHITE);
-            } else if (s->explored) {
-                DrawText("E", el->x + x * UI_tileSize + 1, el->y + y * UI_tileSize + 1, 4, BLACK);
-                DrawText("E", el->x + x * UI_tileSize, el->y + y * UI_tileSize, 4, WHITE);
             }
             if (s->fleet > -1) {
                 DrawText("F", el->x + x * UI_tileSize + UI_tileSize - 4, el->y + y * UI_tileSize + 1, 4, BLACK);
@@ -132,13 +129,11 @@ void _clickMap(UI_Element* el, Vector2 mpos) {
     int ytil = floor(((int)mpos.y - el->y) / UI_tileSize);
     Sector_Entity* se = World_getSectorPointer(xtil, ytil);
     if (targeter.range == 0) {
-        if (se->star > STAR_NONE) {
-            ScreenManager_setCurrentSector(se);
-            ScreenManager_currentSector()->x = xtil;
-            ScreenManager_currentSector()->y = ytil;
-            if (ScreenManager_currentSector()->fleet > -1) {
-                lastFleet = ScreenManager_currentSector()->fleet;
-            }
+        ScreenManager_setCurrentSector(se);
+        ScreenManager_currentSector()->x = xtil;
+        ScreenManager_currentSector()->y = ytil;
+        if (ScreenManager_currentSector()->fleet > -1) {
+            lastFleet = ScreenManager_currentSector()->fleet;
         }
     } else {
         _handleTargeter(se);
