@@ -165,8 +165,18 @@ void _drawSectorInfo(UI_Element* el) {
     int line = 6;
     for (int i = 0; i < ScreenManager_currentSector()->planetnum; i++) {
         Sector_Planet p = Sector_getPlanet(ScreenManager_currentSector(), i);
-        DrawText(TextFormat("- %s %dM", Sector_planetStrings[p.type], p.pop), el->x, el->y + 8*line, 8, RAYWHITE);
-        line++;
+        for (int i = 0; i < p.resourcenum; i++) {
+            if (p.pop == 0) {
+                DrawText(TextFormat("- %s (%d%%)", Sector_resourceStrings[p.resources[i].type], p.resources[i].abundance), el->x, el->y + 8*line, 8, RAYWHITE);
+            } else {
+                DrawText(TextFormat(
+                    "- %s (%dC)",
+                    Sector_resourceStrings[p.resources[i].type],
+                    Sector_resourceBasePrice(&p, p.resources[i].type, ScreenManager_currentSector()->wealthLevel)
+                ), el->x, el->y + 8*line, 8, RAYWHITE);
+            }
+            line++;
+        }
     }
     
     if (lastFleet > -1) {
