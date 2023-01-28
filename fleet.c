@@ -13,10 +13,10 @@ Fleet_Upgrade upgrades[MAXUPGRADES] = {
     (Fleet_Upgrade) {
         .name = "Development Level 1",
         .buildCosts = {
-            {RES_BASE_METALS, 500},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
+            {RES_LUXURY_1, 10},
+            {RES_WINE_1, 10},
+            {RES_MEDICAL_1, 10},
+            {RES_STIM_1, 10}
         },
         .development = 1,
         .obsoletedBy = RT_ALL
@@ -24,10 +24,10 @@ Fleet_Upgrade upgrades[MAXUPGRADES] = {
     (Fleet_Upgrade) {
         .name = "Development Level 2",
         .buildCosts = {
-            {RES_BASE_METALS, 1000},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
+            {RES_LUXURY_2, 10},
+            {RES_WINE_2, 10},
+            {RES_MEDICAL_2, 10},
+            {RES_STIM_2, 10}
         },
         .development = 2,
         .obsoletedBy = RT_ALL
@@ -35,10 +35,10 @@ Fleet_Upgrade upgrades[MAXUPGRADES] = {
     (Fleet_Upgrade) {
         .name = "Development Level 3",
         .buildCosts = {
-            {RES_BASE_METALS, 2000},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
+            {RES_LUXURY_3, 10},
+            {RES_WINE_3, 10},
+            {RES_MEDICAL_3, 10},
+            {RES_STIM_3, 10}
         },
         .development = 3,
         .obsoletedBy = RT_ALL
@@ -46,10 +46,10 @@ Fleet_Upgrade upgrades[MAXUPGRADES] = {
     (Fleet_Upgrade) {
         .name = "Development Level 4",
         .buildCosts = {
-            {RES_BASE_METALS, 4000},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
+            {RES_LUXURY_4, 10},
+            {RES_WINE_4, 10},
+            {RES_MEDICAL_4, 10},
+            {RES_STIM_4, 10}
         },
         .development = 4,
         .obsoletedBy = RT_ALL
@@ -57,10 +57,10 @@ Fleet_Upgrade upgrades[MAXUPGRADES] = {
     (Fleet_Upgrade) {
         .name = "Development Level 5",
         .buildCosts = {
-            {RES_BASE_METALS, 8000},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
+            {RES_LUXURY_5, 10},
+            {RES_WINE_5, 10},
+            {RES_MEDICAL_5, 10},
+            {RES_STIM_5, 10}
         },
         .development = 5,
         .obsoletedBy = RT_ALL
@@ -232,6 +232,65 @@ Fleet_Upgrade upgrades[MAXUPGRADES] = {
         .sizeIncrease = 160000,
         .techRequired = RT_CARRIER_5,
         .obsoletedBy = RT_ALL
+    },
+    (Fleet_Upgrade) {
+        .name = "Fabricator 2",
+        .unitProductionVolume = 100,
+        .buildCosts = {
+            {RES_BASE_METALS, 50},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_1,
+        .obsoletedBy = RT_CONSTRUCT_2
+    },
+    (Fleet_Upgrade) {
+        .name = "Fabricator 3",
+        .unitProductionVolume = 200,
+        .buildCosts = {
+            {RES_BASE_METALS, 100},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_2,
+        .obsoletedBy = RT_CONSTRUCT_3
+    },
+    (Fleet_Upgrade) {
+        .name = "Fabricator 4",
+        .unitProductionVolume = 400,
+        .buildCosts = {
+            {RES_BASE_METALS, 150},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_3,
+        .obsoletedBy = RT_CONSTRUCT_4
+    },
+    (Fleet_Upgrade) {
+        .name = "Fabricator 5",
+        .unitProductionVolume = 1600,
+        .buildCosts = {
+            {RES_BASE_METALS, 200},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_4,
+        .obsoletedBy = RT_CONSTRUCT_5
+    },
+    (Fleet_Upgrade) {
+        .name = "Fabricator 6",
+        .unitProductionVolume = 3200,
+        .buildCosts = {
+            {RES_BASE_METALS, 250},
+            {RES_NONE, 0},
+            {RES_NONE, 0},
+            {RES_NONE, 0}
+        },
+        .techRequired = RT_CONSTRUCT_5
     },
 };
 

@@ -10,18 +10,6 @@ int designnum = 0;
 
 Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
     (Unit_Component) { // 0
-        .name = "Fabricator 1",
-        .unitProductionVolume = 100,
-        .size = 500,
-        .buildCosts = {
-            {RES_BASE_METALS, 10},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .obsoletedBy = RT_CONSTRUCT_1
-    },
-    (Unit_Component) { // 1
         .name="Miner 1",
         .miningVolume = 50,
         .size = 500,
@@ -33,7 +21,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_MINING_2
     },
-    (Unit_Component) { // 2
+    (Unit_Component) { // 1
         .name="Research Lab 1",
         .researchVolume = 10,
         .size = 500,
@@ -44,7 +32,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         }
     },
-    (Unit_Component) { // 3
+    (Unit_Component) { // 2
         .name="Laser Cannon",
         .shotPower = 10,
         .shotPenetration = 25,
@@ -57,7 +45,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_BEAM_2
     },
-    (Unit_Component) { // 4
+    (Unit_Component) { // 3
         .name="Shield 1",
         .shieldStrength = 10,
         .sheildRechargeRate = 1,
@@ -70,7 +58,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_SHIELD_2
     },
-    (Unit_Component) { // 5
+    (Unit_Component) { // 4
         .name="Gun Battery",
         .shotPower = 25,
         .shotPenetration = 10,
@@ -83,7 +71,7 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
         },
         .obsoletedBy = RT_GUN_2
     },
-    (Unit_Component) { // 6
+    (Unit_Component) { // 5
         .name="Titanium Armour",
         .armourStrength = 100,
         .size = 100,
@@ -227,70 +215,6 @@ Unit_Component Unit_allComponents[COMPONENTS_ALL] = {
             {RES_NONE, 0}
         },
         .techRequired = RT_MINING_6
-    },
-    (Unit_Component) {
-        .name = "Fabricator 2",
-        .unitProductionVolume = 100,
-        .size = 100,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CONSTRUCT_1,
-        .obsoletedBy = RT_CONSTRUCT_2
-    },
-    (Unit_Component) {
-        .name = "Fabricator 3",
-        .unitProductionVolume = 200,
-        .size = 100,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CONSTRUCT_2,
-        .obsoletedBy = RT_CONSTRUCT_3
-    },
-    (Unit_Component) {
-        .name = "Fabricator 4",
-        .unitProductionVolume = 400,
-        .size = 100,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CONSTRUCT_3,
-        .obsoletedBy = RT_CONSTRUCT_4
-    },
-    (Unit_Component) {
-        .name = "Fabricator 5",
-        .unitProductionVolume = 1600,
-        .size = 100,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CONSTRUCT_4,
-        .obsoletedBy = RT_CONSTRUCT_5
-    },
-    (Unit_Component) {
-        .name = "Fabricator 6",
-        .unitProductionVolume = 3200,
-        .size = 100,
-        .buildCosts = {
-            {RES_BASE_METALS, 50},
-            {RES_NONE, 0},
-            {RES_NONE, 0},
-            {RES_NONE, 0}
-        },
-        .techRequired = RT_CONSTRUCT_5
     },
     // Weapons tech
     (Unit_Component) {

@@ -137,7 +137,7 @@ Sector_Entity Sector_create(Sector_Template st) {
         }
         // Randomly generate a cache 10% of the time
         if (rand() % 100 < 10) {
-            s.cache = (Sector_Resource) {rand() % RES_REGENATRONS + 1, rand() % 25 + 50};
+            s.cache = (Sector_Resource) {rand() % RES_SILICON + 1, rand() % 25 + 50};
         }
     }
     if (s.star == STAR_NONE) {

@@ -32,7 +32,7 @@ typedef struct {
     int hasBuiltThisTurn;
 } Fleet_Entity;
 
-#define MAXUPGRADES 20
+#define MAXUPGRADES 32
 
 typedef struct {
     char name[32];
@@ -43,6 +43,7 @@ typedef struct {
     int warpFactor;
     int sizeIncrease;
     int complete;
+    int unitProductionVolume;
 } Fleet_Upgrade;
 
 Fleet_Entity* Fleet_create();

@@ -321,9 +321,9 @@ void ScreenFleet_init() {
     UI_createElement(364, 464, 100, 32, "Done", SCREEN_FLEET, _enableUpgradeMenu, UI_drawButton, _clickUpgradeDoneButton, NOFUNC);
     UI_createElement(100, 100, 600, 400, "Upgrade display", SCREEN_FLEET, _enableUpgradeMenu, _drawUpgradeMenu, _clickUpgradeMenu, NOFUNC);
 
-    UI_createElement(500, 100, 132, 32, "Upgrade mothership", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickUpgradeButton, NOFUNC);
-    UI_createElement(500, 132, 132, 32, "Build ship", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickBuildShipButton, NOFUNC);
-    UI_createElement(500, 164, 132, 32, "Scrap ship", SCREEN_FLEET, _enableScrapShip, UI_drawButton, _clickScrapShip, NOFUNC);
+    UI_createElement(500, 100, 164, 32, "Upgrade mothership", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickUpgradeButton, NOFUNC);
+    UI_createElement(500, 132, 164, 32, "Build ship", SCREEN_FLEET, NOFUNC, UI_drawButton, _clickBuildShipButton, NOFUNC);
+    UI_createElement(500, 164, 164, 32, "Scrap ship", SCREEN_FLEET, _enableScrapShip, UI_drawButton, _clickScrapShip, NOFUNC);
     
     UI_createElement(0, 64, 400, SCREENY, "Fleet screen", SCREEN_FLEET, NOFUNC, _drawFleetScreen, _clickFleetScreen, NOFUNC);
 }
