@@ -218,6 +218,12 @@ void World_update() {
                         if (!se->explored) {
                             Event_create("System Discovered", "Captain, we have discovered a new system!");
                         }
+                        if (se->cache.type > RES_NONE) {
+                            Event_create("Cache found", TextFormat("A cache of %d %s has been recovered.", se->cache.abundance, Sector_resourceStrings[se->cache.type]));
+                            Fleet_collectItems(f, se->cache);
+                            se->cache.type = RES_NONE;
+                            se->cache.abundance = 0;
+                        }
                         se->explored = 1;
                         f->orders = -1;
                         o->completed = 1;

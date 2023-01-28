@@ -428,6 +428,10 @@ int Fleet_hasEnoughItems(Fleet_Entity* f, Sector_Resource r) {
     return totalStored >= r.abundance;
 }
 
+void Fleet_collectItems(Fleet_Entity* f, Sector_Resource r) {
+    Unit_storeItem(Unit_getPointer(f->units[0]), (Unit_Inventory) {r.type, r.abundance});
+}
+
 void Fleet_consumeItems(Fleet_Entity* f, Sector_Resource r) {
     Unit_Entity* u;
     for (int i = 0; i < f->unitmax; i++) {

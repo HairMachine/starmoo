@@ -91,6 +91,7 @@ typedef struct {
     int hostile;
     int wealthLevel;
     int finalBoss;
+    Sector_Resource cache;
 } Sector_Entity;
 
 typedef struct {

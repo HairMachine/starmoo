@@ -135,11 +135,14 @@ Sector_Entity Sector_create(Sector_Template st) {
         if (s.wealthLevel < 0) {
             s.wealthLevel = 0;
         }
+        // Randomly generate a cache 10% of the time
+        if (rand() % 100 < 10) {
+            s.cache = (Sector_Resource) {rand() % RES_REGENATRONS + 1, rand() % 25 + 50};
+        }
     }
     if (s.star == STAR_NONE) {
         return s;
     }
-
     // Create some random planets
     if (!s.planetnum) {
         s.planetnum = rand() % PLANET_MAX;

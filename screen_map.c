@@ -88,6 +88,10 @@ void _drawMap(UI_Element* el) {
                 DrawText("C", el->x + x * UI_tileSize + 1, el->y + y * UI_tileSize + 1, 4, BLACK);
                 DrawText("C", el->x + x * UI_tileSize, el->y + y * UI_tileSize, 4, WHITE);
             }
+            if (s->cache.type > RES_NONE) {
+                DrawText("*", el->x + x * UI_tileSize + 6, el->y + y * UI_tileSize + 6, 4, BLACK);
+                DrawText("*", el->x + x * UI_tileSize + 5, el->y + y * UI_tileSize + 5, 4, WHITE);
+            }
             if (s->fleet > -1) {
                 DrawText("F", el->x + x * UI_tileSize + UI_tileSize - 4, el->y + y * UI_tileSize + 1, 4, BLACK);
                 DrawText("F", el->x + x * UI_tileSize + UI_tileSize - 5, el->y + y * UI_tileSize, 4, WHITE);
